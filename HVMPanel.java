@@ -45,4 +45,19 @@ public class HVMPanel extends JPanel{
       System.out.println(e.getKeyChar());
    }
    
+   public void play(){
+      boolean playing = false;
+      while(playing){
+         
+         
+         drawToScreen();
+      }
+      
+      
+   }
+   
+   public void drawToScreen(){
+   
+   }
+   
 }
