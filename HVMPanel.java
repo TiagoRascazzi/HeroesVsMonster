@@ -1,17 +1,20 @@
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
+import java.awt.Graphics;
 
 import java.util.Scanner;
 
 public class HVMPanel extends JPanel{
    
+   public enum GameState {START, MAIN, GAME, PAUSE};
    private int DAY = 26;
    
    public ArrayList<Player> players = new ArrayList<Player>();
    public Board board;
    public int numOfPlayers;
    private int timeOfDay = 26;
+   public static GameState gameState = GameState.START;
    
    private Scanner input = new Scanner(System.in);
    //private boolean playing = false;
@@ -21,23 +24,22 @@ public class HVMPanel extends JPanel{
     
    public HVMPanel(){
       
-      //Load all the images
       
       setUp();
       showMenu();
    }
       
    public void showMenu(){
-      //option including start
+      Display.loadImages();
       
       //TODO in graphics
-      System.out.println("Start new game (N)\nQuit(Q)");
+      /*System.out.println("Start new game (N)\nQuit(Q)");
       String in = input.next();
       if(in.toLowerCase().equals("n")){
          play();
       }else if(in.toLowerCase().equals("q")){
          System.exit(0);
-      }
+      }*/
       
    }
    
@@ -70,9 +72,28 @@ public class HVMPanel extends JPanel{
    }
    
    public void processUserInput(KeyEvent e){
-      System.out.println(e.getKeyChar());
-      if(e.getKeyCode() == 81)
-         System.exit(0);
+      
+      if(gameState == GameState.START){
+         gameState = GameState.MAIN;
+         repaint();
+      }else if(gameState == GameState.MAIN){
+         gameState = GameState.GAME;
+         repaint();
+      }else if(gameState == GameState.GAME){
+         gameState = GameState.PAUSE;
+         repaint();
+      }else if(gameState == GameState.PAUSE){
+         gameState = GameState.GAME;
+         repaint();
+      }
+      
+   }
+   
+   public void paintComponent(Graphics g)
+   {
+      super.paintComponent(g);
+      Display.drawGame(g);
+      System.out.println("draw");
       
    }
    
