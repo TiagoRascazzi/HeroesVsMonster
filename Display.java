@@ -21,6 +21,8 @@ public class Display extends HVMPanel{
          drawBoard(g);
          drawSidebar(g);
       }else if(gameState == GameState.PAUSE){
+         drawBoard(g);
+         drawSidebar(g);
          drawPauseMenu(g);
       }
    }
@@ -35,6 +37,10 @@ public class Display extends HVMPanel{
       g.setColor(Color.BLACK);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
       g.drawString("Menu", 50, 50);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+      g.drawString("(1) START", 75, 100);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+      g.drawString("(?) SETTING", 75, 125);
    }
    public static void drawBoard(Graphics g){
       g.setColor(Color.BLUE);
@@ -53,14 +59,20 @@ public class Display extends HVMPanel{
       g.drawString("INFO", 625, 50);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
       g.drawString("Sun track", 625, 75);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+      g.drawString("(esc) PAUSE", 625, 125);
    }
    public static void drawPauseMenu(Graphics g){
-      g.setColor(Color.GRAY);
+      g.setColor(new Color(125, 125, 125, 225));
       g.fillRect(0, 0, 800, 600);  
       
       g.setColor(Color.BLACK);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
       g.drawString("PAUSE", 50, 50);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+      g.drawString("(esc) RESUME", 75, 100);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+      g.drawString("(q) QUIT", 75, 125);
    }
    
 }

@@ -23,8 +23,6 @@ public class GameDriver{
       public void keyPressed(KeyEvent e){
       }
       public void keyReleased(KeyEvent e){
-         if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
-            System.exit(0);
          screen.processUserInput(e);
          System.out.println(e.getKeyChar());
          

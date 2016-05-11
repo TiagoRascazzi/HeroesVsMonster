@@ -16,45 +16,25 @@ public class HVMPanel extends JPanel{
    private int timeOfDay = 26;
    public static GameState gameState = GameState.START;
    
-   private Scanner input = new Scanner(System.in);
-   //private boolean playing = false;
    
    
    //All the images variable  
     
    public HVMPanel(){
       
-      
-      setUp();
-      showMenu();
-   }
-      
-   public void showMenu(){
       Display.loadImages();
       
-      //TODO in graphics
-      /*System.out.println("Start new game (N)\nQuit(Q)");
-      String in = input.next();
-      if(in.toLowerCase().equals("n")){
-         play();
-      }else if(in.toLowerCase().equals("q")){
-         System.exit(0);
-      }*/
-      
    }
-   
-
-   
-    
+       
    public void play(){
-      setUp();
+      resetGame();
       
       for(int i=0; i<timeOfDay; i++)
          for(int j=0; j<players.size(); j++)
             players.get(j).playTurn();
    }
    
-   public void setUp(){
+   public void resetGame(){
       board = new Board(10, 10);
       timeOfDay = DAY;
       
@@ -77,13 +57,22 @@ public class HVMPanel extends JPanel{
          gameState = GameState.MAIN;
          repaint();
       }else if(gameState == GameState.MAIN){
-         gameState = GameState.GAME;
+         //if click start game
+         if(e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1 ){
+            gameState = GameState.GAME;
+            play();
+         }
          repaint();
       }else if(gameState == GameState.GAME){
-         gameState = GameState.PAUSE;
+         if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+            gameState = GameState.PAUSE;
          repaint();
-      }else if(gameState == GameState.PAUSE){
-         gameState = GameState.GAME;
+      }else if(gameState == GameState.PAUSE){ 
+         if(e.getKeyCode() == KeyEvent.VK_Q){
+            System.exit(0);
+         }else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            gameState = GameState.GAME;
+         }
          repaint();
       }
       
