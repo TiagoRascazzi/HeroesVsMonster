@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 public class HVMPanel extends JPanel{
    
-   public enum GameState {START, MAIN, GAME, PAUSE};
+   public enum GameState {START, MAIN, SELECT,  GAME, PAUSE};
    private int DAY = 26;
    
+   protected static MainMenu mainmenu = new MainMenu("Img/main.jpg");  
    public ArrayList<Player> players = new ArrayList<Player>();
    public Board board;
    public int numOfPlayers;
@@ -27,8 +28,7 @@ public class HVMPanel extends JPanel{
    }
        
    public void play(){
-      resetGame();
-      
+            
       for(int i=0; i<timeOfDay; i++)
          for(int j=0; j<players.size(); j++)
             players.get(j).playTurn();
@@ -54,12 +54,21 @@ public class HVMPanel extends JPanel{
    public void processUserInput(KeyEvent e){
       
       if(gameState == GameState.START){
+         BGMusic.setBGMusic("Music/game/track1.mp3");
          gameState = GameState.MAIN;
          repaint();
       }else if(gameState == GameState.MAIN){
          //if click start game
-         if(e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1 ){
+         /*if(e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1 ){
             gameState = GameState.GAME;
+            resetGame();
+            play();
+         }*/
+         players = mainmenu.processUserInput(e);
+         if(players != null){
+            System.out.println(players);
+            gameState = GameState.GAME;
+            resetGame();
             play();
          }
          repaint();
@@ -82,7 +91,6 @@ public class HVMPanel extends JPanel{
    {
       super.paintComponent(g);
       Display.drawGame(g);
-      System.out.println("draw");
       
    }
    

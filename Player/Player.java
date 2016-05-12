@@ -1,5 +1,6 @@
 public abstract class Player{
    
+   private String name;
    private int posX;
    private int posY;
    private int life;
@@ -11,7 +12,9 @@ public abstract class Player{
    private int luck;
    
    //playerNum is between 1-4
-   public Player(int x, int y, int maxLife, int strength, int agility, int armor, int luck){
+   public Player(String n, int x, int y, int maxLife, int strength, int agility, int armor, int luck){
+      name = n;
+      
       posX = x;
       posY = y;
       life = maxLife;
@@ -37,6 +40,10 @@ public abstract class Player{
    
    public void search(){
       //get a card from search deck if room wasnt search more then twice consecusively
+   }
+   
+   public String getName(){
+      return name;
    }
    
 }

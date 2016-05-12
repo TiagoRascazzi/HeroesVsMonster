@@ -5,18 +5,18 @@ import java.awt.Color;
 
 public class Display extends HVMPanel{
    
-   private static ImageIcon startImg = new ImageIcon("Img/start.jpg");   
+   private static ImageIcon startImg = new ImageIcon("Img/start.jpg"); 
    
    public static void loadImages(){
       
    }
    
    public static void drawGame(Graphics g){
-      System.out.println(gameState);
       if(gameState == GameState.START){
          drawStart(g);
       }else if(gameState == GameState.MAIN){
-         drawMainMenu(g);
+         mainmenu.draw(g);
+         //drawMainMenu(g);
       }else if(gameState == GameState.GAME){
          drawBoard(g);
          drawSidebar(g);
@@ -30,18 +30,19 @@ public class Display extends HVMPanel{
    public static void drawStart(Graphics g){
       g.drawImage(startImg.getImage(),0, 0, 800, 600, null);
    }
-   public static void drawMainMenu(Graphics g){
-      g.setColor(Color.GREEN);
-      g.fillRect(0, 0, 800, 600);
+   /*public static void drawMainMenu(Graphics g){
+      g.drawImage(mainImg.getImage(),0, 0, 800, 600, null);
       
-      g.setColor(Color.BLACK);
+      g.setColor(Color.RED);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
       g.drawString("Menu", 50, 50);
+      g.setColor(Color.RED);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
       g.drawString("(1) START", 75, 100);
+      g.setColor(Color.RED);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
       g.drawString("(?) SETTING", 75, 125);
-   }
+   }*/
    public static void drawBoard(Graphics g){
       g.setColor(Color.BLUE);
       g.fillRect(0, 0, 600, 600); 
@@ -73,6 +74,8 @@ public class Display extends HVMPanel{
       g.drawString("(esc) RESUME", 75, 100);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
       g.drawString("(q) QUIT", 75, 125);
-   }
+   }   
+   public static void drawSelect(Graphics g){
    
+   }
 }

@@ -24,7 +24,7 @@ public class GameDriver{
       }
       public void keyReleased(KeyEvent e){
          screen.processUserInput(e);
-         System.out.println(e.getKeyChar());
+         //System.out.println(e.getKeyChar());
          
       }
    }
