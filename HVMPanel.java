@@ -7,15 +7,15 @@ import java.util.Scanner;
 
 public class HVMPanel extends JPanel{
    
-   public enum GameState {START, MAIN, SELECT,  GAME, PAUSE};
-   private int DAY = 26;
+   protected static MainMenu mainmenu = new MainMenu("Img/main.jpg");
+   public enum GameState {START, MAIN, SELECT,  GAME, PAUSE}; 
+   private int DAY = 26; 
    
-   protected static MainMenu mainmenu = new MainMenu("Img/main.jpg");  
-   public ArrayList<Player> players = new ArrayList<Player>();
-   public Board board;
-   public int numOfPlayers;
-   private int timeOfDay = 26;
+   public static ArrayList<Player> players = new ArrayList<Player>();
    public static GameState gameState = GameState.START;
+   public static SparseMatrix<Tile> board; 
+   //public int numOfPlayers;
+   public static int timeOfDay = 26;
    
    
    
@@ -35,10 +35,10 @@ public class HVMPanel extends JPanel{
    }
    
    public void resetGame(){
-      board = new Board(10, 10);
+      board = new SparseMatrix(10, 10); //4 rows, 5 cols
       timeOfDay = DAY;
       
-      ArrayList<Player> availablePlayers = new ArrayList<Player>();
+      /*ArrayList<Player> availablePlayers = new ArrayList<Player>();
       availablePlayers.add(new SirRohan());
       availablePlayers.add(new ElAdoranSureshot());
       availablePlayers.add(new UlvGrimhand());
@@ -48,7 +48,7 @@ public class HVMPanel extends JPanel{
       //TODO select player
       for(int i=0; i<4; i++)
          players.add(availablePlayers.remove(0));
-            
+       */     
    }
    
    public void processUserInput(KeyEvent e){

@@ -1,3 +1,5 @@
+import java.awt.Image;
+
 public abstract class Player{
    
    private String name;
@@ -42,8 +44,21 @@ public abstract class Player{
       //get a card from search deck if room wasnt search more then twice consecusively
    }
    
+   public int life(){
+      return life;
+   }
+   
    public String getName(){
       return name;
    }
+   
+   public int getPosX(){
+      return posX;
+   }
+   public int getPosY(){
+      return posY;
+   }
+   
+   public abstract Image getImage();
    
 }
