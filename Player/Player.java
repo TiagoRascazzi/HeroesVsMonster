@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 
 public abstract class Player{
    
@@ -27,21 +28,41 @@ public abstract class Player{
       this.luck = luck;
    }
    
-   public void playTurn(){
-      //if player dont miss turn (reason to skip: insructed from card, no possible move, voluntary)
-         //then get what user want to do  only one at the time
-            //move to valid pos
-            //search room if searchable
+   public boolean processUserInput(KeyEvent e){            
+      System.out.println(name+" did action "+e.getKeyChar());
+      
+      if(e.getKeyCode() == KeyEvent.VK_1){ //move to valid pos
+         move();
+      }else if(e.getKeyCode() == KeyEvent.VK_2){ //search room if searchable
+         search();
+      }else if(e.getKeyCode() == KeyEvent.VK_3){
+         return true;
+      }
+      return false;
          
    }
    
    public void move(){
       //if valid move and not other players are in it
          //if room had no tile then get new tile
+      
+      //get input from processUserInput using an emun state TODO
+      //check if input is a valid move
+         //if valid move
+         //if not valid wait for new input
+      /*if(isValidMove(x, y)){
+      
+      }*/
+      
+   }
+   
+   public void isValidMove(int x, int y){
+   
    }
    
    public void search(){
       //get a card from search deck if room wasnt search more then twice consecusively
+      //random search card
    }
    
    public int life(){
@@ -52,6 +73,10 @@ public abstract class Player{
       return name;
    }
    
+   public void setPos(int x, int y){
+      posX = x;
+      posY = y;
+   }
    public int getPosX(){
       return posX;
    }

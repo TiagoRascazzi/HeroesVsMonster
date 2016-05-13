@@ -3,6 +3,8 @@ import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 
+import java.awt.Dimension;
+
 import java.util.Scanner;
 
 public class HVMPanel extends JPanel{
@@ -12,6 +14,7 @@ public class HVMPanel extends JPanel{
    private int DAY = 26; 
    
    public static ArrayList<Player> players = new ArrayList<Player>();
+   public static int currentPlayer = 0;
    public static GameState gameState = GameState.START;
    public static SparseMatrix<Tile> board; 
    //public int numOfPlayers;
@@ -27,28 +30,28 @@ public class HVMPanel extends JPanel{
       
    }
        
-   public void play(){
+   /*public void play(){
             
       for(int i=0; i<timeOfDay; i++)
          for(int j=0; j<players.size(); j++)
             players.get(j).playTurn();
-   }
+   }*/
    
    public void resetGame(){
       board = new SparseMatrix(10, 10); //4 rows, 5 cols
       timeOfDay = DAY;
       
-      /*ArrayList<Player> availablePlayers = new ArrayList<Player>();
-      availablePlayers.add(new SirRohan());
-      availablePlayers.add(new ElAdoranSureshot());
-      availablePlayers.add(new UlvGrimhand());
-      availablePlayers.add(new VolrikTheBrave());
-            
-      numOfPlayers = 4;  //Enter number of player
-      //TODO select player
-      for(int i=0; i<4; i++)
-         players.add(availablePlayers.remove(0));
-       */     
+      //set players start position
+      for(int i=0; i<players.size(); i++){
+         if(i==0)
+            players.get(i).setPos(0, 0);
+         if(i==1)
+            players.get(i).setPos(board.numColumns()-1, 0);
+         if(i==2)
+            players.get(i).setPos(board.numColumns()-1, board.numRows()-1);
+         if(i==3)
+            players.get(i).setPos(0, board.numRows()-1);
+       }   
    }
    
    public void processUserInput(KeyEvent e){
@@ -58,23 +61,26 @@ public class HVMPanel extends JPanel{
          gameState = GameState.MAIN;
          repaint();
       }else if(gameState == GameState.MAIN){
-         //if click start game
-         /*if(e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_NUMPAD1 ){
-            gameState = GameState.GAME;
-            resetGame();
-            play();
-         }*/
          players = mainmenu.processUserInput(e);
          if(players != null){
             System.out.println(players);
             gameState = GameState.GAME;
             resetGame();
-            play();
+            //play();
          }
          repaint();
       }else if(gameState == GameState.GAME){
          if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
             gameState = GameState.PAUSE;
+         
+         if(players.get(currentPlayer).processUserInput(e)){
+            //TODO if return true go to next player, remove one sun after all played
+            currentPlayer++;
+            if(currentPlayer>=players.size()){
+               currentPlayer = 0;
+               timeOfDay--;
+            }
+         } 
          repaint();
       }else if(gameState == GameState.PAUSE){ 
          if(e.getKeyCode() == KeyEvent.VK_Q){
@@ -90,7 +96,7 @@ public class HVMPanel extends JPanel{
    public void paintComponent(Graphics g)
    {
       super.paintComponent(g);
-      Display.drawGame(g);
+      Display.drawGame(g, (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
       
    }
    

@@ -29,9 +29,9 @@ public class MainMenu{
    
    }
    
-   public void draw(Graphics g){
+   public void draw(Graphics g, int screenWidth, int screenHeight){
       
-      g.drawImage(mainImg.getImage(),0, 0, 800, 600, null);
+      g.drawImage(mainImg.getImage(),0, 0, screenWidth, screenHeight, null);
       
       if(state == MainMenuState.SELECT){
          g.setColor(Color.RED);

@@ -9,16 +9,16 @@ public class GameDriver{
    
    public static void main(String[] args){
       screen = new HVMPanel();
-      screen.setPreferredSize(new Dimension(800,600));
+      screen.setPreferredSize(new Dimension(900,650));
       JFrame frame = new JFrame("Heroes VS. Monsters");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(screen);
-      frame.setResizable(false);
       frame.pack();
       frame.setLocationRelativeTo(null);
       frame.setVisible(true);
 	  
 	  //System.out.println(frame.getContentPane().getSize());
+	  //System.out.println(screen.getSize());
 	  
       frame.addKeyListener(new Listen());
    }

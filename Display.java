@@ -16,38 +16,44 @@ public class Display extends HVMPanel{
    private static ImageIcon borderCellImg2 = new ImageIcon("Img/Tile/Border_2.png");  
    private static ImageIcon sunImg = new ImageIcon("Img/sun.png");  
    private static ImageIcon combatImg = new ImageIcon("Img/combat.png");
-   private static Dimension screenSize = new Dimension(800, 600);
-   private static int boardSize = 600; 
    
    public static void loadImages(){
       
    }
    
-   public static void drawGame(Graphics g){
+   public static void drawGame(Graphics g, int screenWidth, int screenHeight){
       if(gameState == GameState.START){
-         drawStart(g);
+         drawStart(g, screenWidth, screenHeight);
       }else if(gameState == GameState.MAIN){
-         mainmenu.draw(g);
+         mainmenu.draw(g, screenWidth, screenHeight);
          //drawMainMenu(g);
       }else if(gameState == GameState.GAME){
-         drawBoard(g);
-         drawSidebar(g);
+         g.setColor(new Color(169,69,46));
+         g.fillRect(0, 0, screenWidth, screenHeight); 
+         drawBoard(g, screenWidth, screenHeight);
+         drawSidebar(g, screenWidth, screenHeight);
       }else if(gameState == GameState.PAUSE){
-         drawBoard(g);
-         drawSidebar(g);
-         drawPauseMenu(g);
+         drawBoard(g, screenWidth, screenHeight);
+         drawSidebar(g, screenWidth, screenHeight);
+         drawPauseMenu(g, screenWidth, screenHeight);
       }
    }
    
-   public static void drawStart(Graphics g){
-      g.drawImage(startImg.getImage(),0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight(), null);
+   public static void drawStart(Graphics g, int screenWidth, int screenHeight){
+      g.drawImage(startImg.getImage(),0, 0, screenWidth, screenHeight, null);
    }
-   public static void drawBoard(Graphics g){      
-      //math for size in proportion
-	   double x = boardSize / 21.8;
+   public static void drawBoard(Graphics g, int screenWidth, int screenHeight){  
+      
+      int boardSize = screenHeight; 
+      
+      double x = boardSize / 22;
       int cornerTileSize = (int)(3*x);
       int tileSize = (int)(2*x);
       int borderSize = (int)x;
+      int borderHeigth = (int)x*5/6;
+      int borderSpace = (int)x-borderHeigth;
+      int playerSize = (int)(x*1.5);
+      int playerSpace = (tileSize-playerSize)/2;
             
       for(int i=0; i<board.numRows(); i++){
          for(int j=0; j<board.numColumns(); j++){
@@ -70,54 +76,61 @@ public class Display extends HVMPanel{
       
 	   //Draw borders
       for(int i=1; i<board.numRows()-1; i++){
-         g.drawImage(borderCellImg1.getImage(), tileSize*i+borderSize, 0, tileSize, borderSize, null);
-         g.drawImage(borderCellImg1.getImage(), tileSize*i+borderSize, borderSize+tileSize*board.numRows()-1, tileSize, borderSize, null);
+         g.drawImage(borderCellImg1.getImage(), tileSize*i+borderSize, borderSpace, tileSize, borderHeigth, null);
+         g.drawImage(borderCellImg1.getImage(), tileSize*i+borderSize, borderSize+tileSize*board.numRows()-1, tileSize, borderHeigth, null);
       }
       for(int i=1; i<board.numColumns()-1; i++){
-         g.drawImage(borderCellImg2.getImage(), 0, tileSize*i+borderSize, borderSize, tileSize, null);
-         g.drawImage(borderCellImg2.getImage(), tileSize*board.numColumns()-1+borderSize, tileSize*i+borderSize, borderSize, tileSize, null);
+         g.drawImage(borderCellImg2.getImage(), borderSpace, tileSize*i+borderSize, borderHeigth, tileSize, null);
+         g.drawImage(borderCellImg2.getImage(), tileSize*board.numColumns()-1+borderSize, tileSize*i+borderSize, borderHeigth, tileSize, null);
       }
       
       //Draw player
-      for(int i=0; i<players.size(); i++){
-         g.drawImage(players.get(i).getImage(), tileSize*(players.get(i).getPosX())+borderSize, tileSize*(players.get(i).getPosY())+borderSize, 45, 45, null);
-      }
+      for(int i=0; i<players.size(); i++)
+         g.drawImage(players.get(i).getImage(), playerSpace+tileSize*(players.get(i).getPosX())+borderSize, playerSpace+tileSize*(players.get(i).getPosY())+borderSize, playerSize, playerSize, null);
       
    }
-   public static void drawSidebar(Graphics g){
-      g.setColor(new Color(169,69,46));
-      g.fillRect(boardSize, 0, (int)screenSize.getWidth()-boardSize, (int)screenSize.getHeight()); 
-       
+   public static void drawSidebar(Graphics g, int screenWidth, int screenHeight){    
+      
+      int boardSize = screenHeight; 
       g.setColor(Color.BLACK);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
-      g.drawString("INFO", 625, 50);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-      g.drawString("Sun track:", 625, 75);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-      g.drawString("(esc) PAUSE", 625, 175);
-	  
+      
+      //g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
+      //g.drawString("INFO", 625, 50); 
+      
 	  //draw sun track
-	  for(int i=0; i<timeOfDay; i++)
-         g.drawImage(sunImg.getImage(), boardSize+25+(i%8)*16, 75+16*(i/8), 16, 16, null);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+      g.drawString("Sun track", boardSize+26, 45); 
+	   for(int i=0; i<timeOfDay; i++)
+         g.drawImage(sunImg.getImage(), boardSize+8+(i%8)*20, 50+20*(i/8), 20, 20, null);
+         
+      //draw option
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+      g.drawString(players.get(currentPlayer).getName(), boardSize+8, 175);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+      g.drawString("(1) MOVE", boardSize+16, 200);
+      g.drawString("(2) SEARCH", boardSize+16, 225);
+      g.drawString("(3) SKIP TURN", boardSize+16, 250);
+      g.drawString("(esc) PAUSE", boardSize+16, 275);
 	  
-	  //draw combat board TODO make zoom to full screen, make a special class for it
-	   g.drawImage(combatImg.getImage(), boardSize, 200, (int)screenSize.getWidth()-boardSize, (int)screenSize.getWidth()-boardSize, null);
+	   //draw player spec (life, etc...)
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+	   for(int i=0; i<players.size(); i++)
+         g.drawString((i+1)+". "+players.get(i).getName() + " has "+ players.get(i).life() +" lives", boardSize, 325+i*25);
 	  
-	  //draw player spec (life, etc...)
-	  for(int i=0; i<players.size(); i++)
-         g.drawString("("+(i+1)+") "+players.get(i).getName() + " has "+ players.get(i).life() +" lives", 625, 500+i*25);
+	   //draw combat board TODO make zoom to full screen, make a special class for it
+	   g.drawImage(combatImg.getImage(), boardSize, 425, 200-10, 200-10, null);
+	  
    }
-   public static void drawPauseMenu(Graphics g){
+   public static void drawPauseMenu(Graphics g, int screenWidth, int screenHeight){
       g.setColor(new Color(125, 125, 125, 225));
-      g.fillRect(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());  
+      g.fillRect(0, 0, screenWidth, screenHeight);  
       
       g.setColor(Color.BLACK);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
+      g.drawString("PAUSE", 50, 75);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
-      g.drawString("PAUSE", 50, 50);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-      g.drawString("(esc) RESUME", 75, 100);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-      g.drawString("(q) QUIT", 75, 125);
+      g.drawString("(esc) RESUME", 100, 150);
+      g.drawString("(q) QUIT", 100, 200);
    }   
    public static void drawSelect(Graphics g){
    
