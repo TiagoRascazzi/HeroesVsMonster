@@ -6,19 +6,28 @@ import java.awt.Dimension;
 
 public class Display extends HVMPanel{
    
-   private static ImageIcon startImg = new ImageIcon("Img/start.jpg"); 
-   private static ImageIcon emptyCellImg = new ImageIcon("Img/Tile/EmptyCell.png");  
-   private static ImageIcon cornerCellImg1 = new ImageIcon("Img/Tile/Corner_1.png");    
-   private static ImageIcon cornerCellImg2 = new ImageIcon("Img/Tile/Corner_2.png");    
-   private static ImageIcon cornerCellImg3 = new ImageIcon("Img/Tile/Corner_3.png");    
-   private static ImageIcon cornerCellImg4 = new ImageIcon("Img/Tile/Corner_4.png");   
-   private static ImageIcon borderCellImg1 = new ImageIcon("Img/Tile/Border_1.png");   
-   private static ImageIcon borderCellImg2 = new ImageIcon("Img/Tile/Border_2.png");  
-   private static ImageIcon sunImg = new ImageIcon("Img/sun.png");  
-   private static ImageIcon combatImg = new ImageIcon("Img/combat.png");
+   private static ImageIcon startImg; 
+   private static ImageIcon emptyCellImg;  
+   private static ImageIcon cornerCellImg1;    
+   private static ImageIcon cornerCellImg2;    
+   private static ImageIcon cornerCellImg3;    
+   private static ImageIcon cornerCellImg4;   
+   private static ImageIcon borderCellImg1;   
+   private static ImageIcon borderCellImg2;  
+   private static ImageIcon sunImg;  
+   private static ImageIcon combatImg;
    
    public static void loadImages(){
-      
+      startImg = new ImageIcon("Img/start.jpg");
+      emptyCellImg = new ImageIcon("Img/Tile/EmptyCell.png");
+      cornerCellImg1 = new ImageIcon("Img/Tile/Corner_1.png");
+      cornerCellImg2 = new ImageIcon("Img/Tile/Corner_2.png");
+      cornerCellImg3 = new ImageIcon("Img/Tile/Corner_3.png");
+      cornerCellImg4 = new ImageIcon("Img/Tile/Corner_4.png");
+      borderCellImg1 = new ImageIcon("Img/Tile/Border_1.png");
+      borderCellImg2 = new ImageIcon("Img/Tile/Border_2.png");
+      sunImg = new ImageIcon("Img/sun.png");
+      combatImg = new ImageIcon("Img/combat.png");
    }
    
    public static void drawGame(Graphics g, int screenWidth, int screenHeight){
@@ -26,7 +35,6 @@ public class Display extends HVMPanel{
          drawStart(g, screenWidth, screenHeight);
       }else if(gameState == GameState.MAIN){
          mainmenu.draw(g, screenWidth, screenHeight);
-         //drawMainMenu(g);
       }else if(gameState == GameState.GAME){
          g.setColor(new Color(169,69,46));
          g.fillRect(0, 0, screenWidth, screenHeight); 
@@ -87,15 +95,12 @@ public class Display extends HVMPanel{
       //Draw player
       for(int i=0; i<players.size(); i++)
          g.drawImage(players.get(i).getImage(), playerSpace+tileSize*(players.get(i).getPosX())+borderSize, playerSpace+tileSize*(players.get(i).getPosY())+borderSize, playerSize, playerSize, null);
-      
+     
    }
    public static void drawSidebar(Graphics g, int screenWidth, int screenHeight){    
       
       int boardSize = screenHeight; 
       g.setColor(Color.BLACK);
-      
-      //g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
-      //g.drawString("INFO", 625, 50); 
       
 	  //draw sun track
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
@@ -103,15 +108,10 @@ public class Display extends HVMPanel{
 	   for(int i=0; i<timeOfDay; i++)
          g.drawImage(sunImg.getImage(), boardSize+8+(i%8)*20, 50+20*(i/8), 20, 20, null);
          
-      //draw option
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-      g.drawString(players.get(currentPlayer).getName(), boardSize+8, 175);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-      g.drawString("(1) MOVE", boardSize+16, 200);
-      g.drawString("(2) SEARCH", boardSize+16, 225);
-      g.drawString("(3) SKIP TURN", boardSize+16, 250);
-      g.drawString("(esc) PAUSE", boardSize+16, 275);
-	  
+      //draw player action
+      players.get(currentPlayer).drawAction(g, screenWidth, screenHeight);
+      
+     
 	   //draw player spec (life, etc...)
       g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
 	   for(int i=0; i<players.size(); i++)
@@ -121,6 +121,8 @@ public class Display extends HVMPanel{
 	   g.drawImage(combatImg.getImage(), boardSize, 425, 200-10, 200-10, null);
 	  
    }
+   
+   
    public static void drawPauseMenu(Graphics g, int screenWidth, int screenHeight){
       g.setColor(new Color(125, 125, 125, 225));
       g.fillRect(0, 0, screenWidth, screenHeight);  
@@ -131,8 +133,5 @@ public class Display extends HVMPanel{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
       g.drawString("(esc) RESUME", 100, 150);
       g.drawString("(q) QUIT", 100, 200);
-   }   
-   public static void drawSelect(Graphics g){
-   
    }
 }

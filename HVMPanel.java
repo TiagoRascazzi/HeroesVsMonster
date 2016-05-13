@@ -16,26 +16,14 @@ public class HVMPanel extends JPanel{
    public static ArrayList<Player> players = new ArrayList<Player>();
    public static int currentPlayer = 0;
    public static GameState gameState = GameState.START;
-   public static SparseMatrix<Tile> board; 
-   //public int numOfPlayers;
+   public static SparseMatrix<Tile> board;
    public static int timeOfDay = 26;
    
    
-   
    //All the images variable  
-    
    public HVMPanel(){
-      
       Display.loadImages();
-      
    }
-       
-   /*public void play(){
-            
-      for(int i=0; i<timeOfDay; i++)
-         for(int j=0; j<players.size(); j++)
-            players.get(j).playTurn();
-   }*/
    
    public void resetGame(){
       board = new SparseMatrix(10, 10); //4 rows, 5 cols
@@ -66,19 +54,19 @@ public class HVMPanel extends JPanel{
             System.out.println(players);
             gameState = GameState.GAME;
             resetGame();
-            //play();
          }
          repaint();
       }else if(gameState == GameState.GAME){
-         if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+         if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
             gameState = GameState.PAUSE;
-         
-         if(players.get(currentPlayer).processUserInput(e)){
-            //TODO if return true go to next player, remove one sun after all played
-            currentPlayer++;
-            if(currentPlayer>=players.size()){
-               currentPlayer = 0;
-               timeOfDay--;
+         }else{
+            if(players.get(currentPlayer).processUserInput(e)){
+               //TODO if return true go to next player, remove one sun after all played
+               currentPlayer++;
+               if(currentPlayer>=players.size()){
+                  currentPlayer = 0;
+                  timeOfDay--;
+               }
             }
          } 
          repaint();

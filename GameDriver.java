@@ -16,10 +16,6 @@ public class GameDriver{
       frame.pack();
       frame.setLocationRelativeTo(null);
       frame.setVisible(true);
-	  
-	  //System.out.println(frame.getContentPane().getSize());
-	  //System.out.println(screen.getSize());
-	  
       frame.addKeyListener(new Listen());
    }
    
@@ -29,9 +25,7 @@ public class GameDriver{
       public void keyPressed(KeyEvent e){
       }
       public void keyReleased(KeyEvent e){
-         screen.processUserInput(e);
-         //System.out.println(e.getKeyChar());
-         
+         screen.processUserInput(e);         
       }
    }
 }
