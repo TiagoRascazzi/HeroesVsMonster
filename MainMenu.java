@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -29,7 +30,7 @@ public class MainMenu{
    
    }
    
-   public void draw(Graphics g, int screenWidth, int screenHeight){
+   public void draw(Graphics2D g, int screenWidth, int screenHeight){
       
       g.drawImage(mainImg.getImage(),0, 0, screenWidth, screenHeight, null);
       

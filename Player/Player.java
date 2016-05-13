@@ -1,6 +1,7 @@
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
 
@@ -40,7 +41,7 @@ public abstract class Player{
       System.out.println(name+" did action "+e.getKeyChar());
       if(state == PlayeState.SELECT){
          if(e.getKeyCode() == KeyEvent.VK_1){
-            move();
+            //move();
             state = PlayeState.MOVE;
          }else if(e.getKeyCode() == KeyEvent.VK_2){
             search();
@@ -50,13 +51,17 @@ public abstract class Player{
          }
       }else if(state == PlayeState.MOVE){
          if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            posX--;
+            //posX--;
+            move(posX-1, posY);
          }else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            posX++;
+            //posX++;
+            move(posX+1, posY);
          }else if(e.getKeyCode() == KeyEvent.VK_UP){
-            posY--;
+            //posY--;
+            move(posX, posY-1);
          }else if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            posY++;
+            //posY++;
+            move(posX, posY+1);
          }else{
             state = PlayeState.SELECT;
          }
@@ -67,7 +72,7 @@ public abstract class Player{
          
    }
    
-   public void move(){
+   public void move(int x, int y){
       //if valid move and not other players are in it
          //if room had no tile then get new tile
       
@@ -78,11 +83,17 @@ public abstract class Player{
       /*if(isValidMove(x, y)){
       
       }*/
-      
+      if(isValidMove(x, y)){
+         posX = x;
+         posY = y;
+      }
    }
    
-   public void isValidMove(int x, int y){
-   
+   public boolean isValidMove(int x, int y){
+      if(x>=0 && y>=0 && x<HVMPanel.board.numRows() && y<HVMPanel.board.numColumns()){
+         return true;
+      }
+      return false;
    }
    
    public void search(){
@@ -90,27 +101,27 @@ public abstract class Player{
       //random search card
    }
    
-   public void drawAction(Graphics g, int screenWidth, int screenHeight){
-      int boardSize = screenHeight; 
+   public void drawAction(Graphics2D g, int posX, int posY){
+      //int boardSize = screenHeight; 
       
       g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-      g.drawString(name, boardSize+8, 175);
+      g.drawString(name, posX, posY);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
          
       if(state == PlayeState.SELECT){
-         g.drawString("(1) MOVE", boardSize+16, 200);
-         g.drawString("(2) SEARCH", boardSize+16, 225);
-         g.drawString("(3) SKIP TURN", boardSize+16, 250);
-         g.drawString("(esc) PAUSE", boardSize+16, 275);
+         g.drawString("(1) MOVE", posX+8, posY+25);
+         g.drawString("(2) SEARCH", posX+8, posY+50);
+         g.drawString("(3) SKIP TURN", posX+8, posY+75);
+         g.drawString("(esc) PAUSE", posX+8, posY+100);
       }else if(state == PlayeState.MOVE){
-         g.drawString("(<) LEFT", boardSize+16, 200);
-         g.drawString("(>) RIGTH", boardSize+16, 225);
-         g.drawString("(/\\) UP", boardSize+16, 250);
-         g.drawString("(\\/) DOWN", boardSize+16, 275);
-         g.drawString("any other key to return", boardSize+16, 300);
+         g.drawString("(\u2190) LEFT", posX+8, posY+25);
+         g.drawString("(\u2192) RIGTH", posX+8, posY+50);
+         g.drawString("(\u2191) UP", posX+8, posY+75);
+         g.drawString("(\u2193) DOWN", posX+8, posY+100);
+         g.drawString("any other key to return", posX+8, posY+125);
       }else if(state == PlayeState.SEARCH){
-         g.drawString("SEARCHING", boardSize+16, 200);
-         g.drawString("any key to return", boardSize+16, 225);
+         g.drawString("SEARCHING", posX+8, posY+25);
+         g.drawString("any key to return", posX+8, posY+50);
       }
    }   
    

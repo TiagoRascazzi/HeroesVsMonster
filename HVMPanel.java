@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import java.awt.Dimension;
 
@@ -84,7 +85,7 @@ public class HVMPanel extends JPanel{
    public void paintComponent(Graphics g)
    {
       super.paintComponent(g);
-      Display.drawGame(g, (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
+      Display.drawGame((Graphics2D)g, (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
       
    }
    
