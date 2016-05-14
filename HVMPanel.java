@@ -27,7 +27,7 @@ public class HVMPanel extends JPanel{
    }
    
    public void resetGame(){
-      board = new SparseMatrix(10, 10); //4 rows, 5 cols
+      board = new SparseMatrix(10, 13); //4 rows, 5 cols
       timeOfDay = DAY;
       
       //set players start position

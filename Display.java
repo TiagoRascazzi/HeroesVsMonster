@@ -99,12 +99,12 @@ public class Display extends HVMPanel{
                g.drawImage(cornerCellImg4.getImage(), transform, null); 
             }else if(board.get(i, j) != null){ 
                //not empty cell
-               transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
+               transform.setToTranslation(i*tileSize+borderSize, j*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
                g.drawImage(board.get(i, j).getImage(), transform, null); 
             }else{ 
                //empty cell
-               transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
+               transform.setToTranslation(i*tileSize+borderSize, j*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
                g.drawImage(emptyCellImg.getImage(), transform, null); 
             }
