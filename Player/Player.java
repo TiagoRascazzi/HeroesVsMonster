@@ -67,29 +67,24 @@ public abstract class Player{
    
    public boolean processMouseInput(MouseEvent e){
       if(state == PlayeState.SELECT){
-         if(e.getButton() == MouseEvent.BUTTON1){
-            if(hover(530, 670, 215, 240)){
-               state = PlayeState.MOVE;
-            }else if(hover(530, 670, 240, 265)){
-               search();
-               state = PlayeState.SEARCH;
-            }else if(hover(530, 670, 265, 290)){ //if skip
-               return true;
-            }else if(hover(530, 670, 290, 315)){
-               HVMPanel.gameState = HVMPanel.GameState.PAUSE;
-            }
+         if(hover(530, 670, 215, 240)){
+            state = PlayeState.MOVE;
+         }else if(hover(530, 670, 240, 265)){
+            search();
+            state = PlayeState.SEARCH;
+         }else if(hover(530, 670, 265, 290)){ //if skip
+            return true;
+         }else if(hover(530, 670, 290, 315)){
+            HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          }
       }else if(state == PlayeState.MOVE){
-         if(e.getButton() == MouseEvent.BUTTON1){
-            Point p = getMouseMove(e);
-            if(p == null)
-               state = PlayeState.SELECT;
-            else
-               move(p);
-         }
-      }else if(state == PlayeState.SEARCH){
-         if(e.getButton() == MouseEvent.BUTTON1)
+         Point p = getMouseMove(e);
+         if(p == null)
             state = PlayeState.SELECT;
+         else
+            move(p);
+      }else if(state == PlayeState.SEARCH){
+         state = PlayeState.SELECT;
       }
       return false;
    }

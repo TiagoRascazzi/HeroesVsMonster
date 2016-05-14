@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
+import java.awt.Color;
 
 import java.awt.Dimension;
 
@@ -30,7 +31,7 @@ public class HVMPanel extends JPanel{
    }
    
    public void resetGame(){
-      board = new SparseMatrix(13, 10); //4 rows, 5 cols
+      board = new SparseMatrix(13, 10);
       timeOfDay = DAY;
       
       //set players start position
@@ -84,41 +85,36 @@ public class HVMPanel extends JPanel{
    }
    
    public void processMouseInput(MouseEvent e){
-      System.out.println("mouse event at ("+e.getX()+", "+e.getY()+")");
+      //System.out.println("mouse event at ("+e.getX()+", "+e.getY()+")");
       mouse = e.getPoint();
-            
-      if(gameState == GameState.START){
-         if(e.getButton() == MouseEvent.BUTTON1){
+         
+      if(e.getButton() == MouseEvent.BUTTON1){   
+         if(gameState == GameState.START){
             BGMusic.setBGMusic("Music/game/track1.mp3");
             gameState = GameState.MAIN;
-            repaint();
-         }
-      }else if(gameState == GameState.MAIN){
-         players = mainmenu.processMouseInput(e);
-         if(players != null){
-            System.out.println(players);
-            gameState = GameState.GAME;
-            resetGame();
-         }
-         repaint();
-      }else if(gameState == GameState.GAME){
-         if(players.get(currentPlayer).processMouseInput(e)){
-            currentPlayer++;
-            if(currentPlayer>=players.size()){
-               currentPlayer = 0;
-               timeOfDay--;
+         }else if(gameState == GameState.MAIN){
+            players = mainmenu.processMouseInput(e);
+            if(players != null){
+               System.out.println(players);
+               gameState = GameState.GAME;
+               resetGame();
             }
-         }
-         repaint();
-      }else if(gameState == GameState.PAUSE){ 
-         if(e.getButton() == MouseEvent.BUTTON1){
+         }else if(gameState == GameState.GAME){
+            if(players.get(currentPlayer).processMouseInput(e)){
+               currentPlayer++;
+               if(currentPlayer>=players.size()){
+                  currentPlayer = 0;
+                  timeOfDay--;
+               }
+            }
+         }else if(gameState == GameState.PAUSE){ 
             if(hover(100, 310, 155, 185))
                gameState = GameState.GAME;
             if(hover(100, 230, 205, 240))
                System.exit(0);
          }
-         repaint();
       }
+      repaint();
    }
    
    public void paintComponent(Graphics g)
@@ -131,6 +127,10 @@ public class HVMPanel extends JPanel{
    public static boolean hover(int x1, int x2, int y1, int y2){
       return (mouse.x>x1 && mouse.x<x2 && mouse.y>y1 && mouse.y<y2);
    }
-   
+   public static void chgColorOnHover(Graphics2D g, Color c1, Color c2, int x1, int x2, int y1, int y2){
+      g.setColor(c1);
+      if(hover(x1, x2, y1, y2))
+         g.setColor(c2);
+   }
    
 }

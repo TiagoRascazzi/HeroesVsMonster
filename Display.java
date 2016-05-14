@@ -170,12 +170,9 @@ public class Display extends HVMPanel{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
       g.drawString("PAUSE", 50, 75);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
-      if(hover(100, 310, 155, 185))
-         g.setColor(Color.BLACK);
+      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 310, 155, 185);
       g.drawString("(esc) RESUME", 100, 150);
-      g.setColor(Color.RED);
-      if(hover(100, 230, 205, 240))
-         g.setColor(Color.BLACK);
+      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 205, 240);
       g.drawString("(q) QUIT", 100, 200);
    }
 }
