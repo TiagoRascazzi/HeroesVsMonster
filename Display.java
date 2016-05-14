@@ -10,6 +10,7 @@ import java.awt.Point;
 public class Display extends HVMPanel{
    
    private static ImageIcon startImg; 
+   private static ImageIcon greenBorderImg; 
    private static ImageIcon emptyCellImg;  
    private static ImageIcon cornerCellImg1;    
    private static ImageIcon cornerCellImg2;    
@@ -23,6 +24,7 @@ public class Display extends HVMPanel{
    
    public static void loadImages(){
       startImg = new ImageIcon("Img/start.jpg");
+      greenBorderImg = new ImageIcon("Img/Tile/GreenBorder.png");
       emptyCellImg = new ImageIcon("Img/Tile/EmptyCell.png");
       cornerCellImg1 = new ImageIcon("Img/Tile/Corner_1.png");
       cornerCellImg2 = new ImageIcon("Img/Tile/Corner_2.png");
@@ -109,7 +111,12 @@ public class Display extends HVMPanel{
                transform.scale(tileScale, tileScale);
                g.drawImage(emptyCellImg.getImage(), transform, null); 
             }
-            
+            if(players.get(currentPlayer).isValidMove(new Point(j, i))){
+               //green border
+               transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
+               transform.scale(tileScale, tileScale);
+               g.drawImage(greenBorderImg.getImage(), transform, null); 
+            }
          }
       }
       

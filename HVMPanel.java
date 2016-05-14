@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class HVMPanel extends JPanel{
    
-   public static Point mouse;
+   public static Point mouse = new Point(0, 0);
    protected static MainMenu mainmenu = new MainMenu("Img/main.jpg");
    public enum GameState {START, MAIN, SELECT,  GAME, PAUSE}; 
    private int DAY = 26; 
@@ -100,7 +100,7 @@ public class HVMPanel extends JPanel{
                resetGame();
             }
          }else if(gameState == GameState.GAME){
-            if(players.get(currentPlayer).processMouseInput(e)){
+            if(players.get(currentPlayer).processMouseInput(new Point((int)this.getSize().getWidth(), (int)this.getSize().getHeight()), e)){
                currentPlayer++;
                if(currentPlayer>=players.size()){
                   currentPlayer = 0;
