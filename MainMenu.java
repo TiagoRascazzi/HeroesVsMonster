@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.awt.event.MouseEvent;
 
 public class MainMenu{
 
@@ -39,23 +40,29 @@ public class MainMenu{
          g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
          g.drawString("Select the number of players", 50, 50);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-         g.drawString("(1) 1 Player", 50, 75); 
-         g.drawString("(2) 2 Player", 50, 100); 
-         g.drawString("(3) 3 Player", 50, 125); 
-         g.drawString("(4) 4 Player", 50, 150);
+         for(int i=0; i<4; i++){
+            g.setColor(Color.RED);
+            if(hover(55, 130, 90+25*i, 90+25*(i+1)))
+               g.setColor(Color.WHITE);
+            g.drawString("("+(i+1)+") "+(i+1)+" Player", 50, 75+(25*i)); 
+         }
       }
       else if(state == MainMenuState.CHOSE){
          g.setColor(Color.RED);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
          g.drawString("Select the hero for player #"+currentPlayer, 50, 50);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-         for(int i=0; i<availablePlayers.size(); i++)
-            g.drawString("("+(i+1)+") "+availablePlayers.get(i).getName(), 50, 75+25*i); 
+         for(int i=0; i<availablePlayers.size(); i++){
+            g.setColor(Color.RED);
+            if(hover(55, 130, 90+25*i, 90+25*(i+1)))
+               g.setColor(Color.WHITE);
+            g.drawString("("+(i+1)+") "+availablePlayers.get(i).getName(), 50, 75+25*i);
+         } 
       }
    
    }
    
-   public ArrayList<Player> processUserInput(KeyEvent e){
+   public ArrayList<Player> processKeyInput(KeyEvent e){
       if(state == MainMenuState.SELECT){
          for(int i = 0; i < 4; i++){
             if(e.getKeyCode() ==(49+i)){
@@ -76,5 +83,39 @@ public class MainMenu{
          }
       }
       return null;   
+   }
+   
+   public ArrayList<Player> processMouseInput(MouseEvent e){
+      if(hover(100, 230, 205, 240))
+         System.out.println("hover");
+         
+      if(state == MainMenuState.SELECT){
+         for(int i = 0; i < 4; i++){
+            if(e.getButton() == MouseEvent.BUTTON1){
+               if(hover(55, 130, 90+25*i, 90+25*(i+1))){
+                  numberOfPlayer = i+1;
+                  currentPlayer = 1;
+                  state = MainMenuState.CHOSE;
+               }
+            }
+         }
+      }else if(state == MainMenuState.CHOSE){
+         for(int i = 0; i < 4; i++){
+            if(e.getButton() == MouseEvent.BUTTON1){
+               if(hover(55, 130, 90+25*i, 90+25*(i+1))){
+                  players.add(availablePlayers.remove(i));
+                  if(currentPlayer<numberOfPlayer)
+                     currentPlayer++;
+                  else
+                     return players;
+               }
+            }
+         }
+      }
+      return null;   
+   }
+   
+   private boolean hover(int x1, int x2, int y1, int y2){
+      return (HVMPanel.mouse.x>x1 && HVMPanel.mouse.x<x2 && HVMPanel.mouse.y>y1 && HVMPanel.mouse.y<y2);
    }
 }

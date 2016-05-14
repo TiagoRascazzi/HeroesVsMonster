@@ -1,6 +1,8 @@
 import javax.swing.JFrame;
 import java.awt.event.KeyListener;
+import javax.swing.event.MouseInputListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Dimension;
 
@@ -16,16 +18,35 @@ public class GameDriver{
       frame.pack();
       frame.setLocationRelativeTo(null);
       frame.setVisible(true);
-      frame.addKeyListener(new Listen());
+      Listener listener = new Listener();
+      frame.addKeyListener(listener);
+      frame.addMouseListener(listener);
+      frame.addMouseMotionListener(listener);
    }
    
-   public static class Listen implements KeyListener{
+   public static class Listener implements KeyListener, MouseInputListener{
       public void keyTyped(KeyEvent e){
       }
       public void keyPressed(KeyEvent e){
       }
       public void keyReleased(KeyEvent e){
-         screen.processUserInput(e);         
+         screen.processKeyInput(e);         
+      }
+      public void mouseClicked(MouseEvent e){
+         screen.processMouseInput(e);
+      }
+      public void mousePressed(MouseEvent e){
+      }
+      public void mouseReleased(MouseEvent e){
+      }
+      public void mouseEntered(MouseEvent e){
+      }
+      public void mouseExited(MouseEvent e){
+      }
+      public void mouseDragged(MouseEvent e){
+      }
+      public void mouseMoved(MouseEvent e){
+         screen.processMouseInput(e);
       }
    }
 }

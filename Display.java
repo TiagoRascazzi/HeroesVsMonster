@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.AffineTransform;
+import java.awt.Point;
 
 public class Display extends HVMPanel{
    
@@ -34,7 +35,7 @@ public class Display extends HVMPanel{
       
    }
    
-   public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){      
+   public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){ 
       if(gameState == GameState.START){
          g.drawImage(startImg.getImage(),0, 0, screenWidth, screenHeight, null);
       }else if(gameState == GameState.MAIN){
@@ -52,7 +53,7 @@ public class Display extends HVMPanel{
    }
    
    public static void drawBoard(Graphics2D g, int screenWidth, int screenHeight){        
-      double x = Math.min(screenWidth, screenHeight) / ((2.0*board.numColumns()+2.0) );
+      double x = Math.min(screenWidth, screenHeight) / ((2.0*board.numRows()+2.0) );
       
       double tileSize = 2.0*x;
       double cornerTileSize = 3.0*x;
@@ -64,8 +65,8 @@ public class Display extends HVMPanel{
       double borderHeigth = x*5.0/6.0;
       double borderSpace = x-borderHeigth;
       
-      double mostRight = (tileSize*board.numRows()-1.0-borderSize)+1.0;
-      double mostBottom = (tileSize*board.numColumns()-1.0-borderSize)+1.0;
+      double mostBottom = (tileSize*board.numRows()-1.0-borderSize)+1.0;
+      double mostRight = (tileSize*board.numColumns()-1.0-borderSize)+1.0;
       boardSize.setSize(mostRight+cornerTileSize, mostBottom+cornerTileSize);
       
       double tileScale = tileSize/60.0;
@@ -99,12 +100,12 @@ public class Display extends HVMPanel{
                g.drawImage(cornerCellImg4.getImage(), transform, null); 
             }else if(board.get(i, j) != null){ 
                //not empty cell
-               transform.setToTranslation(i*tileSize+borderSize, j*tileSize+borderSize);
+               transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
                g.drawImage(board.get(i, j).getImage(), transform, null); 
             }else{ 
                //empty cell
-               transform.setToTranslation(i*tileSize+borderSize, j*tileSize+borderSize);
+               transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
                g.drawImage(emptyCellImg.getImage(), transform, null); 
             }
@@ -113,21 +114,21 @@ public class Display extends HVMPanel{
       }
       
       //Draw borders
-      for(int i=1; i<board.numRows()-1; i++){
+      for(int i=1; i<board.numColumns()-1; i++){
          transform.setToTranslation(tileSize*i+borderSize, borderSpace);
          transform.scale(tileScale, borderScale);
          g.drawImage(borderCellImg1.getImage(), transform, null);
           
-         transform.setToTranslation(tileSize*i+borderSize, 1+borderSize+tileSize*board.numColumns()-1);
+         transform.setToTranslation(tileSize*i+borderSize, 1+borderSize+tileSize*board.numRows()-1);
          transform.scale(tileScale, borderScale);
          g.drawImage(borderCellImg1.getImage(), transform, null);
       }
-      for(int i=1; i<board.numColumns()-1; i++){
+      for(int i=1; i<board.numRows()-1; i++){
          transform.setToTranslation(borderSpace, tileSize*i+borderSize);
          transform.scale(borderScale, tileScale);
          g.drawImage(borderCellImg2.getImage(), transform, null);
           
-         transform.setToTranslation(tileSize*board.numRows()-1+borderSize, tileSize*i+borderSize);
+         transform.setToTranslation(tileSize*board.numColumns()-1+borderSize, tileSize*i+borderSize);
          transform.scale(borderScale, tileScale);
          g.drawImage(borderCellImg2.getImage(), transform, null);
       }
@@ -145,13 +146,13 @@ public class Display extends HVMPanel{
       if(screenWidth>screenHeight){
          drawSunTrack(g, (int)boardSize.getWidth(), 0);
          players.get(currentPlayer).drawAction(g, (int)boardSize.getWidth()+8, 175);
-         drawPlayerSpec(g, (int)boardSize.getWidth(), 325);
-         g.drawImage(combatImg.getImage(), (int)boardSize.getWidth(), 425, 200-10, 200-10, null); //draw combat board TODO make zoom to full screen, make a special class for it
+         players.get(currentPlayer).drawLife(g, (int)boardSize.getWidth()+8, 325);
+         players.get(currentPlayer).drawInfo(g, (int)boardSize.getWidth()+8, 375);
       }else{
          drawSunTrack(g, 0, (int)boardSize.getHeight());
          players.get(currentPlayer).drawAction(g, 175, (int)boardSize.getHeight()+28);
-         drawPlayerSpec(g, 325, (int)boardSize.getHeight()+20);
-         g.drawImage(combatImg.getImage(), 550, (int)boardSize.getHeight(), 200-10, 200-10, null);  //draw combat board TODO make zoom to full screen, make a special class for it
+         players.get(currentPlayer).drawLife(g, 325, (int)boardSize.getHeight()+20);
+         players.get(currentPlayer).drawInfo(g, 325, (int)boardSize.getHeight()+50);
       }
    }
    public static void drawSunTrack(Graphics2D g, int posX, int posY){
@@ -160,21 +161,21 @@ public class Display extends HVMPanel{
 	   for(int i=0; i<timeOfDay; i++)
          g.drawImage(sunImg.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);
    }
-   public static void drawPlayerSpec(Graphics2D g, int posX, int posY){
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
-	   for(int i=0; i<players.size(); i++)
-         g.drawString((i+1)+". "+players.get(i).getName() + " has "+ players.get(i).life() +" lives", posX, posY+i*25);
-   }
    
    public static void drawPauseMenu(Graphics2D g, int screenWidth, int screenHeight){
       g.setColor(new Color(125, 125, 125, 225));
       g.fillRect(0, 0, screenWidth, screenHeight);  
       
-      g.setColor(Color.BLACK);
+      g.setColor(Color.RED);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
       g.drawString("PAUSE", 50, 75);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
+      if(hover(100, 310, 155, 185))
+         g.setColor(Color.BLACK);
       g.drawString("(esc) RESUME", 100, 150);
+      g.setColor(Color.RED);
+      if(hover(100, 230, 205, 240))
+         g.setColor(Color.BLACK);
       g.drawString("(q) QUIT", 100, 200);
    }
 }
