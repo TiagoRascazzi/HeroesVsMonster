@@ -19,12 +19,12 @@ public class WeightedRandom<anyType>{
    }
    
    public anyType next(){     
-      double rand = random.nextDouble()*100;
+      double rand = random.nextDouble()*total;
       
       int lastPerc = 0;
       for(int i=0; i<weight.size(); i++){
          
-         double currentPerc = weight.get(i)/total*100;
+         double currentPerc = weight.get(i);
          
          if(lastPerc < rand && rand < currentPerc+lastPerc){
             return items.get(i);
@@ -47,13 +47,13 @@ public class WeightedRandom<anyType>{
       
       WeightedRandom<Integer> wr = new WeightedRandom<Integer>();
       
-      double w1 = 1;
-      double w2 = 4;
-      double w3 = 8;
+      double w1 = 1; // 1/4 -> 25%
+      double w2 = 3; // 3/4 -> 75%
+      //double w3 = 2;
       
       wr.add(w1, new Integer(1) );
       wr.add(w2, new Integer(2) );
-      wr.add(w3, new Integer(3) );
+      //wr.add(w3, new Integer(3) );
       
       System.out.println(wr);
       
@@ -61,21 +61,19 @@ public class WeightedRandom<anyType>{
       for(int i=0; i< 100; i++)
          str+=wr.next();
       
-      int count = 0;
-      for(int i=0; i<str.length(); i++)
+      int count1 = 0;
+      int count2 = 0;
+      int count3 = 0;
+      for(int i=0; i<str.length(); i++){
          if(str.charAt(i) == '1' )
-            count++;
-      System.out.println("1: "+count);
-      
-      count = 0;
-      for(int i=0; i<str.length(); i++)
-         if(str.charAt(i) == '2')
-            count++;
-      System.out.println("2: "+count);
-            count = 0;
-      for(int i=0; i<str.length(); i++)
-         if(str.charAt(i) == '3')
-            count++;
-      System.out.println("3: "+count); 
+            count1++;
+         if(str.charAt(i) == '2' )
+            count2++;
+         if(str.charAt(i) == '3' )
+            count3++;
+      }
+      System.out.println("1: "+count1);
+      System.out.println("2: "+count2);
+      System.out.println("3: "+count3); 
    }*/
 }
