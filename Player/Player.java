@@ -237,7 +237,6 @@ public abstract class Player{
    public int getPosY(){
       return posY;
    }
-   
    public Image getImage(){
       return image.getImage();
    }

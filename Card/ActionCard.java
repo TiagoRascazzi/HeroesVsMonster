@@ -1,9 +1,9 @@
-public abstract class Card{
+public abstract class ActionCard{
    
    private double probability;
    private int textureID;
    
-   public Card(double p, int tID){
+   public ActionCard(double p, int tID){
       probability = p;
       textureID =  tID;
    }
@@ -15,5 +15,7 @@ public abstract class Card{
    public double getProbability(){
       return probability;
    }
+   
+   public void doAction(){}
    
 }

@@ -18,15 +18,17 @@ public class Display extends HVMPanel{
    public static void loadImages(){
       startImg = new ImageIcon("Img/start.jpg");
       sunImg = new ImageIcon("Img/sun.png");      
-      tileTextures = new ImageIcon[8];
+      tileTextures = new ImageIcon[9];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
       tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
       tileTextures[3] = new ImageIcon("Img/Tile/EmptyCell.png");
-      tileTextures[4] = new ImageIcon("Img/Tile/GreenBorder.png");
-      tileTextures[5] = new ImageIcon("Img/Tile/TreasureChamber.png");
-      tileTextures[6] = new ImageIcon("Img/Tile/4xCorridors.png");
-      tileTextures[7] = new ImageIcon("Img/Tile/RotatingRoom.png");
+      tileTextures[4] = new ImageIcon("Img/Tile/CurrentPlayer.png");
+      
+      tileTextures[5] = new ImageIcon("Img/Tile/GreenBorder.png");
+      tileTextures[6] = new ImageIcon("Img/Tile/TreasureChamber.png");
+      tileTextures[7] = new ImageIcon("Img/Tile/4xCorridors.png");
+      tileTextures[8] = new ImageIcon("Img/Tile/RotatingRoom.png");
       
    }
    
@@ -96,7 +98,7 @@ public class Display extends HVMPanel{
                //green border
                transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
-               g.drawImage(tileTextures[4].getImage(), transform, null); 
+               g.drawImage(tileTextures[5].getImage(), transform, null); 
             }
          }
       }
@@ -129,6 +131,10 @@ public class Display extends HVMPanel{
          transform.scale(playerScale, playerScale);
          g.drawImage(players.get(i).getImage(), transform, null);
       }
+      //Draw current player bar
+      transform.setToTranslation((int)(playerSpace+tileSize*(players.get(currentPlayer).getPosX())+borderSize), (int)(tileSize-playerSpace+tileSize*(players.get(currentPlayer).getPosY())+borderSize));
+      transform.scale(playerScale, playerScale);
+      g.drawImage(tileTextures[4].getImage(), transform, null);
    }
    
    public static void drawSidebar(Graphics2D g, int screenWidth, int screenHeight){    
@@ -165,5 +171,21 @@ public class Display extends HVMPanel{
       g.drawString("(r) RESTART", 100, 200);
       chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
       g.drawString("(q) QUIT", 100, 250);
+      
+      /*
+      double min = Math.min(screenWidth, screenHeight);
+      System.out.println(250/min);
+      
+      g.setColor(Color.RED);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, (int)(0.074*min))); 
+      g.drawString("PAUSE", (int)(0.077*min), (int)(0.121*min));
+      g.setFont(new Font("TimesRoman", Font.PLAIN, (int)(0.049*min))); 
+      chgColorOnHover(g, Color.RED, Color.BLACK, (int)(0.154*min), (int)(0.477*min), (int)(0.238*min), (int)(0.285*min));
+      g.drawString("(esc) RESUME", (int)(0.154*min), (int)(0.231*min));
+      chgColorOnHover(g, Color.RED, Color.BLACK, (int)(0.154*min), (int)(0.477*min), (int)(0.315*min), (int)(0.362*min));
+      g.drawString("(r) RESTART", (int)(0.154*min), (int)(0.308*min));
+      chgColorOnHover(g, Color.RED, Color.BLACK, (int)(0.154*min), (int)(0.477*min), (int)(0.392*min), (int)(0.438*min));
+      g.drawString("(q) QUIT", (int)(0.154*min), (int)(0.385*min));
+      */
    }
 }

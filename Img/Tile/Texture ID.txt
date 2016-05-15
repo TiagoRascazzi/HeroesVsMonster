@@ -3,7 +3,8 @@ tID    Img name
 1  ->  Corner.png
 2  ->  Border.png
 3  ->  EmptyCell.png
-4  ->  GreenBorder.png
-5  ->  TreasureChamber.png
-6  ->  4xCorridors.png
-7  ->  RotatingRoom.png
+4  ->  CurrentPlayer.png
+5  ->  GreenBorder.png
+6  ->  TreasureChamber.png
+7  ->  4xCorridors.png
+8  ->  RotatingRoom.png

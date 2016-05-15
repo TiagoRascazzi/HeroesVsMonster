@@ -1,4 +1,4 @@
-public class RoomCard extends Card{
+public class RoomCard extends ActionCard{
    
    public RoomCard(double p){
       super(p, -1);
