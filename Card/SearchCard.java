@@ -1,7 +1,7 @@
-public class SearchCard{
+public class SearchCard extends Card{
    
-   public SearchCard(){
-      
+   public SearchCard(double p){
+      super(p, -1);
    }
    
 }

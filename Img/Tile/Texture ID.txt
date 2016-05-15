@@ -1,0 +1,9 @@
+tID    Img name
+0  ->  TestTileImg.png
+1  ->  Corner.png
+2  ->  Border.png
+3  ->  EmptyCell.png
+4  ->  GreenBorder.png
+5  ->  TreasureChamber.png
+6  ->  4xCorridors.png
+7  ->  RotatingRoom.png

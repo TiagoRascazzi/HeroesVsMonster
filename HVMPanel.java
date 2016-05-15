@@ -13,24 +13,29 @@ import java.util.Scanner;
 
 public class HVMPanel extends JPanel{
    
-   public static Point mouse = new Point(0, 0);
-   protected static MainMenu mainmenu = new MainMenu("Img/main.jpg");
    public enum GameState {START, MAIN, SELECT,  GAME, PAUSE}; 
-   private int DAY = 26; 
+   private final int DAY = 26; 
    
-   public static ArrayList<Player> players = new ArrayList<Player>();
-   public static int currentPlayer = 0;
-   public static GameState gameState = GameState.START;
+   public static Point mouse;
+   protected static MainMenu mainmenu;
+   public static ArrayList<Player> players;
+   public static int currentPlayer;
+   public static GameState gameState;
    public static SparseMatrix<Tile> board;
-   public static int timeOfDay = 26;
-   
-   
-   //All the images variable  
+   public static int timeOfDay;
+     
    public HVMPanel(){
+      mouse = new Point(0, 0);
+      mainmenu = new MainMenu("Img/main.jpg");
+      players = new ArrayList<Player>();
+      currentPlayer = 0;
+      gameState = GameState.START;
+      
       Display.loadImages();
    }
    
    public void resetGame(){
+      mainmenu = new MainMenu("Img/main.jpg");
       board = new SparseMatrix(13, 10);
       timeOfDay = DAY;
       
@@ -44,7 +49,16 @@ public class HVMPanel extends JPanel{
             players.get(i).setPos(board.numColumns()-1, board.numRows()-1);
          if(i==3)
             players.get(i).setPos(0, board.numRows()-1);
-      }   
+      }
+      //add corner tile
+      board.add(0, 0, new CornerTile(CornerTile.TOP_LEFT));
+      board.add(board.numRows()-1, board.numColumns()-1, new CornerTile(CornerTile.BOTTOM_RIGHT));
+      board.add(board.numRows()-1, 0, new CornerTile(CornerTile.BOTTOM_LEFT));
+      board.add(0, board.numColumns()-1, new CornerTile(CornerTile.TOP_RIGHT));
+      board.add(board.numRows()/2, board.numColumns()/2-1, new TreasureChamberTile(Tile.LEFT));
+      board.add(board.numRows()/2, board.numColumns()/2, new TreasureChamberTile(Tile.RIGHT));
+      board.add(3, 5, new TestTile(Tile.TOP));
+      
    }
    
    public void processKeyInput(KeyEvent e){
@@ -78,6 +92,8 @@ public class HVMPanel extends JPanel{
             System.exit(0);
          }else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
             gameState = GameState.GAME;
+         }else if(e.getKeyCode() == KeyEvent.VK_R){
+            gameState = GameState.MAIN;
          }
          repaint();
       }
@@ -110,7 +126,9 @@ public class HVMPanel extends JPanel{
          }else if(gameState == GameState.PAUSE){ 
             if(hover(100, 310, 155, 185))
                gameState = GameState.GAME;
-            if(hover(100, 230, 205, 240))
+            else if(hover(100, 230, 205, 235))
+               gameState = GameState.MAIN;
+            else if(hover(100, 230, 255, 285))
                System.exit(0);
          }
       }

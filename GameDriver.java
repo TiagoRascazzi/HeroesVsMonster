@@ -11,7 +11,7 @@ public class GameDriver{
    
    public static void main(String[] args){
       screen = new HVMPanel();
-      screen.setPreferredSize(new Dimension(900,650));
+      screen.setPreferredSize(new Dimension(800,650));
       JFrame frame = new JFrame("Heroes VS. Monsters");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(screen);

@@ -1,7 +1,19 @@
-public class Card{
+public abstract class Card{
    
-   public Card(){
-      
+   private double probability;
+   private int textureID;
+   
+   public Card(double p, int tID){
+      probability = p;
+      textureID =  tID;
+   }
+   
+   public int getTextureID(){
+      return textureID;
+   }
+   
+   public double getProbability(){
+      return probability;
    }
    
 }

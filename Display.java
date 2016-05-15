@@ -9,31 +9,24 @@ import java.awt.Point;
 
 public class Display extends HVMPanel{
    
-   private static ImageIcon startImg; 
-   private static ImageIcon greenBorderImg; 
-   private static ImageIcon emptyCellImg;  
-   private static ImageIcon cornerCellImg1;    
-   private static ImageIcon cornerCellImg2;    
-   private static ImageIcon cornerCellImg3;    
-   private static ImageIcon cornerCellImg4;   
-   private static ImageIcon borderCellImg1;   
-   private static ImageIcon borderCellImg2;  
-   private static ImageIcon sunImg;  
-   private static ImageIcon combatImg;
    private static Dimension boardSize = new Dimension(0, 0);
+   private static ImageIcon[] tileTextures;
+   private static ImageIcon[] cardTextures;
+   private static ImageIcon startImg;  
+   private static ImageIcon sunImg;  
    
    public static void loadImages(){
       startImg = new ImageIcon("Img/start.jpg");
-      greenBorderImg = new ImageIcon("Img/Tile/GreenBorder.png");
-      emptyCellImg = new ImageIcon("Img/Tile/EmptyCell.png");
-      cornerCellImg1 = new ImageIcon("Img/Tile/Corner_1.png");
-      cornerCellImg2 = new ImageIcon("Img/Tile/Corner_2.png");
-      cornerCellImg3 = new ImageIcon("Img/Tile/Corner_3.png");
-      cornerCellImg4 = new ImageIcon("Img/Tile/Corner_4.png");
-      borderCellImg1 = new ImageIcon("Img/Tile/Border_1.png");
-      borderCellImg2 = new ImageIcon("Img/Tile/Border_2.png");
-      sunImg = new ImageIcon("Img/sun.png");
-      combatImg = new ImageIcon("Img/combat.png");
+      sunImg = new ImageIcon("Img/sun.png");      
+      tileTextures = new ImageIcon[8];
+      tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
+      tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
+      tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
+      tileTextures[3] = new ImageIcon("Img/Tile/EmptyCell.png");
+      tileTextures[4] = new ImageIcon("Img/Tile/GreenBorder.png");
+      tileTextures[5] = new ImageIcon("Img/Tile/TreasureChamber.png");
+      tileTextures[6] = new ImageIcon("Img/Tile/4xCorridors.png");
+      tileTextures[7] = new ImageIcon("Img/Tile/RotatingRoom.png");
       
    }
    
@@ -75,47 +68,35 @@ public class Display extends HVMPanel{
       double playerScale = playerSize/45.0;
       double borderScale = borderHeigth/20.0;
       double cornerTileScale = cornerTileSize/90.0;
-      AffineTransform transform = new AffineTransform(1, 0.0, 0.0, 1, 0, 0);
+      AffineTransform transform = new AffineTransform(1, 0, 0, 1, 0, 0);
 
       //Draw Tiles
       for(int i=0; i<board.numRows(); i++){
-         for(int j=0; j<board.numColumns(); j++){
-            if(i==0 && j==0){ 
-               //draw left top corner
-               transform.setToTranslation(0, 0);
-               transform.scale(cornerTileScale, cornerTileScale);
-               g.drawImage(cornerCellImg1.getImage(), transform, null); 
-            }else if(i==0 && j==board.numColumns()-1){ 
-               //draw rigth top corner
-               transform.setToTranslation(mostRight, 0);
-               transform.scale(cornerTileScale, cornerTileScale);
-               g.drawImage(cornerCellImg2.getImage(), transform, null); 
-            }else if(i==board.numRows()-1 && j==board.numColumns()-1){ 
-               //draw rigth bottom corner
-               transform.setToTranslation(mostRight, mostBottom);
-               transform.scale(cornerTileScale, cornerTileScale);
-               g.drawImage(cornerCellImg3.getImage(), transform, null); 
-            }else if(i==board.numRows()-1 && j==0){ 
-               //draw left bottom corner
-               transform.setToTranslation(0, mostBottom);
-               transform.scale(cornerTileScale, cornerTileScale);
-               g.drawImage(cornerCellImg4.getImage(), transform, null); 
-            }else if(board.get(i, j) != null){ 
-               //not empty cell
-               transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
+         for(int j=0; j<board.numColumns(); j++){            
+            if(board.get(i, j) != null){ 
+               //Draw Tiles
+               if(board.get(i, j) instanceof CornerTile){ //if corner
+                  double cornerPosX = j*tileSize+(j==board.numColumns()-1? borderSize:0);
+                  double cornerPosY = i*tileSize+(i==board.numRows()-1? borderSize:0);
+                  transform.setToRotation(board.get(i, j).getRotation(), cornerPosX+(cornerTileSize/2), cornerPosY+(cornerTileSize/2));
+                  transform.translate(cornerPosX, cornerPosY);
+               }else{
+                  transform.setToRotation(board.get(i, j).getRotation(), j*tileSize+borderSize+(tileSize/2), i*tileSize+borderSize+(tileSize/2));
+                  transform.translate(j*tileSize+borderSize, i*tileSize+borderSize);
+               }
                transform.scale(tileScale, tileScale);
-               g.drawImage(board.get(i, j).getImage(), transform, null); 
+               g.drawImage(tileTextures[board.get(i, j).getTextureID()].getImage(), transform, null); 
             }else{ 
                //empty cell
                transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
-               g.drawImage(emptyCellImg.getImage(), transform, null); 
+               g.drawImage(tileTextures[3].getImage(), transform, null); 
             }
-            if(players.get(currentPlayer).isValidMove(new Point(j, i))){
+            if(players.get(currentPlayer).isMoving() && players.get(currentPlayer).isValidMove(new Point(j, i))){
                //green border
                transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
-               g.drawImage(greenBorderImg.getImage(), transform, null); 
+               g.drawImage(tileTextures[4].getImage(), transform, null); 
             }
          }
       }
@@ -124,20 +105,22 @@ public class Display extends HVMPanel{
       for(int i=1; i<board.numColumns()-1; i++){
          transform.setToTranslation(tileSize*i+borderSize, borderSpace);
          transform.scale(tileScale, borderScale);
-         g.drawImage(borderCellImg1.getImage(), transform, null);
+         g.drawImage(tileTextures[2].getImage(), transform, null);
           
          transform.setToTranslation(tileSize*i+borderSize, 1+borderSize+tileSize*board.numRows()-1);
          transform.scale(tileScale, borderScale);
-         g.drawImage(borderCellImg1.getImage(), transform, null);
+         g.drawImage(tileTextures[2].getImage(), transform, null);
       }
       for(int i=1; i<board.numRows()-1; i++){
-         transform.setToTranslation(borderSpace, tileSize*i+borderSize);
-         transform.scale(borderScale, tileScale);
-         g.drawImage(borderCellImg2.getImage(), transform, null);
+         transform.setToRotation(Math.toRadians(90), borderSpace+(borderHeigth/2), tileSize*i+borderSize+(borderHeigth/2));
+         transform.translate(borderSpace, tileSize*i+borderSize);
+         transform.scale(tileScale, borderScale);
+         g.drawImage(tileTextures[2].getImage(), transform, null);
           
-         transform.setToTranslation(tileSize*board.numColumns()-1+borderSize, tileSize*i+borderSize);
-         transform.scale(borderScale, tileScale);
-         g.drawImage(borderCellImg2.getImage(), transform, null);
+         transform.setToRotation(Math.toRadians(90), tileSize*board.numColumns()-1+borderSize+(borderHeigth/2), tileSize*i+borderSize+(borderHeigth/2));
+         transform.translate(tileSize*board.numColumns()-1+borderSize, tileSize*i+borderSize);
+         transform.scale(tileScale, borderScale);
+         g.drawImage(tileTextures[2].getImage(), transform, null);
       }
       
       //Draw player
@@ -149,13 +132,12 @@ public class Display extends HVMPanel{
    }
    
    public static void drawSidebar(Graphics2D g, int screenWidth, int screenHeight){    
-      g.setColor(Color.BLACK);      
-      if(screenWidth>screenHeight){
+      if(screenWidth>screenHeight){ //draw on side
          drawSunTrack(g, (int)boardSize.getWidth(), 0);
          players.get(currentPlayer).drawAction(g, (int)boardSize.getWidth()+8, 175);
          players.get(currentPlayer).drawLife(g, (int)boardSize.getWidth()+8, 325);
          players.get(currentPlayer).drawInfo(g, (int)boardSize.getWidth()+8, 375);
-      }else{
+      }else{   //draw on bottom
          drawSunTrack(g, 0, (int)boardSize.getHeight());
          players.get(currentPlayer).drawAction(g, 175, (int)boardSize.getHeight()+28);
          players.get(currentPlayer).drawLife(g, 325, (int)boardSize.getHeight()+20);
@@ -179,7 +161,9 @@ public class Display extends HVMPanel{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
       chgColorOnHover(g, Color.RED, Color.BLACK, 100, 310, 155, 185);
       g.drawString("(esc) RESUME", 100, 150);
-      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 205, 240);
-      g.drawString("(q) QUIT", 100, 200);
+      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 205, 235);
+      g.drawString("(r) RESTART", 100, 200);
+      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
+      g.drawString("(q) QUIT", 100, 250);
    }
 }

@@ -10,7 +10,7 @@ import java.awt.Color;
 
 public abstract class Player{
    
-   private enum PlayeState {SELECT, MOVE, SEARCH};
+   private enum PlayeState {SELECT, MOVE, SEARCH, COMBAT};
    private PlayeState state = PlayeState.SELECT;
    
    private ImageIcon image;
@@ -143,6 +143,10 @@ public abstract class Player{
          posX = p.x;
          posY = p.y;
       }
+      //add random tile
+      
+      //get random card
+      //do card action
    }
    
    public boolean isValidMove(Point p){
@@ -163,7 +167,8 @@ public abstract class Player{
       
       actionPosX = posX;
       actionPosY = posY;
-           
+      
+      g.setColor(Color.BLACK);   
       g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
       g.drawString(name, posX, posY);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
@@ -208,6 +213,10 @@ public abstract class Player{
       
       //TODO
       
+   }
+   
+   public boolean isMoving(){
+      return state == PlayeState.MOVE;
    }
    
    public int life(){
