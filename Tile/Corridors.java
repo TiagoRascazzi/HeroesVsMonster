@@ -1,7 +1,7 @@
 public class Corridors extends Tile{
       
    public Corridors(int orien){
-      super(orien, 7);
+      super(orien, 7, 1);
    }
    
 }

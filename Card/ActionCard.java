@@ -2,6 +2,7 @@ public abstract class ActionCard{
    
    private double probability;
    private int textureID;
+   private static WeightedRandom wr;
    
    public ActionCard(double p, int tID){
       probability = p;
@@ -17,5 +18,6 @@ public abstract class ActionCard{
    }
    
    public void doAction(){}
+   public abstract ActionCard getRandom();
    
 }

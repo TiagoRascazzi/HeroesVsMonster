@@ -154,45 +154,61 @@ public abstract class Player{
       /*if(isValidMove(x, y)){
       
       }*/
-      if(isValidMove(p)){
-      
-         Tile tile =  Tile.getRandomTile();
-         if(p.x == posX+1)
-            tile.setOrientation(Tile.LEFT);
-         else if(p.x == posX-1)
-            tile.setOrientation(Tile.RIGHT);
-         else if(p.y == posY+1)
-            tile.setOrientation(Tile.TOP);
-         else if(p.y == posY-1)
-            tile.setOrientation(Tile.BOTTOM);
+      if(isValidMoveEmpty(p)){
+         if(HVMPanel.board.get(p.y, p.x) == null){
          
-         
-         posX = p.x;
-         posY = p.y;
-      
-         if(HVMPanel.board.get(posY, posX) == null)
-            HVMPanel.board.add(posY, posX, tile);
-         //else
-         //   HVMPanel.board.set(posY, posX, tile); //removed so that we dont change the value of placed tiles. 
-      }
-      
-      
+            Tile tile =  Tile.getRandomTile();
+            
+            if(p.x == posX+1)
+               tile.setOrientation(Tile.LEFT);
+            else if(p.x == posX-1)
+               tile.setOrientation(Tile.RIGHT);
+            else if(p.y == posY+1)
+               tile.setOrientation(Tile.TOP);
+            else if(p.y == posY-1)
+               tile.setOrientation(Tile.BOTTOM);
+            
+            HVMPanel.board.add(p.y, p.x, tile);
+         }
+         if(isValidMove(p)){
+            posX = p.x;
+            posY = p.y;
+            
+            
+            
+         }
+      }      
       //add random tile
       
       //get random card
       //do card action
    }
    
-   public boolean isValidMove(Point p){
+   
+   public boolean isValidMoveEmpty(Point p){
       if(p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows()){// test if inside board
          if( ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX)){ //test if it is next to current one
-            //if(!( p.x == HVMPanel.board.numColumns()/2 && p.y == HVMPanel.board.numRows()/2) &&
-            //   !( p.x == HVMPanel.board.numColumns()/2-1 && p.y == HVMPanel.board.numRows()/2)){ // test if it is in the treasure area, so that we dont replace the middle with new tiles.
-               return true;  
-            //}         
+            return true;
          }
       }
       return false;
+   }
+   
+   public boolean isValidMove(Point p){
+      if(isValidMoveEmpty(p)){
+         if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
+            return true;          
+         }
+      }
+      return false;
+   }
+   
+   public int getNumOfPlayersAt(Point p){
+      int count = 0;
+      for(int i = 0; i < HVMPanel.players.size(); i++)
+         if(HVMPanel.players.get(i).getPosX() == p.x && HVMPanel.players.get(i).getPosY() == p.y)
+            count++;
+      return count;
    }
    
    public void search(){

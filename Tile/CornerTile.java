@@ -9,7 +9,7 @@ public class CornerTile extends Tile{
    public static final int BOTTOM_RIGHT = 3;
       
    public CornerTile(int orien){
-      super(orien, 1);
+      super(orien, 1, 1);
    }
    
 }

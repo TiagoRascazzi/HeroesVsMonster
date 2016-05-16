@@ -4,4 +4,8 @@ public class SearchCard extends ActionCard{
       super(p, -1);
    }
    
+   public SearchCard getRandom(){
+      return null;
+   }
+   
 }

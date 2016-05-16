@@ -11,12 +11,16 @@ public abstract class Tile{
    
    private int orientation;
    private int textureID;
+   private int maxNumOfPlayers;
    
-   public Tile(int orien, int tID){
+   public Tile(int orien, int tID, int mnop){
       orientation = orien;
       textureID = tID;
+      maxNumOfPlayers = mnop;
    }
-   
+   public int getMaxNumOfPlayers(){
+      return maxNumOfPlayers;
+   }
    public int getTextureID(){
       return textureID;
    } 

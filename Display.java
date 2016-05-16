@@ -94,7 +94,7 @@ public class Display extends HVMPanel{
                transform.scale(tileScale, tileScale);
                g.drawImage(tileTextures[3].getImage(), transform, null); 
             }
-            if(players.get(currentPlayer).isMoving() && players.get(currentPlayer).isValidMove(new Point(j, i))){
+            if(players.get(currentPlayer).isMoving() && players.get(currentPlayer).isValidMoveEmpty(new Point(j, i))){
                //green border
                transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
