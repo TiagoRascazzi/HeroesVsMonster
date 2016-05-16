@@ -11,7 +11,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!607;g
+!627;g
 %\011Utils%ssparseMatrix%sCell.java
 %\011GameDriver.java
 %\011HVMPanel.java
@@ -20,7 +20,7 @@ s#l0
 %\011MainMenu.java
 %\011Utils%ssparseMatrix%sMatrixable.java
 %\011Player%sVolrikTheBrave.java
-%\011Card%sWeightedRandom.java
+%\011Tile%sCorridors.java
 %\011Card%sRoomCard.java
 %\011Tile%sTreasureChamberTile.java
 %\011BGMusic.java
@@ -32,9 +32,10 @@ s#l0
 %\011Player%sUlvGrimhand.java
 %\011Card%sActionCard.java
 %\011Player%sElAdoranSureshot.java
+%\011WeightedRandom.java
 %\011Tile%sTile.java
 %\011Player%sSirRohan.java
-!607;f
+!627;f
 %\011Utils%ssparseMatrix%sCell.java
 %\011GameDriver.java
 %\011HVMPanel.java
@@ -43,7 +44,7 @@ s#l0
 %\011MainMenu.java
 %\011Utils%ssparseMatrix%sMatrixable.java
 %\011Player%sVolrikTheBrave.java
-%\011Card%sWeightedRandom.java
+%\011Tile%sCorridors.java
 %\011Card%sRoomCard.java
 %\011Tile%sTreasureChamberTile.java
 %\011BGMusic.java
@@ -55,5 +56,6 @@ s#l0
 %\011Player%sUlvGrimhand.java
 %\011Card%sActionCard.java
 %\011Player%sElAdoranSureshot.java
+%\011WeightedRandom.java
 %\011Tile%sTile.java
 %\011Player%sSirRohan.java

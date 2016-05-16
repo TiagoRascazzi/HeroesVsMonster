@@ -57,7 +57,7 @@ public class HVMPanel extends JPanel{
       board.add(0, board.numColumns()-1, new CornerTile(CornerTile.TOP_RIGHT));
       board.add(board.numRows()/2, board.numColumns()/2-1, new TreasureChamberTile(Tile.LEFT));
       board.add(board.numRows()/2, board.numColumns()/2, new TreasureChamberTile(Tile.RIGHT));
-      board.add(3, 5, new TestTile(Tile.TOP));
+      board.add(3, 5, new TestTile(Tile.BOTTOM));
       
    }
    

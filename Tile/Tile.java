@@ -7,6 +7,7 @@ public abstract class Tile{
    public static final int BOTTOM = 1;
    public static final int LEFT = 2;
    public static final int RIGHT = 3;
+   private static WeightedRandom<Tile> wr; 
    
    private int orientation;
    private int textureID;
@@ -19,6 +20,10 @@ public abstract class Tile{
    public int getTextureID(){
       return textureID;
    } 
+   
+   public void setOrientation(int orien){
+      orientation = orien;
+   } 
   
   public double getRotation(){
      if(orientation == TOP)
@@ -30,6 +35,12 @@ public abstract class Tile{
      if(orientation == RIGHT)
         return Math.toRadians(180);
      return -1;
+  }
+  public static Tile getRandomTile(){
+     wr = new WeightedRandom<Tile>();
+     wr.add(1, new Corridors(LEFT));
+     wr.add(1, new TestTile(LEFT));
+     return wr.next();
   }
   
 }

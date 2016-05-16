@@ -58,7 +58,7 @@ public class WeightedRandom<anyType>{
       System.out.println(wr);
       
       String str = "";
-      for(int i=0; i< 100; i++)
+      for(int i=0; i< 100000; i++)
          str+=wr.next();
       
       int count1 = 0;
@@ -72,8 +72,8 @@ public class WeightedRandom<anyType>{
          if(str.charAt(i) == '3' )
             count3++;
       }
-      System.out.println("1: "+count1);
-      System.out.println("2: "+count2);
-      System.out.println("3: "+count3); 
+      System.out.println("1: "+count1/1000);
+      System.out.println("2: "+count2/1000);
+      System.out.println("3: "+count3/1000); 
    }*/
 }

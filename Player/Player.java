@@ -51,19 +51,23 @@ public abstract class Player{
       if(state == PlayeState.SELECT){
          if(e.getKeyCode() == KeyEvent.VK_1){ //move();
             state = PlayeState.MOVE;
-         }else if(e.getKeyCode() == KeyEvent.VK_2){
+         }
+         else if(e.getKeyCode() == KeyEvent.VK_2){
             search();
             state = PlayeState.SEARCH;
-         }else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
+         }
+         else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
             return true;
          }
-      }else if(state == PlayeState.MOVE){
+      }
+      else if(state == PlayeState.MOVE){
          Point p = getKeyMove(e);
          if(p == null)
             state = PlayeState.SELECT;
          else
             move(p);
-      }else if(state == PlayeState.SEARCH){
+      }
+      else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
       }
       return false;
@@ -73,21 +77,26 @@ public abstract class Player{
       if(state == PlayeState.SELECT){
          if(hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
             state = PlayeState.MOVE;
-         }else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
+         }
+         else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
             search();
             state = PlayeState.SEARCH;
-         }else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
+         }
+         else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
             return true;
-         }else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
+         }
+         else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          }
-      }else if(state == PlayeState.MOVE){
+      }
+      else if(state == PlayeState.MOVE){
          Point p = getMouseMove(e);
          if(p == null)
             state = PlayeState.SELECT;
          else
             move(p);
-      }else if(state == PlayeState.SEARCH){
+      }
+      else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
       }
       return false;
@@ -98,13 +107,16 @@ public abstract class Player{
       if(e.getKeyCode() == KeyEvent.VK_LEFT){
          p = new Point();
          p.setLocation(posX-1, posY);
-      }else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
          p = new Point();
          p.setLocation(posX+1, posY);
-      }else if(e.getKeyCode() == KeyEvent.VK_UP){
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_UP){
          p = new Point();
          p.setLocation(posX, posY-1);
-      }else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+      }
+      else if(e.getKeyCode() == KeyEvent.VK_DOWN){
          p = new Point();
          p.setLocation(posX, posY+1);
       }
@@ -115,13 +127,16 @@ public abstract class Player{
       if(hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
          p = new Point();
          p.setLocation(posX-1, posY);
-      }else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
+      }
+      else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
          p = new Point();
          p.setLocation(posX+1, posY);
-      }else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){
+      }
+      else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){
          p = new Point();
          p.setLocation(posX, posY-1);
-      }else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
+      }
+      else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
          p = new Point();
          p.setLocation(posX, posY+1);
       }
@@ -140,9 +155,28 @@ public abstract class Player{
       
       }*/
       if(isValidMove(p)){
+      
+         Tile tile =  Tile.getRandomTile();
+         if(p.x == posX+1)
+            tile.setOrientation(Tile.LEFT);
+         else if(p.x == posX-1)
+            tile.setOrientation(Tile.RIGHT);
+         else if(p.y == posY+1)
+            tile.setOrientation(Tile.TOP);
+         else if(p.y == posY-1)
+            tile.setOrientation(Tile.BOTTOM);
+         
+         
          posX = p.x;
          posY = p.y;
+      
+         if(HVMPanel.board.get(posY, posX) == null)
+            HVMPanel.board.add(posY, posX, tile);
+         //else
+         //   HVMPanel.board.set(posY, posX, tile); //removed so that we dont change the value of placed tiles. 
       }
+      
+      
       //add random tile
       
       //get random card
@@ -152,7 +186,10 @@ public abstract class Player{
    public boolean isValidMove(Point p){
       if(p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows()){// test if inside board
          if( ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX)){ //test if it is next to current one
-            return true;            
+            //if(!( p.x == HVMPanel.board.numColumns()/2 && p.y == HVMPanel.board.numRows()/2) &&
+            //   !( p.x == HVMPanel.board.numColumns()/2-1 && p.y == HVMPanel.board.numRows()/2)){ // test if it is in the treasure area, so that we dont replace the middle with new tiles.
+               return true;  
+            //}         
          }
       }
       return false;
