@@ -7,18 +7,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 import java.awt.Color;
+import java.util.ArrayList;
 
 public abstract class Player{
    
-   private enum PlayeState {SELECT, MOVE, SEARCH, COMBAT};
+   private enum PlayeState {SELECT, MOVE, SEARCH, COMBAT, CARD};
    private PlayeState state = PlayeState.SELECT;
    
    private ImageIcon image;
    private ImageIcon lifeIcon;
+   private ImageIcon goldIcon;
    private String name;
    private int posX;
    private int posY;
    private int life;
+   private int gold;// Comment 15 I hava also added a gold variable it is going to store to gold that the player collects  GOTO Player.java at Comment #16
+   private ArrayList<ActionCard> playerCards;
+   private ActionCard playerCurrentCard;
    
    //Charracteristic
    private int strength;
@@ -33,8 +38,12 @@ public abstract class Player{
    //playerNum is between 1-4
    public Player(String url, String n, int x, int y, int maxLife, int strength, int agility, int armor, int luck){
       lifeIcon = new ImageIcon("Img/hearth.png");
+      goldIcon = new ImageIcon("Img/gold.png");
       image = new ImageIcon(url); 
+      playerCards =  new ArrayList<ActionCard>();
+      playerCurrentCard = null;
       name = n;
+      gold = 0;
       
       posX = x;
       posY = y;
@@ -47,28 +56,35 @@ public abstract class Player{
    }
    
    public boolean processKeyInput(KeyEvent e){            
-      System.out.println(name+" did action "+e.getKeyChar());
       if(state == PlayeState.SELECT){
          if(e.getKeyCode() == KeyEvent.VK_1){ //move();
             state = PlayeState.MOVE;
-         }
-         else if(e.getKeyCode() == KeyEvent.VK_2){
+         }else if(e.getKeyCode() == KeyEvent.VK_2){
             search();
             state = PlayeState.SEARCH;
-         }
-         else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
+         }else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
             return true;
          }
-      }
-      else if(state == PlayeState.MOVE){
+      }else if(state == PlayeState.MOVE){
          Point p = getKeyMove(e);
          if(p == null)
             state = PlayeState.SELECT;
          else
             move(p);
-      }
-      else if(state == PlayeState.SEARCH){
+      }else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
+      }else if(state == PlayeState.CARD){
+         /*
+         Comment #3
+           Here it is going to send the key that was pressed to the card
+           and if the card returns true it mean that the card has finished to do whatever it has to do
+           GOTO ActionCard.java at Comment #4
+         */
+         if(playerCurrentCard.processKeyInput(e)){
+            state = PlayeState.SELECT;
+            playerCurrentCard = null;
+            return true;
+         }
       }
       return false;
    }
@@ -77,27 +93,29 @@ public abstract class Player{
       if(state == PlayeState.SELECT){
          if(hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
             state = PlayeState.MOVE;
-         }
-         else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
+         }else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
             search();
             state = PlayeState.SEARCH;
-         }
-         else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
+         }else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
             return true;
-         }
-         else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
+         }else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          }
-      }
-      else if(state == PlayeState.MOVE){
+      }else if(state == PlayeState.MOVE){
          Point p = getMouseMove(e);
          if(p == null)
             state = PlayeState.SELECT;
          else
             move(p);
-      }
-      else if(state == PlayeState.SEARCH){
+      }else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
+      }else if(state == PlayeState.CARD){
+         /*
+          Comment #7  
+            here it is giong to do the same thing then at Comment #3 but it is going to take the mouse input (Not implemented yet)
+            GOTO ActionCard.java at Comment #8
+        */
+         playerCurrentCard.processMouseInput(screenSize, e);
       }
       return false;
    }
@@ -144,16 +162,6 @@ public abstract class Player{
    }
    
    public void move(Point p){
-      //if valid move and not other players are in it
-         //if room had no tile then get new tile
-      
-      //get input from processUserInput using an emun state TODO
-      //check if input is a valid move
-         //if valid move
-         //if not valid wait for new input
-      /*if(isValidMove(x, y)){
-      
-      }*/
       if(isValidMoveEmpty(p)){
          if(HVMPanel.board.get(p.y, p.x) == null){
          
@@ -174,14 +182,17 @@ public abstract class Player{
             posX = p.x;
             posY = p.y;
             
-            
-            
+            /*START COMMENT
+              I have't done much but it is doing a bunch
+              so do be scared
+              
+              ok so here is where we left off last time
+              i only added those two line 
+            */
+            playerCurrentCard = RoomCard.getRandom();  //This is going to get a random card and put it in the player current card GOTO RoomCard.java at Comment #2
+            state = PlayeState.CARD;  //This is going to set the state to CARD GOTO Player.java at Comment #3
          }
-      }      
-      //add random tile
-      
-      //get random card
-      //do card action
+      }
    }
    
    
@@ -235,8 +246,7 @@ public abstract class Player{
          g.drawString("(3) SKIP TURN", posX+8, posY+75);
          chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+115, posY+140);
          g.drawString("(esc) PAUSE", posX+8, posY+100);
-      }
-      else if(state == PlayeState.MOVE){
+      }else if(state == PlayeState.MOVE){
          chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(\u2190) LEFT", posX+8, posY+25);
          chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+65, posY+90);
@@ -247,26 +257,35 @@ public abstract class Player{
          g.drawString("(\u2193) DOWN", posX+8, posY+100);
          chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+140, posY+165);
          g.drawString("any other key to return", posX+8, posY+125);
-      }
-      else if(state == PlayeState.SEARCH){
+      }else if(state == PlayeState.SEARCH){
          g.drawString("SEARCHING", posX+8, posY+25);
          chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+65, posY+90);
          g.drawString("any key to return", posX+8, posY+50);
+      }else if(state == PlayeState.CARD){
+        /*
+          Comment #10
+            here if the state is CARD it is going to ask the current card to draw what action it can do
+          GOTO ActionCard at Comment #11
+        */
+         playerCurrentCard.drawAction(g, posX, posY);
       }
    } 
    
-   public void drawLife(Graphics2D g, int posX, int posY){
-      
+   public void drawLifeGold(Graphics2D g, int posX, int posY){
+      /*
+        Comment #16
+          to draw the gold value simply change the name of this method from drawLife to drawLifeGold
+          because it used to draw only the life but now it also draw to gold valu
+      */
+      g.drawImage(goldIcon.getImage(), posX, posY, 20, 20, null);  //draw the gold icon
+      g.setColor(Color.BLACK); //set font color to black
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 20));// set font 
+      g.drawString(""+gold, posX+20+2, posY+20-2);// draw the gold value which is supposed to stay to zero now because nothing change it
       for(int i=0; i<life; i++)
-         g.drawImage(lifeIcon.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);
-      
+         g.drawImage(lifeIcon.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);// this is going to draw asmany hearth as the player life (8 on each row)
+         
+      //DONE this was the last comment
    } 
-   
-   public void drawInfo(Graphics2D g, int posX, int posY){
-      
-      //TODO
-      
-   }
    
    public boolean isMoving(){
       return state == PlayeState.MOVE;
@@ -304,5 +323,8 @@ public abstract class Player{
          g.setColor(c2);
    }
    
+   public ActionCard getCurrentCard(){
+      return playerCurrentCard;
+   }
    
 }

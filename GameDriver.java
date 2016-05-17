@@ -5,14 +5,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
 
 public class GameDriver{
    public static HVMPanel screen;
    
    public static void main(String[] args){
+      ImageIcon icon = new ImageIcon("Img/icon.png");
       screen = new HVMPanel();
       screen.setPreferredSize(new Dimension(800,650));
       JFrame frame = new JFrame("Heroes VS. Monsters");
+      frame.setIconImage(icon.getImage());
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(screen);
       frame.pack();

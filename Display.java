@@ -17,7 +17,25 @@ public class Display extends HVMPanel{
    
    public static void loadImages(){
       startImg = new ImageIcon("Img/start.jpg");
-      sunImg = new ImageIcon("Img/sun.png");      
+      sunImg = new ImageIcon("Img/sun.png"); 
+      
+      cardTextures = new ImageIcon[15];
+      cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
+      cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
+      cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
+      cardTextures[3] = new ImageIcon("Img/Cards/RoomCard/Bracelet.png"); 
+      cardTextures[4] = new ImageIcon("Img/Cards/RoomCard/CrossfireTrap.png");  
+      cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
+      cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
+      cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
+      cardTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
+      cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Monster.png"); 
+      cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
+      cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
+      cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
+      cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
+      cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+        
       tileTextures = new ImageIcon[9];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
@@ -30,23 +48,32 @@ public class Display extends HVMPanel{
       tileTextures[7] = new ImageIcon("Img/Tile/4xCorridors.png");
       tileTextures[8] = new ImageIcon("Img/Tile/RotatingRoom.png");
       
+
+      
    }
    
    public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){ 
+   /*
+      Comment #14
+        if you remember this is where it draw all the game
+   */
+      g.setColor(new Color(169,69,46));
+      g.fillRect(0, 0, screenWidth, screenHeight); 
       if(gameState == GameState.START){
          g.drawImage(startImg.getImage(),0, 0, screenWidth, screenHeight, null);
       }else if(gameState == GameState.MAIN){
          mainmenu.draw(g, screenWidth, screenHeight);
-      }else if(gameState == GameState.GAME){
-         g.setColor(new Color(169,69,46));
-         g.fillRect(0, 0, screenWidth, screenHeight); 
+      }else if(gameState == GameState.GAME){   //when it is the actual game not the menu or pause or start (GameState.GAME)
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
+         drawCard(g, screenWidth, screenHeight);// then it call the method you just saw to draw the card if needed to be drawed 
       }else if(gameState == GameState.PAUSE){
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
          drawPauseMenu(g, screenWidth, screenHeight);
       }
+      
+      //GOTO Player.java at Comment #15
    }
    
    public static void drawBoard(Graphics2D g, int screenWidth, int screenHeight){        
@@ -141,13 +168,11 @@ public class Display extends HVMPanel{
       if(screenWidth>screenHeight){ //draw on side
          drawSunTrack(g, (int)boardSize.getWidth(), 0);
          players.get(currentPlayer).drawAction(g, (int)boardSize.getWidth()+8, 175);
-         players.get(currentPlayer).drawLife(g, (int)boardSize.getWidth()+8, 325);
-         players.get(currentPlayer).drawInfo(g, (int)boardSize.getWidth()+8, 375);
+         players.get(currentPlayer).drawLifeGold(g, (int)boardSize.getWidth()+8, 325);
       }else{   //draw on bottom
          drawSunTrack(g, 0, (int)boardSize.getHeight());
          players.get(currentPlayer).drawAction(g, 175, (int)boardSize.getHeight()+28);
-         players.get(currentPlayer).drawLife(g, 325, (int)boardSize.getHeight()+20);
-         players.get(currentPlayer).drawInfo(g, 325, (int)boardSize.getHeight()+50);
+         players.get(currentPlayer).drawLifeGold(g, 325, (int)boardSize.getHeight()+20);
       }
    }
    public static void drawSunTrack(Graphics2D g, int posX, int posY){
@@ -187,5 +212,29 @@ public class Display extends HVMPanel{
       chgColorOnHover(g, Color.RED, Color.BLACK, (int)(0.154*min), (int)(0.477*min), (int)(0.392*min), (int)(0.438*min));
       g.drawString("(q) QUIT", (int)(0.154*min), (int)(0.385*min));
       */
+   }
+   
+   /*
+   
+     Comment #13
+     
+     this method is simply going to draw the window with the card onside and the Enter on the bottom
+     
+   */
+   
+   public static void drawCard(Graphics2D g, int screenWidth, int screenHeight){
+      ActionCard c = players.get(currentPlayer).getCurrentCard();  //This gets the card to bbe drawed
+      if(c != null && c.isShowing()){  // this check if the card is supposed to be showed (card state is equal to SHOW)
+         g.setColor(new Color(65, 105, 225, 225)); //set the blue background color
+         g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); //draw the blue backgroung
+         
+         g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-125, (int)(screenHeight/6), 250, 350, null);//draw the card image
+         
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); //set the font for the word enter
+         chgColorOnHover(g, Color.RED, Color.BLACK, 400, 545, 475, 565); //set the color of the word enter
+         g.drawString("ENTER", (int)(screenWidth/2), (int)(5*screenHeight/6)-10); //draw the word enter
+         
+         //GOTO Display.java at Comment #14
+      }
    }
 }

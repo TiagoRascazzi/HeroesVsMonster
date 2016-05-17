@@ -56,9 +56,7 @@ public class HVMPanel extends JPanel{
       board.add(board.numRows()-1, 0, new CornerTile(CornerTile.BOTTOM_LEFT));
       board.add(0, board.numColumns()-1, new CornerTile(CornerTile.TOP_RIGHT));
       board.add(board.numRows()/2, board.numColumns()/2-1, new TreasureChamberTile(Tile.LEFT));
-      board.add(board.numRows()/2, board.numColumns()/2, new TreasureChamberTile(Tile.RIGHT));
-      board.add(3, 5, new TestTile(Tile.BOTTOM));
-      
+      board.add(board.numRows()/2, board.numColumns()/2, new TreasureChamberTile(Tile.RIGHT));      
    }
    
    public void processKeyInput(KeyEvent e){
@@ -117,11 +115,7 @@ public class HVMPanel extends JPanel{
             }
          }else if(gameState == GameState.GAME){
             if(players.get(currentPlayer).processMouseInput(new Point((int)this.getSize().getWidth(), (int)this.getSize().getHeight()), e)){
-               currentPlayer++;
-               if(currentPlayer>=players.size()){
-                  currentPlayer = 0;
-                  timeOfDay--;
-               }
+               nextPlayer();
             }
          }else if(gameState == GameState.PAUSE){ 
             if(hover(100, 310, 155, 185))
@@ -133,6 +127,14 @@ public class HVMPanel extends JPanel{
          }
       }
       repaint();
+   }
+   
+   public void nextPlayer(){
+      currentPlayer++;
+      if(currentPlayer>=players.size()){
+         currentPlayer = 0;
+         timeOfDay--;
+      }
    }
    
    public void paintComponent(Graphics g)

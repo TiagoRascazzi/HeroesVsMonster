@@ -10,6 +10,7 @@ public class WeightedRandom<anyType>{
    
    public WeightedRandom(){
       random = new Random();
+      total = 0;
    }
    
    public void add(double w, anyType x){
@@ -33,6 +34,12 @@ public class WeightedRandom<anyType>{
          
       }
       return null;
+   }
+   
+   public void clear(){
+      items.clear();
+      weight.clear();
+      total = 0;
    }
       
    public String toString(){

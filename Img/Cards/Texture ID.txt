@@ -1,0 +1,16 @@
+tID    Img name
+0  ->  EmptyRoom.png
+1  ->  CaveIn.png
+2  ->  Jewellery.png
+3  ->  Bracelet.png
+4  ->  CrossfireTrap.png
+5  ->  Crypt.png
+6  ->  CurseOfTheWizard.png
+7  ->  DeadAdventurer.png
+8  ->  GiantSpider.png
+9  ->  Monster.png
+10 ->  Potion.png
+11 ->  SneakAttack.png
+12 ->  TorchGoesOut.png
+13 ->  TrapDoor.png
+14 ->  VampireBats.png 
