@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 import java.awt.Color;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.awt.Dimension;
 
@@ -14,7 +16,9 @@ import java.util.Scanner;
 public class HVMPanel extends JPanel{
    
    public enum GameState {START, MAIN, SELECT,  GAME, PAUSE}; 
+   private Timer musicTimer = new Timer();
    private final int DAY = 26; 
+   private static BGMusicPlayer bgMusicPlayer;
    
    public static Point mouse;
    protected static MainMenu mainmenu;
@@ -25,6 +29,8 @@ public class HVMPanel extends JPanel{
    public static int timeOfDay;
      
    public HVMPanel(){
+      bgMusicPlayer = new BGMusicPlayer();
+      bgMusicPlayer.playMusic(0);
       mouse = new Point(0, 0);
       mainmenu = new MainMenu("Img/main.jpg");
       players = new ArrayList<Player>();
@@ -32,6 +38,7 @@ public class HVMPanel extends JPanel{
       gameState = GameState.START;
       
       Display.loadImages();
+      
    }
    
    public void resetGame(){
@@ -61,17 +68,15 @@ public class HVMPanel extends JPanel{
    
    public void processKeyInput(KeyEvent e){
       if(gameState == GameState.START){
-         BGMusic.setBGMusic("Music/game/track1.mp3");
          gameState = GameState.MAIN;
-         repaint();
       }else if(gameState == GameState.MAIN){
          players = mainmenu.processKeyInput(e);
          if(players != null){
+            bgMusicPlayer.playRandomMusic();
             System.out.println(players);
             gameState = GameState.GAME;
             resetGame();
          }
-         repaint();
       }else if(gameState == GameState.GAME){
          if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
             gameState = GameState.PAUSE;
@@ -84,7 +89,6 @@ public class HVMPanel extends JPanel{
                }
             }
          } 
-         repaint();
       }else if(gameState == GameState.PAUSE){ 
          if(e.getKeyCode() == KeyEvent.VK_Q){
             System.exit(0);
@@ -93,9 +97,8 @@ public class HVMPanel extends JPanel{
          }else if(e.getKeyCode() == KeyEvent.VK_R){
             gameState = GameState.MAIN;
          }
-         repaint();
       }
-      
+      repaint();
    }
    
    public void processMouseInput(MouseEvent e){
@@ -104,11 +107,11 @@ public class HVMPanel extends JPanel{
          
       if(e.getButton() == MouseEvent.BUTTON1){   
          if(gameState == GameState.START){
-            BGMusic.setBGMusic("Music/game/track1.mp3");
             gameState = GameState.MAIN;
          }else if(gameState == GameState.MAIN){
             players = mainmenu.processMouseInput(e);
             if(players != null){
+               bgMusicPlayer.playRandomMusic();
                System.out.println(players);
                gameState = GameState.GAME;
                resetGame();
@@ -152,5 +155,4 @@ public class HVMPanel extends JPanel{
       if(hover(x1, x2, y1, y2))
          g.setColor(c2);
    }
-   
 }

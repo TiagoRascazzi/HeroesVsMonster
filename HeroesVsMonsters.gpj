@@ -11,7 +11,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!1196;g
+!1209;g
 %\011HVMPanel.java
 %\011Tile%sCornerTile.java
 %\011Card%sRoomCards%sCrypt.java
@@ -22,7 +22,6 @@ s#l0
 %\011Card%sRoomCards%sBracelet.java
 %\011Card%sRoomCards%sPotion.java
 %\011Tile%sTreasureChamberTile.java
-%\011BGMusic.java
 %\011Tile%sTestTile.java
 %\011Card%sRoomCards%sCaveIn.java
 %\011Card%sRoomCards%sJewellery.java
@@ -48,8 +47,9 @@ s#l0
 %\011Card%sRoomCards%sCrossfireTrap.java
 %\011Display.java
 %\011Card%sRoomCards%sTorchGoesOut.java
+%\011Music%sBGMusicPlayer.java
 %\011Player%sSirRohan.java
-!1196;f
+!1209;f
 %\011HVMPanel.java
 %\011Tile%sCornerTile.java
 %\011Card%sRoomCards%sCrypt.java
@@ -60,7 +60,6 @@ s#l0
 %\011Card%sRoomCards%sBracelet.java
 %\011Card%sRoomCards%sPotion.java
 %\011Tile%sTreasureChamberTile.java
-%\011BGMusic.java
 %\011Tile%sTestTile.java
 %\011Card%sRoomCards%sCaveIn.java
 %\011Card%sRoomCards%sJewellery.java
@@ -86,4 +85,5 @@ s#l0
 %\011Card%sRoomCards%sCrossfireTrap.java
 %\011Display.java
 %\011Card%sRoomCards%sTorchGoesOut.java
+%\011Music%sBGMusicPlayer.java
 %\011Player%sSirRohan.java

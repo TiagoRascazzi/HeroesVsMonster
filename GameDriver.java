@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
+import java.awt.Point;
+import java.awt.Toolkit;
 
 public class GameDriver{
    public static HVMPanel screen;
@@ -15,6 +17,7 @@ public class GameDriver{
       screen = new HVMPanel();
       screen.setPreferredSize(new Dimension(800,650));
       JFrame frame = new JFrame("Heroes VS. Monsters");
+      screen.setCursor(Toolkit.getDefaultToolkit().createCustomCursor( new ImageIcon("Img/cursor/normal.png").getImage(), new Point(0,0),"custom cursor"));
       frame.setIconImage(icon.getImage());
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(screen);
