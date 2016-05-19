@@ -86,7 +86,7 @@ public abstract class Tile{
   public static Tile getRandomTile(){ 
      WeightedRandom<Tile> wr = new WeightedRandom<Tile>();
      wr.add(1, new Corridors(LEFT));
-     wr.add(1, new TestTile(LEFT));
+     //wr.add(1, new TestTile(LEFT));
      wr.add(1, new OneWayCorridor(LEFT));
      return wr.next();
   }

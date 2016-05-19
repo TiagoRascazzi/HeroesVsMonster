@@ -178,10 +178,9 @@ public abstract class Player{
                   tile.setOrientation(Tile.BOTTOM);
                
                HVMPanel.board.add(p.y, p.x, tile);
-            }
-            
+            }           
          }
-         if(isValidMove(p)){
+         if(HVMPanel.board.get(p.y, p.x) != null && isValidMove(p)){
             posX = p.x;
             posY = p.y;
             
