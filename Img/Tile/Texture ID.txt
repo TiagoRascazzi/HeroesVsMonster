@@ -8,3 +8,4 @@ tID    Img name
 6  ->  TreasureChamber.png
 7  ->  4xCorridors.png
 8  ->  RotatingRoom.png
+9  ->  1WayCorridor.png

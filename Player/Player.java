@@ -70,7 +70,7 @@ public abstract class Player{
          if(p == null)
             state = PlayeState.SELECT;
          else
-            move(p);
+            return move(p);
       }else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
       }else if(state == PlayeState.CARD){
@@ -106,7 +106,7 @@ public abstract class Player{
          if(p == null)
             state = PlayeState.SELECT;
          else
-            move(p);
+            return move(p);
       }else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
       }else if(state == PlayeState.CARD){
@@ -161,38 +161,43 @@ public abstract class Player{
       return p;
    }
    
-   public void move(Point p){
+   public boolean move(Point p){
       if(isValidMoveEmpty(p)){
          if(HVMPanel.board.get(p.y, p.x) == null){
          
             Tile tile =  Tile.getRandomTile();
             
-            if(p.x == posX+1)
-               tile.setOrientation(Tile.LEFT);
-            else if(p.x == posX-1)
-               tile.setOrientation(Tile.RIGHT);
-            else if(p.y == posY+1)
-               tile.setOrientation(Tile.TOP);
-            else if(p.y == posY-1)
-               tile.setOrientation(Tile.BOTTOM);
+            if(isValidFutureMove(p, tile)){
+               if(p.x == posX+1)
+                  tile.setOrientation(Tile.LEFT);
+               else if(p.x == posX-1)
+                  tile.setOrientation(Tile.RIGHT);
+               else if(p.y == posY+1)
+                  tile.setOrientation(Tile.TOP);
+               else if(p.y == posY-1)
+                  tile.setOrientation(Tile.BOTTOM);
+               
+               HVMPanel.board.add(p.y, p.x, tile);
+            }
             
-            HVMPanel.board.add(p.y, p.x, tile);
          }
          if(isValidMove(p)){
             posX = p.x;
             posY = p.y;
             
-            /*START COMMENT
-              I have't done much but it is doing a bunch
-              so do be scared
-              
-              ok so here is where we left off last time
-              i only added those two line 
-            */
-            playerCurrentCard = RoomCard.getRandom();  //This is going to get a random card and put it in the player current card GOTO RoomCard.java at Comment #2
-            state = PlayeState.CARD;  //This is going to set the state to CARD GOTO Player.java at Comment #3
+            if(HVMPanel.board.get(posY, posX).givesRoomCard()){
+               if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
+                  playerCurrentCard = RoomCard.getRandom();  //This is going to get a random card and put it in the player current card GOTO RoomCard.java at Comment #2
+                  state = PlayeState.CARD;  //This is going to set the state to CARD GOTO Player.java at Comment #3
+               }
+            }else{
+               if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
+                  return true;
+               }
+            }
          }
       }
+      return false;
    }
    
    
@@ -207,8 +212,31 @@ public abstract class Player{
    
    public boolean isValidMove(Point p){
       if(isValidMoveEmpty(p)){
-         if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
-            return true;          
+         if(HVMPanel.board.get(p.y, p.x) == null || getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
+            if(p.x == posX+1 && HVMPanel.board.get(p.y, p.x).isRightSideOpen())
+               return true;
+            if(p.x == posX-1 && HVMPanel.board.get(p.y, p.x).isLeftSideOpen())
+               return true;
+            if(p.y == posY+1 && HVMPanel.board.get(p.y, p.x).isBottomSideOpen())
+               return true;
+            if(p.y == posY-1 && HVMPanel.board.get(p.y, p.x).isTopSideOpen())
+               return true;        
+         }
+      }
+      return false;
+   }  
+   
+   public boolean isValidFutureMove(Point p, Tile tile){
+      if(isValidMoveEmpty(p)){
+         if(HVMPanel.board.get(p.y, p.x) == null || getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
+            if(p.x == posX+1 && tile.isRightSideOpen())
+               return true;
+            if(p.x == posX-1 && tile.isLeftSideOpen())
+               return true;
+            if(p.y == posY+1 && tile.isBottomSideOpen())
+               return true;
+            if(p.y == posY-1 && tile.isTopSideOpen())
+               return true;        
          }
       }
       return false;

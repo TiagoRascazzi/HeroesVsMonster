@@ -30,7 +30,7 @@ public class HVMPanel extends JPanel{
      
    public HVMPanel(){
       bgMusicPlayer = new BGMusicPlayer();
-      bgMusicPlayer.playMusic(0);
+      //bgMusicPlayer.playMusic(0);
       mouse = new Point(0, 0);
       mainmenu = new MainMenu("Img/main.jpg");
       players = new ArrayList<Player>();
@@ -72,7 +72,7 @@ public class HVMPanel extends JPanel{
       }else if(gameState == GameState.MAIN){
          players = mainmenu.processKeyInput(e);
          if(players != null){
-            bgMusicPlayer.playRandomMusic();
+            //bgMusicPlayer.playRandomMusic();
             System.out.println(players);
             gameState = GameState.GAME;
             resetGame();
@@ -111,7 +111,7 @@ public class HVMPanel extends JPanel{
          }else if(gameState == GameState.MAIN){
             players = mainmenu.processMouseInput(e);
             if(players != null){
-               bgMusicPlayer.playRandomMusic();
+               //bgMusicPlayer.playRandomMusic();
                System.out.println(players);
                gameState = GameState.GAME;
                resetGame();

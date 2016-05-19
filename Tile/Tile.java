@@ -8,14 +8,28 @@ public abstract class Tile{
    public static final int LEFT = 2;
    public static final int RIGHT = 3; 
    
+   private boolean leftSide;
+   private boolean rightSide;
+   private boolean topSide;
+   private boolean bottomSide;
+   
    private int orientation;
    private int textureID;
    private int maxNumOfPlayers;
    
-   public Tile(int orien, int tID, int mnop){
+   private boolean keepPlaying;
+   private boolean giveRoomCard;
+   
+   public Tile(int orien, int tID, int mnop, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       orientation = orien;
       textureID = tID;
       maxNumOfPlayers = mnop;
+      keepPlaying = kp;
+      giveRoomCard = grc;
+      leftSide = ls;
+      rightSide = rs;
+      topSide = ts;
+      bottomSide = bs;
    }
    public int getMaxNumOfPlayers(){
       return maxNumOfPlayers;
@@ -43,7 +57,27 @@ public abstract class Tile{
      WeightedRandom<Tile> wr = new WeightedRandom<Tile>();
      wr.add(1, new Corridors(LEFT));
      wr.add(1, new TestTile(LEFT));
+     wr.add(1, new OneWayCorridor(LEFT));
      return wr.next();
+  }
+  public boolean keepsPlaying(){
+      return keepPlaying;
+  }
+  public boolean givesRoomCard(){
+      return giveRoomCard;
+  }
+  
+  public boolean isLeftSideOpen(){
+     return leftSide;
+  }
+  public boolean isRightSideOpen(){
+     return rightSide;
+  }
+  public boolean isTopSideOpen(){
+     return topSide;
+  }
+  public boolean isBottomSideOpen(){
+     return bottomSide;
   }
   
 }

@@ -36,17 +36,18 @@ public class Display extends HVMPanel{
       cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         
-      tileTextures = new ImageIcon[9];
+      tileTextures = new ImageIcon[10];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
       tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
       tileTextures[3] = new ImageIcon("Img/Tile/EmptyCell.png");
-      tileTextures[4] = new ImageIcon("Img/Tile/CurrentPlayer.png");
-      
+      tileTextures[4] = new ImageIcon("Img/Tile/CurrentPlayer.png"); 
       tileTextures[5] = new ImageIcon("Img/Tile/GreenBorder.png");
       tileTextures[6] = new ImageIcon("Img/Tile/TreasureChamber.png");
       tileTextures[7] = new ImageIcon("Img/Tile/4xCorridors.png");
       tileTextures[8] = new ImageIcon("Img/Tile/RotatingRoom.png");
+      
+      tileTextures[9] = new ImageIcon("Img/Tile/1WayCorridor.png");
       
 
       

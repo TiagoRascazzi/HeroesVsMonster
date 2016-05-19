@@ -7,9 +7,25 @@ public class CornerTile extends Tile{
    public static final int TOP_RIGHT = 0;
    public static final int BOTTOM_LEFT = 1;
    public static final int BOTTOM_RIGHT = 3;
+ 
+
+    
+   public CornerTile(int orientation){
+            
+      super(orientation, 1, 1, true, false, false, true, false, true);
       
-   public CornerTile(int orien){
-      super(orien, 1, 1);
+        
+   // private int textureID = 1;
+   // private int maxNumOfPlayers = 1;
+   // private boolean keepPlaying = true;
+   // private boolean giveRoomCard = false; 
+   // private boolean leftSide = false;
+   // private boolean rightSide = true;
+   // private boolean topSide = false;
+   // private boolean bottomSide = true;
    }
+
+   
+
    
 }
