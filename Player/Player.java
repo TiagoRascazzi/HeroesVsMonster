@@ -191,6 +191,7 @@ public abstract class Player{
                }
             }else{
                if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
+                  state = PlayeState.SELECT;
                   return true;
                }
             }
