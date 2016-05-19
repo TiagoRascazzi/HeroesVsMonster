@@ -12,7 +12,7 @@ public class CornerTile extends Tile{
     
    public CornerTile(int orientation){
             
-      super(orientation, 1, 1, true, false, false, true, false, true);
+      super(orientation, 1, 1, true, false, true, false, true, false);
       
         
    // private int textureID = 1;

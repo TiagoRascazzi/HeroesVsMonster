@@ -39,6 +39,36 @@ public abstract class Tile{
    } 
    
    public void setOrientation(int orien){
+     if(orientation == TOP){
+        boolean tmp1 = leftSide;
+        boolean tmp2 = rightSide;
+        
+        leftSide = bottomSide;
+        rightSide = topSide;
+        topSide = tmp1;
+        bottomSide = tmp2;
+        
+     }else if(orientation == BOTTOM){
+        boolean tmp1 = leftSide;
+        boolean tmp2 = rightSide;
+        
+        leftSide = topSide;
+        rightSide = bottomSide;
+        topSide = tmp2;
+        bottomSide = tmp1;
+        
+     }else if(orientation == LEFT){
+       //DO NOTHING
+     }else if(orientation == RIGHT){
+        boolean tmp1 = leftSide;
+        boolean tmp2 = topSide;
+        
+        leftSide = rightSide;
+        rightSide = tmp1;
+        topSide = bottomSide;
+        bottomSide = tmp2;
+        
+     }
       orientation = orien;
    } 
   

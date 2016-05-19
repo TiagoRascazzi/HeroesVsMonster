@@ -213,14 +213,7 @@ public abstract class Player{
    public boolean isValidMove(Point p){
       if(isValidMoveEmpty(p)){
          if(HVMPanel.board.get(p.y, p.x) == null || getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
-            if(p.x == posX+1 && HVMPanel.board.get(p.y, p.x).isRightSideOpen())
-               return true;
-            if(p.x == posX-1 && HVMPanel.board.get(p.y, p.x).isLeftSideOpen())
-               return true;
-            if(p.y == posY+1 && HVMPanel.board.get(p.y, p.x).isBottomSideOpen())
-               return true;
-            if(p.y == posY-1 && HVMPanel.board.get(p.y, p.x).isTopSideOpen())
-               return true;        
+            return true;        
          }
       }
       return false;
