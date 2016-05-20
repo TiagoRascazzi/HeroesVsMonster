@@ -20,8 +20,8 @@ public abstract class Tile{
    private boolean keepPlaying;
    private boolean giveRoomCard;
    
-   public Tile(int orien, int tID, int mnop, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
-      orientation = orien;
+   public Tile(int tID, int mnop, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
+      orientation = LEFT;
 
       textureID = tID;
       maxNumOfPlayers = mnop;
@@ -32,6 +32,18 @@ public abstract class Tile{
       topSide = ts;
       bottomSide = bs;
    }
+   public Tile(int orien, int tID, int mnop, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
+      textureID = tID;
+      maxNumOfPlayers = mnop;
+      keepPlaying = kp;
+      giveRoomCard = grc;
+      leftSide = ls;
+      rightSide = rs;
+      topSide = ts;
+      bottomSide = bs;
+      setOrientation(orien);
+   }
+   
    public int getMaxNumOfPlayers(){
       return maxNumOfPlayers;
    }
@@ -53,8 +65,7 @@ public abstract class Tile{
          topSide = tmp1;
          bottomSide = tmp2;          
                 
-      }
-      else if(orien == BOTTOM){
+      }else if(orien == BOTTOM){
          boolean tmp1 = leftSide;
          boolean tmp2 = rightSide;
         
@@ -63,11 +74,9 @@ public abstract class Tile{
          topSide = tmp2;
          bottomSide = tmp1;
         
-      }
-      else if(orien == LEFT){
+      }else if(orien == LEFT){
        //DO NOTHING
-      }
-      else if(orientation == RIGHT){
+      }else if(orientation == RIGHT){
          boolean tmp1 = leftSide;
          boolean tmp2 = topSide;
         
@@ -91,20 +100,21 @@ public abstract class Tile{
          return Math.toRadians(180);
       return -1;
    }
+   
    public static Tile getRandomTile(){ 
       WeightedRandom<Tile> wr = new WeightedRandom<Tile>();
-      wr.add(1, new Corridors(LEFT));
-      wr.add(1, new TestTile(LEFT));
-      wr.add(1, new OneWayCorridor(LEFT));
+      wr.add(1, new Corridors());
+      wr.add(1, new TestTile());
+      wr.add(1, new OneWayCorridor());
       return wr.next();
    }
+   
    public boolean keepsPlaying(){
       return keepPlaying;
    }
    public boolean givesRoomCard(){
       return giveRoomCard;
    }
-  
    public boolean isLeftSideOpen(){
       return leftSide;
    }

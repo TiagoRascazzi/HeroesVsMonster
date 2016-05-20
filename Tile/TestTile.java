@@ -5,9 +5,9 @@ public class TestTile extends Tile{
   
 
       
-   public TestTile(int orientation){
+   public TestTile(){
             
-      super(orientation, 0, 1, false, true, true, true, true, true);
+      super(0, 1, false, true, true, true, true, true);
       
    //private int textureID = 0;
    //private int maxNumOfPlayers = 1;

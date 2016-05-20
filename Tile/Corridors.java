@@ -2,9 +2,9 @@ public class Corridors extends Tile{
    
 
    
-   public Corridors(int orientation){   
+   public Corridors(){   
       //orientation, textureID, maxNumOfPlayers, keepPlaying, giveRoomCard, leftSide, rightSide, topSide, bottomSide   
-      super(orientation, 7, 1, true, false, true, true, true, true);
+      super(7, 1, true, false, true, true, true, true);
       
    // private int textureID = 7;
    // private int maxNumOfPlayers = 1;
