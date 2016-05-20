@@ -18,10 +18,7 @@ public abstract class Player{
    private ImageIcon lifeIcon;
    private ImageIcon goldIcon;
    private String name;
-   private int posX;
-   private int posY;
-   private int life;
-   private int gold;// Comment 15 I hava also added a gold variable it is going to store to gold that the player collects  GOTO Player.java at Comment #16
+   
    private ArrayList<ActionCard> playerCards;
    private ActionCard playerCurrentCard;
    
@@ -31,11 +28,14 @@ public abstract class Player{
    private int armor;
    private int luck;
    
+   private int life;
+   private int gold;
+   private int posX;
+   private int posY;
    
    private int actionPosX;
    private int actionPosY;
    
-   //playerNum is between 1-4
    public Player(String url, String n, int x, int y, int maxLife, int strength, int agility, int armor, int luck){
       lifeIcon = new ImageIcon("Img/hearth.png");
       goldIcon = new ImageIcon("Img/gold.png");
@@ -57,7 +57,7 @@ public abstract class Player{
    
    public boolean processKeyInput(KeyEvent e){            
       if(state == PlayeState.SELECT){
-         if(e.getKeyCode() == KeyEvent.VK_1){ //move();
+         if(e.getKeyCode() == KeyEvent.VK_1){
             state = PlayeState.MOVE;
          }else if(e.getKeyCode() == KeyEvent.VK_2){
             search();
@@ -74,12 +74,6 @@ public abstract class Player{
       }else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
       }else if(state == PlayeState.CARD){
-         /*
-         Comment #3
-           Here it is going to send the key that was pressed to the card
-           and if the card returns true it mean that the card has finished to do whatever it has to do
-           GOTO ActionCard.java at Comment #4
-         */
          if(playerCurrentCard.processKeyInput(e)){
             state = PlayeState.SELECT;
             playerCurrentCard = null;
@@ -110,11 +104,6 @@ public abstract class Player{
       }else if(state == PlayeState.SEARCH){
          state = PlayeState.SELECT;
       }else if(state == PlayeState.CARD){
-         /*
-          Comment #7  
-            here it is giong to do the same thing then at Comment #3 but it is going to take the mouse input (Not implemented yet)
-            GOTO ActionCard.java at Comment #8
-        */
          playerCurrentCard.processMouseInput(screenSize, e);
       }
       return false;
@@ -162,12 +151,12 @@ public abstract class Player{
    }
    
    public boolean move(Point p){
-      if(isValidMoveEmpty(p)){
-         if(HVMPanel.board.get(p.y, p.x) == null){
-         
-            Tile tile =  Tile.getRandomTile();
-            
-            if(isValidFutureMove(p, tile)){
+   
+      if(isValidMoveEmpty(p)){ //test if it is in the board
+         Tile tile = null;
+         if(HVMPanel.board.get(p.y, p.x) == null)
+            tile = Tile.getRandomTile();
+            if(tile != null){
                if(p.x == posX+1)
                   tile.setOrientation(Tile.LEFT);
                else if(p.x == posX-1)
@@ -176,22 +165,56 @@ public abstract class Player{
                   tile.setOrientation(Tile.TOP);
                else if(p.y == posY-1)
                   tile.setOrientation(Tile.BOTTOM);
-               
+               System.out.println("Rotation: "+Math.toDegrees(tile.getRotation()));
+               System.out.println("Left: "+tile.isLeftSideOpen());
+               System.out.println("Right: "+tile.isRightSideOpen());
+               System.out.println("Top: "+tile.isTopSideOpen());
+               System.out.println("Bottom: "+tile.isBottomSideOpen());
+            }
+         else
+            tile = HVMPanel.board.get(p.y, p.x);
+         
+         if(isValidFutureMove(p, tile)){
+            if(HVMPanel.board.get(p.y, p.x) == null)  
                HVMPanel.board.add(p.y, p.x, tile);
-            }           
-         }
-         if(HVMPanel.board.get(p.y, p.x) != null && isValidMove(p)){
             posX = p.x;
             posY = p.y;
-            
-            if(HVMPanel.board.get(posY, posX).givesRoomCard()){
-               if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
-                  playerCurrentCard = RoomCard.getRandom();  //This is going to get a random card and put it in the player current card GOTO RoomCard.java at Comment #2
-                  state = PlayeState.CARD;  //This is going to set the state to CARD GOTO Player.java at Comment #3
+         }
+      }
+      return false;
+   }
+     
+   /*public boolean isValidMove(Point p){
+      if(p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows()){// test if inside board
+         if( ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX)){ //test if it is next to current one
+            Tile tile = HVMPanel.board.get(posY, posX);
+            if(p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen()){//test if can get out of tile
+               if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
+                  if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
+                     Tile nextTile = HVMPanel.board.get(posY, posX);
+                     if(p.x == posX+1 && nextTile.isRightSideOpen() || p.x == posX-1 && nextTile.isLeftSideOpen() || p.y == posY+1 && nextTile.isBottomSideOpen() || p.y == posY-1 && nextTile.isTopSideOpen())//test if can enter in tile
+                        return true;
+                  }
+               }else{ // if has no tile
+                  return true;
                }
-            }else{
-               if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
-                  state = PlayeState.SELECT;
+            }
+         }
+      }
+      return false;
+   }*/
+   
+   public boolean isValidMove(Point p){
+      if(isInsideBoard(p)){// test if inside board
+         if( isNextToCurrentTile(p) ){ //test if it is next to current one
+            if( canExit(p) ){//test if can get out of tile
+               if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
+                  if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
+                     if(canEnter(HVMPanel.board.get(p.y, p.x), p)){//test if can enter in tile
+                        return true;
+                     }
+                  }
+               }else{ // if has no tile
                   return true;
                }
             }
@@ -200,29 +223,42 @@ public abstract class Player{
       return false;
    }
    
+   public boolean isInsideBoard(Point p){
+      return p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows();
+   }
+   public boolean isNextToCurrentTile(Point p){
+      return ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX);
+   }
+   public boolean canExit(Point p){
+      Tile tile = HVMPanel.board.get(posY, posX);
+      return p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen();
+   }
+   public boolean canEnter(Tile tile, Point p){
+      return p.x == posX+1 && tile.isRightSideOpen() || p.x == posX-1 && tile.isLeftSideOpen() || p.y == posY+1 && tile.isBottomSideOpen() || p.y == posY-1 && tile.isTopSideOpen();
+   }
+   
    
    public boolean isValidMoveEmpty(Point p){
       if(p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows()){// test if inside board
          if( ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX)){ //test if it is next to current one
-            return true;
+            if(p.x == posX+1 && HVMPanel.board.get(posY, posX).isLeftSideOpen())//test if can get out of tile
+               return true;
+            if(p.x == posX-1 && HVMPanel.board.get(posY, posX).isRightSideOpen())
+               return true;
+            if(p.y == posY+1 && HVMPanel.board.get(posY, posX).isTopSideOpen())
+               return true;
+            if(p.y == posY-1 && HVMPanel.board.get(posY, posX).isBottomSideOpen())
+               return true;   
+            
          }
       }
       return false;
-   }
-   
-   public boolean isValidMove(Point p){
-      if(isValidMoveEmpty(p)){
-         if(HVMPanel.board.get(p.y, p.x) == null || getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
-            return true;        
-         }
-      }
-      return false;
-   }  
+   } 
    
    public boolean isValidFutureMove(Point p, Tile tile){
       if(isValidMoveEmpty(p)){
          if(HVMPanel.board.get(p.y, p.x) == null || getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
-            if(p.x == posX+1 && tile.isRightSideOpen())
+            if(p.x == posX+1 && tile.isRightSideOpen())//test if can enter in tile
                return true;
             if(p.x == posX-1 && tile.isLeftSideOpen())
                return true;
@@ -283,29 +319,17 @@ public abstract class Player{
          chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+65, posY+90);
          g.drawString("any key to return", posX+8, posY+50);
       }else if(state == PlayeState.CARD){
-        /*
-          Comment #10
-            here if the state is CARD it is going to ask the current card to draw what action it can do
-          GOTO ActionCard at Comment #11
-        */
          playerCurrentCard.drawAction(g, posX, posY);
       }
    } 
    
    public void drawLifeGold(Graphics2D g, int posX, int posY){
-      /*
-        Comment #16
-          to draw the gold value simply change the name of this method from drawLife to drawLifeGold
-          because it used to draw only the life but now it also draw to gold valu
-      */
-      g.drawImage(goldIcon.getImage(), posX, posY, 20, 20, null);  //draw the gold icon
-      g.setColor(Color.BLACK); //set font color to black
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 20));// set font 
-      g.drawString(""+gold, posX+20+2, posY+20-2);// draw the gold value which is supposed to stay to zero now because nothing change it
+      g.drawImage(goldIcon.getImage(), posX, posY, 20, 20, null);
+      g.setColor(Color.BLACK);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+      g.drawString(""+gold, posX+20+2, posY+20-2);
       for(int i=0; i<life; i++)
-         g.drawImage(lifeIcon.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);// this is going to draw asmany hearth as the player life (8 on each row)
-         
-      //DONE this was the last comment
+         g.drawImage(lifeIcon.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);
    } 
    
    public boolean isMoving(){

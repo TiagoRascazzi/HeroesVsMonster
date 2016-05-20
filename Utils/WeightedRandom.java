@@ -33,6 +33,7 @@ public class WeightedRandom<anyType>{
          lastPerc+=currentPerc;
          
       }
+      next();
       return null;
    }
    

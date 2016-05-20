@@ -54,27 +54,21 @@ public class Display extends HVMPanel{
    }
    
    public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){ 
-   /*
-      Comment #14
-        if you remember this is where it draw all the game
-   */
       g.setColor(new Color(169,69,46));
       g.fillRect(0, 0, screenWidth, screenHeight); 
       if(gameState == GameState.START){
          g.drawImage(startImg.getImage(),0, 0, screenWidth, screenHeight, null);
       }else if(gameState == GameState.MAIN){
          mainmenu.draw(g, screenWidth, screenHeight);
-      }else if(gameState == GameState.GAME){   //when it is the actual game not the menu or pause or start (GameState.GAME)
+      }else if(gameState == GameState.GAME){
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
-         drawCard(g, screenWidth, screenHeight);// then it call the method you just saw to draw the card if needed to be drawed 
+         drawCard(g, screenWidth, screenHeight);
       }else if(gameState == GameState.PAUSE){
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
          drawPauseMenu(g, screenWidth, screenHeight);
       }
-      
-      //GOTO Player.java at Comment #15
    }
    
    public static void drawBoard(Graphics2D g, int screenWidth, int screenHeight){        
@@ -122,7 +116,7 @@ public class Display extends HVMPanel{
                transform.scale(tileScale, tileScale);
                g.drawImage(tileTextures[3].getImage(), transform, null); 
             }
-            if(players.get(currentPlayer).isMoving() && players.get(currentPlayer).isValidMoveEmpty(new Point(j, i))){
+            if(players.get(currentPlayer).isMoving() && players.get(currentPlayer).isValidMove(new Point(j, i))){
                //green border
                transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
                transform.scale(tileScale, tileScale);
@@ -215,27 +209,19 @@ public class Display extends HVMPanel{
       */
    }
    
-   /*
-   
-     Comment #13
-     
-     this method is simply going to draw the window with the card onside and the Enter on the bottom
-     
-   */
    
    public static void drawCard(Graphics2D g, int screenWidth, int screenHeight){
-      ActionCard c = players.get(currentPlayer).getCurrentCard();  //This gets the card to bbe drawed
-      if(c != null && c.isShowing()){  // this check if the card is supposed to be showed (card state is equal to SHOW)
-         g.setColor(new Color(65, 105, 225, 225)); //set the blue background color
-         g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); //draw the blue backgroung
+      ActionCard c = players.get(currentPlayer).getCurrentCard();
+      if(c != null && c.isShowing()){
+         g.setColor(new Color(65, 105, 225, 225));
+         g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
          
-         g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-125, (int)(screenHeight/6), 250, 350, null);//draw the card image
+         g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-125, (int)(screenHeight/6), 250, 350, null);
          
-         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); //set the font for the word enter
-         chgColorOnHover(g, Color.RED, Color.BLACK, 400, 545, 475, 565); //set the color of the word enter
-         g.drawString("ENTER", (int)(screenWidth/2), (int)(5*screenHeight/6)-10); //draw the word enter
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+         chgColorOnHover(g, Color.RED, Color.BLACK, 400, 545, 475, 565);
+         g.drawString("ENTER", (int)(screenWidth/2), (int)(5*screenHeight/6)-10);
          
-         //GOTO Display.java at Comment #14
       }
    }
 }

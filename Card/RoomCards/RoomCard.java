@@ -8,12 +8,7 @@ public abstract class RoomCard extends ActionCard{
    public RoomCard(int tID){
       super(tID);
    }
-   /* 
-    Comment #2
-        ||   here all that the method getRandom do, is that put every type of card in the WeightedRandom object
-        ||   with there weight (number of same cards) RETURN to Player.java at START Comment
-        \/
-   */
+   
    public static RoomCard getRandom(){
       WeightedRandom<RoomCard> wr = new WeightedRandom<RoomCard>();
       wr.add(1, new EmptyRoom());
@@ -31,6 +26,6 @@ public abstract class RoomCard extends ActionCard{
       wr.add(1, new TorchGoesOut());
       wr.add(1, new TrapDoor());
       wr.add(1, new VampireBats());
-      return wr.next();  // and then the WeightedRandom object return the random card 
+      return wr.next();  // return the random card 
    }
 }
