@@ -13,11 +13,13 @@ public class Display extends HVMPanel{
    private static ImageIcon[] tileTextures;
    private static ImageIcon[] cardTextures;
    private static ImageIcon startImg;  
-   private static ImageIcon sunImg;  
+   private static ImageIcon sunImg; 
+   private static ImageIcon sidebarBG; 
    
    public static void loadImages(){
       startImg = new ImageIcon("Img/start.jpg");
       sunImg = new ImageIcon("Img/sun.png"); 
+      sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
       
       cardTextures = new ImageIcon[15];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
@@ -36,25 +38,35 @@ public class Display extends HVMPanel{
       cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         
-      tileTextures = new ImageIcon[10];
+      tileTextures = new ImageIcon[19];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
       tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
       tileTextures[3] = new ImageIcon("Img/Tile/EmptyCell.png");
       tileTextures[4] = new ImageIcon("Img/Tile/CurrentPlayer.png"); 
       tileTextures[5] = new ImageIcon("Img/Tile/GreenBorder.png");
+      
       tileTextures[6] = new ImageIcon("Img/Tile/TreasureChamber.png");
       tileTextures[7] = new ImageIcon("Img/Tile/4xCorridors.png");
       tileTextures[8] = new ImageIcon("Img/Tile/RotatingRoom.png");
-      
       tileTextures[9] = new ImageIcon("Img/Tile/1WayCorridor.png");
-      
+      tileTextures[10] = new ImageIcon("Img/Tile/3WayCorridors.png");
+      tileTextures[11] = new ImageIcon("Img/Tile/2WayDarkRoom.png");
+      tileTextures[12] = new ImageIcon("Img/Tile/3WayDarkRoom.png");
+      tileTextures[13] = new ImageIcon("Img/Tile/BottomlessPit.png");
+      tileTextures[14] = new ImageIcon("Img/Tile/4WayPit.png");
+      tileTextures[15] = new ImageIcon("Img/Tile/3WayTrap.png");
+      tileTextures[16] = new ImageIcon("Img/Tile/4WayTrap.png");
+      tileTextures[17] = new ImageIcon("Img/Tile/1WayEmptyRoom.png");
+      tileTextures[18] = new ImageIcon("Img/Tile/4WayEmptyRoom.png");
+
+            
 
       
    }
    
    public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){ 
-      g.setColor(new Color(169,69,46));
+      g.setColor(new Color(5, 5, 5));
       g.fillRect(0, 0, screenWidth, screenHeight); 
       if(gameState == GameState.START){
          g.drawImage(startImg.getImage(),0, 0, screenWidth, screenHeight, null);
@@ -159,7 +171,10 @@ public class Display extends HVMPanel{
       g.drawImage(tileTextures[4].getImage(), transform, null);
    }
    
-   public static void drawSidebar(Graphics2D g, int screenWidth, int screenHeight){    
+   public static void drawSidebar(Graphics2D g, int screenWidth, int screenHeight){   
+      g.drawImage(sidebarBG.getImage(), (int)boardSize.getWidth(), 0, screenWidth -(int)boardSize.getWidth(), screenHeight, null);
+      //drawImage(Image img, int x, int y, int width, int height, ImageObserver observer)
+ 
       if(screenWidth>screenHeight){ //draw on side
          drawSunTrack(g, (int)boardSize.getWidth(), 0);
          players.get(currentPlayer).drawAction(g, (int)boardSize.getWidth()+8, 175);
@@ -169,7 +184,7 @@ public class Display extends HVMPanel{
          players.get(currentPlayer).drawAction(g, 175, (int)boardSize.getHeight()+28);
          players.get(currentPlayer).drawLifeGold(g, 325, (int)boardSize.getHeight()+20);
       }
-   }
+         }
    public static void drawSunTrack(Graphics2D g, int posX, int posY){
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
       g.drawString("Sun track", posX+26, posY+20); 

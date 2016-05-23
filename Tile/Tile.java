@@ -52,10 +52,10 @@ public abstract class Tile{
    } 
    
    public void setOrientation(int orien){ 
-      System.out.println("Left: "+isLeftSideOpen());
-      System.out.println("Right: "+isRightSideOpen());
-      System.out.println("Top: "+isTopSideOpen());
-      System.out.println("Bottom: "+isBottomSideOpen());        
+      //System.out.println("Left: "+isLeftSideOpen());
+      //System.out.println("Right: "+isRightSideOpen());
+      //System.out.println("Top: "+isTopSideOpen());
+      //System.out.println("Bottom: "+isBottomSideOpen());        
       if(orien == TOP){
          boolean tmp1 = leftSide;
          boolean tmp2 = rightSide;
@@ -76,7 +76,7 @@ public abstract class Tile{
         
       }else if(orien == LEFT){
        //DO NOTHING
-      }else if(orientation == RIGHT){
+      }else if(orien == RIGHT){
          boolean tmp1 = leftSide;
          boolean tmp2 = topSide;
         
@@ -103,9 +103,19 @@ public abstract class Tile{
    
    public static Tile getRandomTile(){ 
       WeightedRandom<Tile> wr = new WeightedRandom<Tile>();
-      wr.add(1, new Corridors());
-      wr.add(1, new TestTile());
-      wr.add(1, new OneWayCorridor());
+      wr.add(2, new Corridors());
+      //wr.add(1, new TestTile());
+      wr.add(4, new OneWayCorridor());
+      wr.add(8, new ThreeWayCorridors());
+      wr.add(2, new BottomLessPit());
+      wr.add(2, new FourWayPit());
+      wr.add(2, new ThreeWayTrap());
+      wr.add(3, new FourWayTrap());
+      wr.add(2, new TwoWayDarkRoom());
+      wr.add(2, new ThreeWayDarkRoom());
+      wr.add(5, new OneWayEmptyRoom());
+      wr.add(15, new FourWayEmptyRoom());
+      wr.add(5, new RotatingRoom());
       return wr.next();
    }
    

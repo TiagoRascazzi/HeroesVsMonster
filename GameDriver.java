@@ -22,12 +22,14 @@ public class GameDriver{
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(screen);
       frame.pack();
+      frame.setResizable(true);
       frame.setLocationRelativeTo(null);
       frame.setVisible(true);
       Listener listener = new Listener();
       frame.addKeyListener(listener);
       frame.addMouseListener(listener);
       frame.addMouseMotionListener(listener);
+      
    }
    
    public static class Listener implements KeyListener, MouseInputListener{

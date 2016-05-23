@@ -152,7 +152,8 @@ public abstract class Player{
    
    public boolean move(Point p){
    
-      if(isValidMoveEmpty(p)){ //test if it is in the board
+      if(isValidMove(p)){ //test if it is in the board
+         System.out.println("valid move");
          Tile tile = null;
          if(HVMPanel.board.get(p.y, p.x) == null)
             tile = Tile.getRandomTile();
@@ -165,16 +166,19 @@ public abstract class Player{
                   tile.setOrientation(Tile.TOP);
                else if(p.y == posY-1)
                   tile.setOrientation(Tile.BOTTOM);
-               System.out.println("Rotation: "+Math.toDegrees(tile.getRotation()));
-               System.out.println("Left: "+tile.isLeftSideOpen());
-               System.out.println("Right: "+tile.isRightSideOpen());
-               System.out.println("Top: "+tile.isTopSideOpen());
-               System.out.println("Bottom: "+tile.isBottomSideOpen());
+               //System.out.println("Rotation: "+Math.toDegrees(tile.getRotation()));
             }
          else
             tile = HVMPanel.board.get(p.y, p.x);
          
-         if(isValidFutureMove(p, tile)){
+         
+               System.out.println("Left: "+tile.isLeftSideOpen());
+               System.out.println("Right: "+tile.isRightSideOpen());
+               System.out.println("Top: "+tile.isTopSideOpen());
+               System.out.println("Bottom: "+tile.isBottomSideOpen());
+         
+         if(isValidMove(p)){
+            System.out.println("valid future move");
             if(HVMPanel.board.get(p.y, p.x) == null)  
                HVMPanel.board.add(p.y, p.x, tile);
             posX = p.x;
@@ -183,26 +187,6 @@ public abstract class Player{
       }
       return false;
    }
-     
-   /*public boolean isValidMove(Point p){
-      if(p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows()){// test if inside board
-         if( ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX)){ //test if it is next to current one
-            Tile tile = HVMPanel.board.get(posY, posX);
-            if(p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen()){//test if can get out of tile
-               if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
-                  if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
-                     Tile nextTile = HVMPanel.board.get(posY, posX);
-                     if(p.x == posX+1 && nextTile.isRightSideOpen() || p.x == posX-1 && nextTile.isLeftSideOpen() || p.y == posY+1 && nextTile.isBottomSideOpen() || p.y == posY-1 && nextTile.isTopSideOpen())//test if can enter in tile
-                        return true;
-                  }
-               }else{ // if has no tile
-                  return true;
-               }
-            }
-         }
-      }
-      return false;
-   }*/
    
    public boolean isValidMove(Point p){
       if(isInsideBoard(p)){// test if inside board
@@ -237,26 +221,8 @@ public abstract class Player{
       return p.x == posX+1 && tile.isRightSideOpen() || p.x == posX-1 && tile.isLeftSideOpen() || p.y == posY+1 && tile.isBottomSideOpen() || p.y == posY-1 && tile.isTopSideOpen();
    }
    
-   
-   public boolean isValidMoveEmpty(Point p){
-      if(p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows()){// test if inside board
-         if( ((p.x==posX-1 || p.x==posX+1) && p.y==posY)  || ((p.y==posY-1 || p.y==posY+1) && p.x==posX)){ //test if it is next to current one
-            if(p.x == posX+1 && HVMPanel.board.get(posY, posX).isLeftSideOpen())//test if can get out of tile
-               return true;
-            if(p.x == posX-1 && HVMPanel.board.get(posY, posX).isRightSideOpen())
-               return true;
-            if(p.y == posY+1 && HVMPanel.board.get(posY, posX).isTopSideOpen())
-               return true;
-            if(p.y == posY-1 && HVMPanel.board.get(posY, posX).isBottomSideOpen())
-               return true;   
-            
-         }
-      }
-      return false;
-   } 
-   
    public boolean isValidFutureMove(Point p, Tile tile){
-      if(isValidMoveEmpty(p)){
+      if(isValidMove(p)){
          if(HVMPanel.board.get(p.y, p.x) == null || getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){
             if(p.x == posX+1 && tile.isRightSideOpen())//test if can enter in tile
                return true;
@@ -289,34 +255,34 @@ public abstract class Player{
       actionPosX = posX;
       actionPosY = posY;
       
-      g.setColor(Color.BLACK);   
+      g.setColor(Color.RED);   
       g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
       g.drawString(name, posX, posY);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
          
       if(state == PlayeState.SELECT){
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+40, posY+65);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(1) MOVE", posX+8, posY+25);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+65, posY+90);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
          g.drawString("(2) SEARCH", posX+8, posY+50);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+90, posY+115);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
          g.drawString("(3) SKIP TURN", posX+8, posY+75);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+115, posY+140);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
          g.drawString("(esc) PAUSE", posX+8, posY+100);
       }else if(state == PlayeState.MOVE){
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+40, posY+65);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(\u2190) LEFT", posX+8, posY+25);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+65, posY+90);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
          g.drawString("(\u2192) RIGTH", posX+8, posY+50);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+90, posY+115);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
          g.drawString("(\u2191) UP", posX+8, posY+75);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+115, posY+140);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
          g.drawString("(\u2193) DOWN", posX+8, posY+100);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+140, posY+165);
+         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+140, posY+165);
          g.drawString("any other key to return", posX+8, posY+125);
       }else if(state == PlayeState.SEARCH){
          g.drawString("SEARCHING", posX+8, posY+25);
-         chgColorOnHover(g, Color.BLACK, Color.RED, posX+8, posX+148, posY+65, posY+90);
+         chgColorOnHover(g, Color.RED, Color.RED, posX+8, posX+148, posY+65, posY+90);
          g.drawString("any key to return", posX+8, posY+50);
       }else if(state == PlayeState.CARD){
          playerCurrentCard.drawAction(g, posX, posY);
@@ -325,7 +291,7 @@ public abstract class Player{
    
    public void drawLifeGold(Graphics2D g, int posX, int posY){
       g.drawImage(goldIcon.getImage(), posX, posY, 20, 20, null);
-      g.setColor(Color.BLACK);
+      g.setColor(Color.RED);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
       g.drawString(""+gold, posX+20+2, posY+20-2);
       for(int i=0; i<life; i++)
