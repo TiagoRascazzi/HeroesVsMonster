@@ -38,7 +38,7 @@ public class Display extends HVMPanel{
       cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         
-      tileTextures = new ImageIcon[19];
+      tileTextures = new ImageIcon[24];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
       tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
@@ -59,10 +59,13 @@ public class Display extends HVMPanel{
       tileTextures[16] = new ImageIcon("Img/Tile/4WayTrap.png");
       tileTextures[17] = new ImageIcon("Img/Tile/1WayEmptyRoom.png");
       tileTextures[18] = new ImageIcon("Img/Tile/4WayEmptyRoom.png");
-
-            
-
       
+      tileTextures[19] = new ImageIcon("Img/Tile/1WayPortcullis.png");
+      tileTextures[20] = new ImageIcon("Img/Tile/2WayPortcullis.png");
+      tileTextures[21] = new ImageIcon("Img/Tile/3WayPortcullis.png");
+      tileTextures[22] = new ImageIcon("Img/Tile/2WayEmptyRoom.png");
+      tileTextures[23] = new ImageIcon("Img/Tile/3WayEmptyRoom.png");
+    
    }
    
    public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){ 

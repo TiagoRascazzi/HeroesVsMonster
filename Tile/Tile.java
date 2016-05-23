@@ -116,6 +116,12 @@ public abstract class Tile{
       wr.add(5, new OneWayEmptyRoom());
       wr.add(15, new FourWayEmptyRoom());
       wr.add(5, new RotatingRoom());
+      wr.add(5, new TwoWayEmptyRoom());
+      wr.add(20, new ThreeWayEmptyRoom());
+      wr.add(5, new OneWayPortcullis());
+      wr.add(5, new TwoWayPortcullis());
+      wr.add(5, new ThreeWayPortcullis());
+      
       return wr.next();
    }
    
