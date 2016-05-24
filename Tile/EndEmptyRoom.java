@@ -1,21 +1,21 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class TwoWayEmptyRoom extends Tile{
+public class EndEmptyRoom extends Tile{
   
 
       
-   public TwoWayEmptyRoom(){
+   public EndEmptyRoom(){
             
-      super(22, false, true, true, false, false, true);
+      super(17, false, true, true, false, false, false);
       
-   //private int textureID0;
+   //private int textureID;
    //private int maxNumOfPlayers;
-   //private boolean keepPlaying;
+   //private boolean keepPlayin;
    //private boolean giveRoomCard; 
    //private boolean leftSide;
    //private boolean rightSide;
-   //private boolean topSide:
+   //private boolean topSide;
    //private boolean bottomSide;
    }
    

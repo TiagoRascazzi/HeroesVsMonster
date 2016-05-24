@@ -47,7 +47,7 @@ public class Display extends HVMPanel{
       tileTextures[5] = new ImageIcon("Img/Tile/GreenBorder.png");
       
       tileTextures[6] = new ImageIcon("Img/Tile/TreasureChamber.png");
-      tileTextures[7] = new ImageIcon("Img/Tile/4xCorridors.png");
+      tileTextures[7] = new ImageIcon("Img/Tile/4WayCorridors.png");
       tileTextures[8] = new ImageIcon("Img/Tile/RotatingRoom.png");
       tileTextures[9] = new ImageIcon("Img/Tile/1WayCorridor.png");
       tileTextures[10] = new ImageIcon("Img/Tile/3WayCorridors.png");
@@ -57,11 +57,11 @@ public class Display extends HVMPanel{
       tileTextures[14] = new ImageIcon("Img/Tile/4WayPit.png");
       tileTextures[15] = new ImageIcon("Img/Tile/3WayTrap.png");
       tileTextures[16] = new ImageIcon("Img/Tile/4WayTrap.png");
-      tileTextures[17] = new ImageIcon("Img/Tile/1WayEmptyRoom.png");
+      tileTextures[17] = new ImageIcon("Img/Tile/EndEmptyRoom.png");
       tileTextures[18] = new ImageIcon("Img/Tile/4WayEmptyRoom.png");
       
-      tileTextures[19] = new ImageIcon("Img/Tile/1WayPortcullis.png");
-      tileTextures[20] = new ImageIcon("Img/Tile/2WayPortcullis.png");
+      tileTextures[19] = new ImageIcon("Img/Tile/EndPortcullis.png");
+      tileTextures[20] = new ImageIcon("Img/Tile/1WayPortcullis.png");
       tileTextures[21] = new ImageIcon("Img/Tile/3WayPortcullis.png");
       tileTextures[22] = new ImageIcon("Img/Tile/2WayEmptyRoom.png");
       tileTextures[23] = new ImageIcon("Img/Tile/3WayEmptyRoom.png");

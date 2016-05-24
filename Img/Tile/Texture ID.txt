@@ -7,7 +7,7 @@ tID    Img name
 5   ->  Img/Tile/GreenBorder.png
 
 6   ->  Img/Tile/TreasureChamber.png
-7   ->  Img/Tile/4xCorridors.png
+7   ->  Img/Tile/4WayCorridors.png
 8   ->  Img/Tile/RotatingRoom.png
 9   ->  Img/Tile/1WayCorridor.png
 10  ->  Img/Tile/3WayCorridors.png
@@ -17,11 +17,34 @@ tID    Img name
 14  ->  Img/Tile/4WayPit.png
 15  ->  Img/Tile/3WayTrap.png
 16  ->  Img/Tile/4WayTrap.png
-17  ->  Img/Tile/1WayEmptyRoom.png
+17  ->  Img/Tile/EndEmptyRoom.png
 18  ->  Img/Tile/4WayEmptyRoom.png
- 
-19  ->  Img/Tile/1WayPortcullis.png
-20  ->  Img/Tile/2WayPortcullis.png
+
+19  ->  Img/Tile/EndPortcullis.png
+20  ->  Img/Tile/1WayPortcullis.png
 21  ->  Img/Tile/3WayPortcullis.png
 22  ->  Img/Tile/2WayEmptyRoom.png
 23  ->  Img/Tile/3WayEmptyRoom.png
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
