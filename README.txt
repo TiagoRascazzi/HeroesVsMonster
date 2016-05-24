@@ -1,0 +1,1 @@
+To use the ~PULL FROM GITHUB.bat script you need to have powershell and git-scm - https://git-scm.com/
