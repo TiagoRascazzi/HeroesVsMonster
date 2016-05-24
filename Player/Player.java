@@ -153,7 +153,6 @@ public abstract class Player{
    public boolean move(Point p){
    
       if(isValidMove(p)){ //test if it is in the board
-         System.out.println("valid move");
          Tile tile = null;
          if(HVMPanel.board.get(p.y, p.x) == null)
             tile = Tile.getRandomTile();
@@ -166,19 +165,11 @@ public abstract class Player{
                   tile.setOrientation(Tile.TOP);
                else if(p.y == posY-1)
                   tile.setOrientation(Tile.BOTTOM);
-               //System.out.println("Rotation: "+Math.toDegrees(tile.getRotation()));
             }
          else
             tile = HVMPanel.board.get(p.y, p.x);
          
-         
-               System.out.println("Left: "+tile.isLeftSideOpen());
-               System.out.println("Right: "+tile.isRightSideOpen());
-               System.out.println("Top: "+tile.isTopSideOpen());
-               System.out.println("Bottom: "+tile.isBottomSideOpen());
-         
          if(isValidMove(p)){
-            System.out.println("valid future move");
             if(HVMPanel.board.get(p.y, p.x) == null)  
                HVMPanel.board.add(p.y, p.x, tile);
             posX = p.x;
@@ -194,7 +185,7 @@ public abstract class Player{
             if( canExit(p) ){//test if can get out of tile
                if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
                   if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
-                     if(canEnter(HVMPanel.board.get(p.y, p.x), p)){//test if can enter in tile
+                     if(canEnter(p)){//test if can enter in tile
                         return true;
                      }
                   }
@@ -215,10 +206,11 @@ public abstract class Player{
    }
    public boolean canExit(Point p){
       Tile tile = HVMPanel.board.get(posY, posX);
-      return p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen();
-   }
-   public boolean canEnter(Tile tile, Point p){
       return p.x == posX+1 && tile.isRightSideOpen() || p.x == posX-1 && tile.isLeftSideOpen() || p.y == posY+1 && tile.isBottomSideOpen() || p.y == posY-1 && tile.isTopSideOpen();
+   }
+   public boolean canEnter(Point p){
+      Tile tile = HVMPanel.board.get(p.y, p.x);      
+      return p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen();
    }
    
    public boolean isValidFutureMove(Point p, Tile tile){

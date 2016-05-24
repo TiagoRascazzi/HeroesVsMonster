@@ -8,7 +8,7 @@ public class OneWayCorridor extends Tile{
    
    public OneWayCorridor(){
             
-      super(9, 1, true, false, true, true, false, false);
+      super(9, true, false, true, true, false, false);
       
    //private int textureID = 9;
    //private int maxNumOfPlayers = 1;

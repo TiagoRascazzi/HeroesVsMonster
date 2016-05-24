@@ -7,7 +7,7 @@ public class RotatingRoom extends Tile{
       
    public RotatingRoom(){
             
-      super(8, 1, false, true, true, false, false, false);
+      super(8, false, true, true, false, false, false);
       
    //private int textureID;
    //private int maxNumOfPlayers;

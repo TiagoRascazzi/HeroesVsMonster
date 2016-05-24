@@ -7,7 +7,7 @@ public class BottomLessPit extends Tile{
       
    public BottomLessPit(){
             
-      super(13, 1, false, true, true, true, false, false);
+      super(13, false, true, true, true, false, false);
       
    //private int textureID = 0;
    //private int maxNumOfPlayers = 1;

@@ -20,11 +20,11 @@ public abstract class Tile{
    private boolean keepPlaying;
    private boolean giveRoomCard;
    
-   public Tile(int tID, int mnop, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
+   public Tile(int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       orientation = LEFT;
 
       textureID = tID;
-      maxNumOfPlayers = mnop;
+      maxNumOfPlayers = 1;
       keepPlaying = kp;
       giveRoomCard = grc;
       leftSide = ls;
@@ -32,9 +32,9 @@ public abstract class Tile{
       topSide = ts;
       bottomSide = bs;
    }
-   public Tile(int orien, int tID, int mnop, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
+   public Tile(int orien, int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       textureID = tID;
-      maxNumOfPlayers = mnop;
+      maxNumOfPlayers = 1;
       keepPlaying = kp;
       giveRoomCard = grc;
       leftSide = ls;
@@ -103,8 +103,38 @@ public abstract class Tile{
    
    public static Tile getRandomTile(){ 
       WeightedRandom<Tile> wr = new WeightedRandom<Tile>();
-      wr.add(2, new Corridors());
+      
+      //TO BE FIXED
+      //wr.add(2, new Corridors());
+      //wr.add(5, new TwoWayEmptyRoom());
+      //wr.add(5, new TwoWayPortcullis());
+      //wr.add(100, new TwoWayDarkRoom());
+
+      //Fixed
       //wr.add(1, new TestTile());
+      wr.add(1, new RotatingRoom());
+      wr.add(1, new BottomLessPit());
+      
+      wr.add(1, new OneWayEmptyRoom());
+      wr.add(1, new OneWayPortcullis());
+      wr.add(1, new OneWayCorridor());
+      
+      wr.add(1, new ThreeWayCorridors());
+      wr.add(1, new ThreeWayTrap());
+      wr.add(1, new ThreeWayDarkRoom());
+      wr.add(1, new ThreeWayEmptyRoom());
+      wr.add(1, new ThreeWayPortcullis());
+      
+      
+      wr.add(1, new FourWayEmptyRoom());
+      wr.add(1, new FourWayPit());
+      wr.add(1, new FourWayTrap());
+
+
+
+      /*OLD
+      wr.add(2, new Corridors());
+      wr.add(1, new TestTile());
       wr.add(4, new OneWayCorridor());
       wr.add(8, new ThreeWayCorridors());
       wr.add(2, new BottomLessPit());
@@ -121,10 +151,13 @@ public abstract class Tile{
       wr.add(5, new OneWayPortcullis());
       wr.add(5, new TwoWayPortcullis());
       wr.add(5, new ThreeWayPortcullis());
+      */
       
       return wr.next();
    }
-   
+   public void changeMaxNumOfPlayers(int mnop){
+      maxNumOfPlayers = mnop;
+   }
    public boolean keepsPlaying(){
       return keepPlaying;
    }

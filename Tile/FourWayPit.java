@@ -7,7 +7,7 @@ public class FourWayPit extends Tile{
       
    public FourWayPit(){
             
-      super(14, 1, false, true, true, true, true, true);
+      super(14, false, true, true, true, true, true);
       
    //private int textureID;
    //private int maxNumOfPlayers;

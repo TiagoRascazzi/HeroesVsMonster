@@ -1,11 +1,27 @@
 tID    Img name
-0  ->  TestTileImg.png
-1  ->  Corner.png
-2  ->  Border.png
-3  ->  EmptyCell.png
-4  ->  CurrentPlayer.png
-5  ->  GreenBorder.png
-6  ->  TreasureChamber.png
-7  ->  4xCorridors.png
-8  ->  RotatingRoom.png
-9  ->  1WayCorridor.png
+0   ->  Img/Tile/TestTileImg.png
+1   ->  Img/Tile/Corner.png
+2   ->  Img/Tile/Border.png
+3   ->  Img/Tile/EmptyCell.png
+4   ->  Img/Tile/CurrentPlayer.png
+5   ->  Img/Tile/GreenBorder.png
+
+6   ->  Img/Tile/TreasureChamber.png
+7   ->  Img/Tile/4xCorridors.png
+8   ->  Img/Tile/RotatingRoom.png
+9   ->  Img/Tile/1WayCorridor.png
+10  ->  Img/Tile/3WayCorridors.png
+11  ->  Img/Tile/2WayDarkRoom.png
+12  ->  Img/Tile/3WayDarkRoom.png
+13  ->  Img/Tile/BottomlessPit.png
+14  ->  Img/Tile/4WayPit.png
+15  ->  Img/Tile/3WayTrap.png
+16  ->  Img/Tile/4WayTrap.png
+17  ->  Img/Tile/1WayEmptyRoom.png
+18  ->  Img/Tile/4WayEmptyRoom.png
+ 
+19  ->  Img/Tile/1WayPortcullis.png
+20  ->  Img/Tile/2WayPortcullis.png
+21  ->  Img/Tile/3WayPortcullis.png
+22  ->  Img/Tile/2WayEmptyRoom.png
+23  ->  Img/Tile/3WayEmptyRoom.png
