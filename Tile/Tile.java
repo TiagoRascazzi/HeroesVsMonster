@@ -51,11 +51,7 @@ public abstract class Tile{
       return textureID;
    } 
    
-   public void setOrientation(int orien){ 
-      //System.out.println("Left: "+isLeftSideOpen());
-      //System.out.println("Right: "+isRightSideOpen());
-      //System.out.println("Top: "+isTopSideOpen());
-      //System.out.println("Bottom: "+isBottomSideOpen());        
+   public void setOrientation(int orien){     
       if(orien == TOP){
          boolean tmp1 = leftSide;
          boolean tmp2 = rightSide;

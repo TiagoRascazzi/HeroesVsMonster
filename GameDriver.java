@@ -3,7 +3,6 @@ import java.awt.event.KeyListener;
 import javax.swing.event.MouseInputListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import java.awt.Point;
@@ -12,6 +11,7 @@ import java.awt.Toolkit;
 public class GameDriver{
    public static HVMPanel screen;
    
+   //Start of the program setup the window create panel
    public static void main(String[] args){
       ImageIcon icon = new ImageIcon("Img/icon.png");
       screen = new HVMPanel();
@@ -32,6 +32,7 @@ public class GameDriver{
       
    }
    
+   //The listener it listen for the key and mouse
    public static class Listener implements KeyListener, MouseInputListener{
       public void keyTyped(KeyEvent e){}
       public void keyPressed(KeyEvent e){}

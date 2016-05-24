@@ -7,7 +7,7 @@ public class TwoWayDarkRoom extends Tile{
       
    public TwoWayDarkRoom(){
             
-      super(11, false, true, true, true, false, false);
+      super(11, false, true, true, false, false, true);
       
    //private int textureID;
    //private int maxNumOfPlayers;

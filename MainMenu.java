@@ -23,18 +23,19 @@ public class MainMenu{
       mainImg= new ImageIcon("Img/main.jpg");
       state = MainMenuState.SELECT;
       playerSelecting = 1;
-      
       availablePlayers.add(new SirRohan());
       availablePlayers.add(new ElAdoranSureshot());
       availablePlayers.add(new UlvGrimhand());
       availablePlayers.add(new VolrikTheBrave());
-   
    }
    
+   //draw option of the menu
    public void draw(Graphics2D g, int screenWidth, int screenHeight){
       
+      //draw the background image
       g.drawImage(mainImg.getImage(),0, 0, screenWidth, screenHeight, null);
       
+      //ask how many players for the game
       if(state == MainMenuState.SELECT){
          g.setColor(Color.RED);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
@@ -45,6 +46,7 @@ public class MainMenu{
             g.drawString("("+(i+1)+") "+(i+1)+" Player", 50, 75+(25*i)); 
          }
       }
+      //chose which charactor the player has
       else if(state == MainMenuState.CHOSE){
          g.setColor(Color.RED);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
@@ -58,6 +60,7 @@ public class MainMenu{
    
    }
    
+   //Process the player key pressed
    public ArrayList<Player> processKeyInput(KeyEvent e){
       if(state == MainMenuState.SELECT){
          for(int i = 0; i < 4; i++){
@@ -81,6 +84,7 @@ public class MainMenu{
       return null;   
    }
    
+   //process the mouse movement and click
    public ArrayList<Player> processMouseInput(MouseEvent e){
       if(state == MainMenuState.SELECT){
          for(int i = 0; i < 4; i++){
@@ -104,10 +108,10 @@ public class MainMenu{
       return null;   
    }
    
+   //methods used to do the hovering effect later they migth go in a GUI class
    private boolean hover(int x1, int x2, int y1, int y2){
       return (HVMPanel.mouse.x>x1 && HVMPanel.mouse.x<x2 && HVMPanel.mouse.y>y1 && HVMPanel.mouse.y<y2);
    } 
-   
    private void chgColorOnHover(Graphics2D g, Color c1, Color c2, int x1, int x2, int y1, int y2){
       g.setColor(c1);
       if(hover(x1, x2, y1, y2))
