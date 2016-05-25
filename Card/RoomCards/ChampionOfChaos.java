@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 
-public class GiantSpider extends RoomCard{
+public class ChampionOfChaos extends RoomCard{
    
-   public GiantSpider(){
-      super(8);
+   public ChampionOfChaos(){
+      super(0);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

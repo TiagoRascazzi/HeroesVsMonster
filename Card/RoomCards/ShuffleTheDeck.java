@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 
-public class CurseOfTheWizard extends RoomCard{
+public class ShuffleTheDeck extends RoomCard{
    
-   public CurseOfTheWizard(){
-      super(6);
+   public ShuffleTheDeck(){
+      super(0);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

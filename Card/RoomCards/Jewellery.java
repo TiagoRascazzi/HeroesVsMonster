@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Jewellery extends RoomCard{
    
    public Jewellery(){
-      super(2);
+      super(1);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

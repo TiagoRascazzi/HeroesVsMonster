@@ -101,28 +101,30 @@ public abstract class Tile{
       WeightedRandom<Tile> wr = new WeightedRandom<Tile>();
       
       //wr.add(1, new TestTile());
-      wr.add(1, new RotatingRoom());
-      wr.add(1, new BottomLessPit());
+      wr.add(5, new RotatingRoom());
+      wr.add(2, new BottomLessPit());
       
-      wr.add(1, new EndEmptyRoom());
+      wr.add(5, new EndEmptyRoom());
       wr.add(1, new EndPortcullis());      
       
-      wr.add(1, new OneWayCorridor());
-      wr.add(1, new OneWayPortcullis());
+      wr.add(2, new OneWayCorridor());
+      wr.add(3, new OneWayPortcullis());
       
-      wr.add(1, new TwoWayEmptyRoom());
-      wr.add(1, new TwoWayDarkRoom());
+      wr.add(15, new TwoWayEmptyRoom());
+      wr.add(2, new TwoWayDarkRoom());
+      wr.add(8, new TwoWayStraightEmptyRoom());
+      wr.add(4, new TwoWayCorridor());
       
-      wr.add(1, new ThreeWayCorridors());
-      wr.add(1, new ThreeWayTrap());
-      wr.add(1, new ThreeWayDarkRoom());
-      wr.add(1, new ThreeWayEmptyRoom());
-      wr.add(1, new ThreeWayPortcullis());
+      wr.add(8, new ThreeWayCorridors());
+      wr.add(2, new ThreeWayTrap());
+      wr.add(2, new ThreeWayDarkRoom());
+      wr.add(30, new ThreeWayEmptyRoom());
+      wr.add(6, new ThreeWayPortcullis());
       
-      wr.add(1, new FourWayEmptyRoom());
-      wr.add(1, new FourWayPit());
-      wr.add(1, new FourWayTrap());
-      wr.add(1, new FourWayCorridors());
+      wr.add(15, new FourWayEmptyRoom());
+      wr.add(2, new FourWayPit());
+      wr.add(3, new FourWayTrap());
+      wr.add(2, new FourWayCorridors());
             
       return wr.next();
    }

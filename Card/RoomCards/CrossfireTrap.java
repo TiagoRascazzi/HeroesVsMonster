@@ -6,7 +6,7 @@ import java.awt.Point;
 public class CrossfireTrap extends RoomCard{
    
    public CrossfireTrap(){
-      super(4);
+      super(3);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

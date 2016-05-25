@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Crypt extends RoomCard{
    
    public Crypt(){
-      super(5);
+      super(4);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

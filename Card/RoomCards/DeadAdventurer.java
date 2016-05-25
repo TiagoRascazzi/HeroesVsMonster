@@ -6,7 +6,7 @@ import java.awt.Point;
 public class DeadAdventurer extends RoomCard{
    
    public DeadAdventurer(){
-      super(7);
+      super(5);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

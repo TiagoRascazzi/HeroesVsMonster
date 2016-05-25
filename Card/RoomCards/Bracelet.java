@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Bracelet extends RoomCard{
    
    public Bracelet(){
-      super(3);
+      super(2);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

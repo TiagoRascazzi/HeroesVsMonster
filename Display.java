@@ -23,25 +23,25 @@ public class Display extends HVMPanel{
       sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
       
       //load all the image for cards
-      cardTextures = new ImageIcon[15];
+      cardTextures = new ImageIcon[9];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
-      cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
-      cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
-      cardTextures[3] = new ImageIcon("Img/Cards/RoomCard/Bracelet.png"); 
-      cardTextures[4] = new ImageIcon("Img/Cards/RoomCard/CrossfireTrap.png");  
-      cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
-      cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
-      cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
-      cardTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
-      cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Monster.png"); 
-      cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
-      cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
-      cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
-      cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
-      cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      //cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
+      cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
+      cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Bracelet.png"); 
+      cardTextures[3] = new ImageIcon("Img/Cards/RoomCard/CrossfireTrap.png");  
+      cardTextures[4] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
+      //cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
+      cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
+      //cardTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
+      //cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Monster.png"); 
+      //cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
+      cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
+      cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
+      //cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
+      cardTextures[8] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         
       //load all the image for tiles
-      tileTextures = new ImageIcon[24];
+      tileTextures = new ImageIcon[26];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
       tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
@@ -66,6 +66,9 @@ public class Display extends HVMPanel{
       tileTextures[21] = new ImageIcon("Img/Tile/3WayPortcullis.png");
       tileTextures[22] = new ImageIcon("Img/Tile/2WayEmptyRoom.png");
       tileTextures[23] = new ImageIcon("Img/Tile/3WayEmptyRoom.png");
+      
+      tileTextures[24] = new ImageIcon("Img/Tile/TwoWayCorridor");
+      tileTextures[25] = new ImageIcon("Img/Tile/TwoWayStraightEmptyRoom");
     
    }
    

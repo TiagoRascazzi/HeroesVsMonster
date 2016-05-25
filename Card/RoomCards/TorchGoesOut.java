@@ -6,7 +6,7 @@ import java.awt.Point;
 public class TorchGoesOut extends RoomCard{
    
    public TorchGoesOut(){
-      super(12);
+      super(7);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){
