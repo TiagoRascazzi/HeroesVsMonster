@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public abstract class Player{
    
-   private enum PlayeState {SELECT, MOVE, SEARCH, COMBAT, CARD};
-   private PlayeState state = PlayeState.SELECT;
+   private enum PlayerState {SELECT, MOVE, SEARCH, COMBAT, CARD};
+   private PlayerState state = PlayerState.SELECT;
    
    private ImageIcon image;
    private ImageIcon lifeIcon;
@@ -56,54 +56,60 @@ public abstract class Player{
    }
    
    public boolean processKeyInput(KeyEvent e){            
-      if(state == PlayeState.SELECT){
+      if(state == PlayerState.SELECT){
          if(e.getKeyCode() == KeyEvent.VK_1){
-            state = PlayeState.MOVE;
+            state = PlayerState.MOVE;
          }else if(e.getKeyCode() == KeyEvent.VK_2){
             search();
-            state = PlayeState.SEARCH;
+            state = PlayerState.SEARCH;
          }else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
             return true;
          }
-      }else if(state == PlayeState.MOVE){
+      }else if(state == PlayerState.MOVE){
          Point p = getKeyMove(e);
          if(p == null)
-            state = PlayeState.SELECT;
+            state = PlayerState.SELECT;
          else
             return move(p);
-      }else if(state == PlayeState.SEARCH){
-         state = PlayeState.SELECT;
-      }else if(state == PlayeState.CARD){
+      }else if(state == PlayerState.SEARCH){
+         state = PlayerState.SELECT;
+      }else if(state == PlayerState.CARD){
          if(playerCurrentCard.processKeyInput(e)){
-            state = PlayeState.SELECT;
+            state = PlayerState.SELECT;
+            life -= playerCurrentCard.getDamage();
+            gold += playerCurrentCard.getGold();
+            if(life<=0)
+               return true;
             playerCurrentCard = null;
-            return true;
+            if(!HVMPanel.board.get(posY, posX).keepsPlaying())
+               return true;
          }
       }
       return false;
    }
    
    public boolean processMouseInput(Point screenSize, MouseEvent e){
-      if(state == PlayeState.SELECT){
+      if(state == PlayerState.SELECT){
          if(hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
-            state = PlayeState.MOVE;
+            state = PlayerState.MOVE;
          }else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
             search();
-            state = PlayeState.SEARCH;
+            state = PlayerState.SEARCH;
          }else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
             return true;
          }else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          }
-      }else if(state == PlayeState.MOVE){
+      }else if(state == PlayerState.MOVE){
          Point p = getMouseMove(e);
          if(p == null)
-            state = PlayeState.SELECT;
+            state = PlayerState.SELECT;
          else
             return move(p);
-      }else if(state == PlayeState.SEARCH){
-         state = PlayeState.SELECT;
-      }else if(state == PlayeState.CARD){
+      }else if(state == PlayerState.SEARCH){
+         state = PlayerState.SELECT;
+      }else if(state == PlayerState.CARD){
+         //TODO return true 
          playerCurrentCard.processMouseInput(screenSize, e);
       }
       return false;
@@ -174,6 +180,14 @@ public abstract class Player{
                HVMPanel.board.add(p.y, p.x, tile);
             posX = p.x;
             posY = p.y;
+            if(HVMPanel.board.get(posY, posX).givesRoomCard()){
+               playerCurrentCard = RoomCard.getRandom();
+               state = PlayerState.CARD;
+            }else if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
+               state = PlayerState.SELECT;
+               playerCurrentCard = null;
+               return true;
+            }
          }
       }
       return false;
@@ -252,7 +266,7 @@ public abstract class Player{
       g.drawString(name, posX, posY);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
          
-      if(state == PlayeState.SELECT){
+      if(state == PlayerState.SELECT){
          chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(1) MOVE", posX+8, posY+25);
          chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
@@ -261,7 +275,7 @@ public abstract class Player{
          g.drawString("(3) SKIP TURN", posX+8, posY+75);
          chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
          g.drawString("(esc) PAUSE", posX+8, posY+100);
-      }else if(state == PlayeState.MOVE){
+      }else if(state == PlayerState.MOVE){
          chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(\u2190) LEFT", posX+8, posY+25);
          chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
@@ -272,11 +286,11 @@ public abstract class Player{
          g.drawString("(\u2193) DOWN", posX+8, posY+100);
          chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+140, posY+165);
          g.drawString("any other key to return", posX+8, posY+125);
-      }else if(state == PlayeState.SEARCH){
+      }else if(state == PlayerState.SEARCH){
          g.drawString("SEARCHING", posX+8, posY+25);
          chgColorOnHover(g, Color.RED, Color.RED, posX+8, posX+148, posY+65, posY+90);
          g.drawString("any key to return", posX+8, posY+50);
-      }else if(state == PlayeState.CARD){
+      }else if(state == PlayerState.CARD){
          playerCurrentCard.drawAction(g, posX, posY);
       }
    } 
@@ -291,11 +305,14 @@ public abstract class Player{
    } 
    
    public boolean isMoving(){
-      return state == PlayeState.MOVE;
+      return state == PlayerState.MOVE;
    }
    
    public int life(){
       return life;
+   }
+   public boolean isAlive(){
+      return life > 0;
    }
    
    public String getName(){

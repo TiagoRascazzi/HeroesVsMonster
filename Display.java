@@ -13,32 +13,38 @@ public class Display extends HVMPanel{
    private static ImageIcon[] tileTextures;                    //array that contain all the texture for the tiles
    private static ImageIcon[] cardTextures;                    //array that contain all the texture for the cards
    private static ImageIcon startImg;                          //the picture for the start screen 
+   private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
    private static ImageIcon sidebarBG;                         //the picture background of the sidebar 
    
    public static void loadImages(){
       //load backgroung and icon image
       startImg = new ImageIcon("Img/start.jpg");
+      endImg = new ImageIcon("Img/end.jpg");
       sunImg = new ImageIcon("Img/sun.png"); 
       sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
       
+      
+      //NEVER CHANGE THE TEXTURE ID, JUST ADD
       //load all the image for cards
-      cardTextures = new ImageIcon[9];
+      cardTextures = new ImageIcon[17];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
-      //cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
-      cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
-      cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Bracelet.png"); 
-      cardTextures[3] = new ImageIcon("Img/Cards/RoomCard/CrossfireTrap.png");  
-      cardTextures[4] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
-      //cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
-      cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
-      //cardTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
+      cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
+      cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
+      cardTextures[3] = new ImageIcon("Img/Cards/RoomCard/Bracelet.png"); 
+      cardTextures[4] = new ImageIcon("Img/Cards/RoomCard/CrossfireTrap.png");  
+      //cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
+      cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
+      //cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
+      //ca1rdTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
       //cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Monster.png"); 
       //cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
-      cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
-      cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
+      //cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
+      //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
       //cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
-      cardTextures[8] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      //cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      //cardTextures[15] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      //cardTextures[16] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         
       //load all the image for tiles
       tileTextures = new ImageIcon[26];
@@ -66,9 +72,8 @@ public class Display extends HVMPanel{
       tileTextures[21] = new ImageIcon("Img/Tile/3WayPortcullis.png");
       tileTextures[22] = new ImageIcon("Img/Tile/2WayEmptyRoom.png");
       tileTextures[23] = new ImageIcon("Img/Tile/3WayEmptyRoom.png");
-      
-      tileTextures[24] = new ImageIcon("Img/Tile/TwoWayCorridor");
-      tileTextures[25] = new ImageIcon("Img/Tile/TwoWayStraightEmptyRoom");
+      tileTextures[24] = new ImageIcon("Img/Tile/2WayCorridor.png");
+      tileTextures[25] = new ImageIcon("Img/Tile/2WayStraightEmptyRoom.png");
     
    }
    
@@ -88,6 +93,8 @@ public class Display extends HVMPanel{
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
          drawPauseMenu(g, screenWidth, screenHeight);
+      }else if(gameState == GameState.END){
+         g.drawImage(endImg.getImage(),0, 0, screenWidth, screenHeight, null);
       }
    }
    
@@ -173,9 +180,11 @@ public class Display extends HVMPanel{
       
       //Draw the player
       for(int i=0; i<players.size(); i++){
-         transform.setToTranslation((int)(playerSpace+tileSize*(players.get(i).getPosX())+borderSize), (int)(playerSpace+tileSize*(players.get(i).getPosY())+borderSize));
-         transform.scale(playerScale, playerScale);
-         g.drawImage(players.get(i).getImage(), transform, null);
+         if(players.get(i).isAlive()){
+            transform.setToTranslation((int)(playerSpace+tileSize*(players.get(i).getPosX())+borderSize), (int)(playerSpace+tileSize*(players.get(i).getPosY())+borderSize));
+            transform.scale(playerScale, playerScale);
+            g.drawImage(players.get(i).getImage(), transform, null);
+         }
       }
       //Draw current player blue bar 
       transform.setToTranslation((int)(playerSpace+tileSize*(players.get(currentPlayer).getPosX())+borderSize), (int)(tileSize-playerSpace+tileSize*(players.get(currentPlayer).getPosY())+borderSize));

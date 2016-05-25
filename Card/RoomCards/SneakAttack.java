@@ -6,7 +6,7 @@ import java.awt.Point;
 public class SneakAttack extends RoomCard{
    
    public SneakAttack(){
-      super(6);
+      super(11);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

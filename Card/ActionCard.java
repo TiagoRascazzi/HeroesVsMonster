@@ -9,6 +9,10 @@ public abstract class ActionCard{
    protected CardState cardState;
    private int textureID;
    
+   protected int damage = 0;
+   protected int gold = 0;
+   
+   
    public ActionCard(int tID){
       textureID =  tID;
       cardState = CardState.SHOW;
@@ -37,6 +41,13 @@ public abstract class ActionCard{
    
    public boolean isShowing(){
       return cardState == CardState.SHOW;
+   }
+      
+   public int getDamage(){
+      return damage;
+   }
+   public int getGold(){
+      return gold;
    }
    
 }

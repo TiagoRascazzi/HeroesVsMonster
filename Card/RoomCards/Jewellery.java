@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Jewellery extends RoomCard{
    
    public Jewellery(){
-      super(1);
+      super(2);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){
@@ -15,6 +15,7 @@ public class Jewellery extends RoomCard{
    public boolean processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+            this.gold += 100;  //TODO only thing that this card could need is that instead of 10 its a number between some range
             return true;
          }
       }

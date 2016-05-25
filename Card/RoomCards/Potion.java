@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 
-public class DeadAdventurer extends RoomCard{
+public class Potion extends RoomCard{
    
-   public DeadAdventurer(){
-      super(7);
+   public Potion(){
+      super(10);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

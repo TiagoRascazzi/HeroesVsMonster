@@ -4,24 +4,33 @@ import java.awt.event.MouseEvent;
 import java.awt.Point;
 import java.util.Random;
 
-public class CrossfireTrap extends RoomCard{
+public class CaveIn extends RoomCard{
    
-   public CrossfireTrap(){
-      super(4);
+   public CaveIn(){
+      super(1);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){
       super.drawAction(g, posX, posY);
    }
-   public boolean processKeyInput(KeyEvent e){ 
+   
+   public boolean processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+            
             Random random = new Random();
-            damage = random.nextInt(12) + 1;  //TODO display to screen amount lost
+            int dice = random.nextInt(6) + 1;
+            int guess = random.nextInt(6) + 1;  //maybe ask the player for a number
+            
+            if(dice == guess) //maybe print what happened
+               damage += 1000000;
+            else
+               damage += random.nextInt(6) + 1;
+            
             return true;
          }
       }
-      return super.processKeyInput(e);  
+      return super.processKeyInput(e);
    }
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       return super.processMouseInput(screenSize, e);

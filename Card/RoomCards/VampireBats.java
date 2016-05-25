@@ -6,7 +6,7 @@ import java.awt.Point;
 public class VampireBats extends RoomCard{
    
    public VampireBats(){
-      super(8);
+      super(14);
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){

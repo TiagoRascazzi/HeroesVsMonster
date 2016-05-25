@@ -9,7 +9,7 @@ import java.awt.Color;
 
 public class HVMPanel extends JPanel{
    
-   public enum GameState {START, MAIN, GAME, PAUSE};  // enum of all the state that the game has
+   public enum GameState {START, MAIN, GAME, PAUSE, END};  // enum of all the state that the game has
    private static BGMusicPlayer bgMusicPlayer;        // used to play the music in the backgroung
     
    public static Point mouse;                         // Save the mouse position
@@ -119,10 +119,29 @@ public class HVMPanel extends JPanel{
    
    //goes to next player if its the last one go back to first and remove one sun
    public void nextPlayer(){
+      int lastPlayer = currentPlayer;
       currentPlayer++;
       if(currentPlayer>=players.size()){
          currentPlayer = 0;
          timeOfDay--;
+      }
+      
+      boolean atLeastOneAlive = false;
+      for(int i=0; i<players.size(); i++)
+         if(players.get(i).isAlive())
+            atLeastOneAlive = true;
+      if(atLeastOneAlive){
+         while(!players.get(currentPlayer).isAlive()){
+            currentPlayer++;
+            if(currentPlayer>=players.size()){
+               currentPlayer = 0;
+               timeOfDay--;
+            }
+         }
+      }else{
+         //show end screen
+         gameState = GameState.END;
+         System.out.println("THE GAME HAS ENDED");
       }
    }
    
