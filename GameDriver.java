@@ -15,7 +15,7 @@ public class GameDriver{
    public static void main(String[] args){
       ImageIcon icon = new ImageIcon("Img/icon.png");
       screen = new HVMPanel();
-      screen.setPreferredSize(new Dimension(800,650));
+      screen.setPreferredSize(new Dimension(800,650/*400, 325*/));
       JFrame frame = new JFrame("Heroes VS. Monsters");
       screen.setCursor(Toolkit.getDefaultToolkit().createCustomCursor( new ImageIcon("Img/cursor/normal.png").getImage(), new Point(0,0),"custom cursor"));
       frame.setIconImage(icon.getImage());

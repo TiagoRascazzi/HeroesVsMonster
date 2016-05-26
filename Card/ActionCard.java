@@ -36,6 +36,11 @@ public abstract class ActionCard{
    }
    
    public boolean processMouseInput(Point screenSize, MouseEvent e){
+      if(cardState == CardState.SHOW){
+         if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            cardState = CardState.ACTION;
+         }
+      }
       return false;
    }
    
@@ -49,5 +54,10 @@ public abstract class ActionCard{
    public int getGold(){
       return gold;
    }
+ 
+    //methods used to do the hovering effect later they migth go in a GUI class
+  //// public static boolean hover(int x1, int x2, int y1, int y2){
+  //    return (mouse.x>x1 && mouse.x<x2 && mouse.y>y1 && mouse.y<y2);
+  // }
    
 }

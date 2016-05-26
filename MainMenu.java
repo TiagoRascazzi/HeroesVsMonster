@@ -42,7 +42,7 @@ public class MainMenu{
          g.drawString("Select the number of players", 50, 50);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
          for(int i=0; i<4; i++){
-            chgColorOnHover(g, Color.RED, Color.WHITE, 55, 130, 90+25*i, 90+25*(i+1));
+            GUI.chgColorOnHover(g, Color.RED, Color.WHITE, 55, 130, 90+25*i, 90+25*(i+1));
             g.drawString("("+(i+1)+") "+(i+1)+" Player", 50, 75+(25*i)); 
          }
       }
@@ -53,7 +53,7 @@ public class MainMenu{
          g.drawString("Select the hero for player #"+currentPlayer, 50, 50);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
          for(int i=0; i<availablePlayers.size(); i++){
-            chgColorOnHover(g, Color.RED, Color.WHITE, 55, 130, 90+25*i, 90+25*(i+1));
+            GUI.chgColorOnHover(g, Color.RED, Color.WHITE, 55, 130, 90+25*i, 90+25*(i+1));
             g.drawString("("+(i+1)+") "+availablePlayers.get(i).getName(), 50, 75+25*i);
          } 
       }
@@ -88,7 +88,7 @@ public class MainMenu{
    public ArrayList<Player> processMouseInput(MouseEvent e){
       if(state == MainMenuState.SELECT){
          for(int i = 0; i < 4; i++){
-            if(hover(55, 130, 90+25*i, 90+25*(i+1))){
+            if(GUI.hover(55, 130, 90+25*i, 90+25*(i+1))){
                numberOfPlayer = i+1;
                currentPlayer = 1;
                state = MainMenuState.CHOSE;
@@ -96,7 +96,7 @@ public class MainMenu{
          }
       }else if(state == MainMenuState.CHOSE){
          for(int i = 0; i < 4; i++){
-            if(hover(55, 130, 90+25*i, 90+25*(i+1))){
+            if(GUI.hover(55, 130, 90+25*i, 90+25*(i+1))){
                players.add(availablePlayers.remove(i));
                if(currentPlayer<numberOfPlayer)
                   currentPlayer++;
@@ -106,15 +106,5 @@ public class MainMenu{
          }
       }
       return null;   
-   }
-   
-   //methods used to do the hovering effect later they migth go in a GUI class
-   private boolean hover(int x1, int x2, int y1, int y2){
-      return (HVMPanel.mouse.x>x1 && HVMPanel.mouse.x<x2 && HVMPanel.mouse.y>y1 && HVMPanel.mouse.y<y2);
-   } 
-   private void chgColorOnHover(Graphics2D g, Color c1, Color c2, int x1, int x2, int y1, int y2){
-      g.setColor(c1);
-      if(hover(x1, x2, y1, y2))
-         g.setColor(c2);
    }
 }

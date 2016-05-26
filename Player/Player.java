@@ -74,30 +74,22 @@ public abstract class Player{
       }else if(state == PlayerState.SEARCH){
          state = PlayerState.SELECT;
       }else if(state == PlayerState.CARD){
-         if(playerCurrentCard.processKeyInput(e)){
-            state = PlayerState.SELECT;
-            life -= playerCurrentCard.getDamage();
-            gold += playerCurrentCard.getGold();
-            if(life<=0)
-               return true;
-            playerCurrentCard = null;
-            if(!HVMPanel.board.get(posY, posX).keepsPlaying())
-               return true;
-         }
+         if(playerCurrentCard.processKeyInput(e))
+            return afterReceivedCard();
       }
       return false;
    }
    
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(state == PlayerState.SELECT){
-         if(hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
+         if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
             state = PlayerState.MOVE;
-         }else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
+         }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
             search();
             state = PlayerState.SEARCH;
-         }else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
+         }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
             return true;
-         }else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
+         }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          }
       }else if(state == PlayerState.MOVE){
@@ -109,9 +101,22 @@ public abstract class Player{
       }else if(state == PlayerState.SEARCH){
          state = PlayerState.SELECT;
       }else if(state == PlayerState.CARD){
-         //TODO return true 
-         playerCurrentCard.processMouseInput(screenSize, e);
+         if(playerCurrentCard.processMouseInput(screenSize, e))
+            return afterReceivedCard();
+         
       }
+      return false;
+   }
+   
+   public boolean afterReceivedCard(){
+      state = PlayerState.SELECT;
+      life -= playerCurrentCard.getDamage();
+      gold += playerCurrentCard.getGold();
+      if(life<=0)
+         return true;
+      playerCurrentCard = null;
+      if(!HVMPanel.board.get(posY, posX).keepsPlaying())
+         return true;
       return false;
    }
    
@@ -137,19 +142,19 @@ public abstract class Player{
    }
    public Point getMouseMove(MouseEvent e){
       Point p = null;
-      if(hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
+      if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
          p = new Point();
          p.setLocation(posX-1, posY);
       }
-      else if(hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
+      else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
          p = new Point();
          p.setLocation(posX+1, posY);
       }
-      else if(hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){
+      else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){
          p = new Point();
          p.setLocation(posX, posY-1);
       }
-      else if(hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
+      else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
          p = new Point();
          p.setLocation(posX, posY+1);
       }
@@ -267,28 +272,28 @@ public abstract class Player{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
          
       if(state == PlayerState.SELECT){
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(1) MOVE", posX+8, posY+25);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
          g.drawString("(2) SEARCH", posX+8, posY+50);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
          g.drawString("(3) SKIP TURN", posX+8, posY+75);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
          g.drawString("(esc) PAUSE", posX+8, posY+100);
       }else if(state == PlayerState.MOVE){
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(\u2190) LEFT", posX+8, posY+25);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
          g.drawString("(\u2192) RIGTH", posX+8, posY+50);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
          g.drawString("(\u2191) UP", posX+8, posY+75);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
          g.drawString("(\u2193) DOWN", posX+8, posY+100);
-         chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+140, posY+165);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+140, posY+165);
          g.drawString("any other key to return", posX+8, posY+125);
       }else if(state == PlayerState.SEARCH){
          g.drawString("SEARCHING", posX+8, posY+25);
-         chgColorOnHover(g, Color.RED, Color.RED, posX+8, posX+148, posY+65, posY+90);
+         GUI.chgColorOnHover(g, Color.RED, Color.RED, posX+8, posX+148, posY+65, posY+90);
          g.drawString("any key to return", posX+8, posY+50);
       }else if(state == PlayerState.CARD){
          playerCurrentCard.drawAction(g, posX, posY);
@@ -331,16 +336,6 @@ public abstract class Player{
    }
    public Image getImage(){
       return image.getImage();
-   }
-   
-   private boolean hover(int x1, int x2, int y1, int y2){
-      return (HVMPanel.mouse.x>x1 && HVMPanel.mouse.x<x2 && HVMPanel.mouse.y>y1 && HVMPanel.mouse.y<y2);
-   }
-   
-   private void chgColorOnHover(Graphics2D g, Color c1, Color c2, int x1, int x2, int y1, int y2){
-      g.setColor(c1);
-      if(hover(x1, x2, y1, y2))
-         g.setColor(c2);
    }
    
    public ActionCard getCurrentCard(){

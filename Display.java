@@ -225,11 +225,11 @@ public class Display extends HVMPanel{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
       g.drawString("PAUSE", 50, 75);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
-      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 310, 155, 185);
+      GUI.chgColorOnHover(g, Color.RED, Color.BLACK, 100, 310, 155, 185);
       g.drawString("(esc) RESUME", 100, 150);
-      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 205, 235);
+      GUI.chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 205, 235);
       g.drawString("(r) RESTART", 100, 200);
-      chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
+      GUI.chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
       g.drawString("(q) QUIT", 100, 250);
    }
    
@@ -240,11 +240,11 @@ public class Display extends HVMPanel{
          g.setColor(new Color(65, 105, 225, 225));
          g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
          
-         g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-125, (int)(screenHeight/6), 250, 350, null);
+         g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4), (int)(screenWidth/4), (int)(screenHeight/2), null);
          
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-         chgColorOnHover(g, Color.RED, Color.BLACK, 400, 545, 475, 565);
-         g.drawString("ENTER", (int)(screenWidth/2), (int)(5*screenHeight/6)-10);
+         GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
+         g.drawString("ENTER", (int)(screenWidth/2)-25, (int)(screenHeight-(3*screenHeight/16)));
          
       }
    }

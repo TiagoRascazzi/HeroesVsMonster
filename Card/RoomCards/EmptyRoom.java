@@ -23,6 +23,11 @@ public class EmptyRoom extends RoomCard{
    }
    
    public boolean processMouseInput(Point screenSize, MouseEvent e){
+      if(cardState == CardState.SHOW){
+         if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            return true;
+         }
+      }
       return super.processMouseInput(screenSize, e);
    }
    
