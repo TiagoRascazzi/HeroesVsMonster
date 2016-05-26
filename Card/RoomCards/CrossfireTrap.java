@@ -16,8 +16,7 @@ public class CrossfireTrap extends RoomCard{
    public boolean processKeyInput(KeyEvent e){ 
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
-            Random random = new Random();
-            damage = random.nextInt(12) + 1;  //TODO display to screen amount lost
+            mainAction();
             return true;
          }
       }
@@ -26,10 +25,16 @@ public class CrossfireTrap extends RoomCard{
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            mainAction();
             return true;
          }
       }
       return super.processMouseInput(screenSize, e);
+   }
+   
+   public void mainAction(){
+      Random random = new Random();
+      damage = random.nextInt(12) + 1;  //TODO display to screen amount lost
    }
    
 }

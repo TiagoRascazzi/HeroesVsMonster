@@ -5,7 +5,7 @@ import java.awt.Point;
 
 public abstract class ActionCard{
    
-   protected enum CardState {SHOW, ACTION};
+   protected enum CardState {SHOW, ACTION, OPT1, OPT2, OPT3, OPT4, OPT5};
    protected CardState cardState;
    private int textureID;
    
@@ -54,10 +54,5 @@ public abstract class ActionCard{
    public int getGold(){
       return gold;
    }
- 
-    //methods used to do the hovering effect later they migth go in a GUI class
-  //// public static boolean hover(int x1, int x2, int y1, int y2){
-  //    return (mouse.x>x1 && mouse.x<x2 && mouse.y>y1 && mouse.y<y2);
-  // }
    
 }

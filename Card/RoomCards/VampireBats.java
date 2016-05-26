@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
+import java.util.Random;
 
 public class VampireBats extends RoomCard{
    
@@ -15,6 +16,7 @@ public class VampireBats extends RoomCard{
    public boolean processKeyInput(KeyEvent e){ 
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+            mainAction();
             return true;
          }
       }
@@ -23,10 +25,21 @@ public class VampireBats extends RoomCard{
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            mainAction();
             return true;
          }
       }
       return super.processMouseInput(screenSize, e);
+   }
+   
+   public void mainAction(){
+      Random random = new Random();
+      int typeOfDice = random.nextInt(2) + 1;
+      if(typeOfDice == 1){
+         damage += random.nextInt(6) + 1;
+      }else if(typeOfDice == 2){
+         damage += random.nextInt(12) + 1;
+      }
    }
    
 }

@@ -42,7 +42,7 @@ public class Display extends HVMPanel{
       //cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
       //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
       //cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
-      //cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
       //cardTextures[15] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
       //cardTextures[16] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         

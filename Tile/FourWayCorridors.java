@@ -7,7 +7,7 @@ public class FourWayCorridors extends Tile{
       
    public FourWayCorridors(){
             
-      super(7, true, true, true, true, true, true);
+      super(7, true, false, true, true, true, true);
       
    //private int textureID0;
    //private int maxNumOfPlayers;

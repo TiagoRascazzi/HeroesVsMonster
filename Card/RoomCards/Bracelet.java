@@ -15,7 +15,7 @@ public class Bracelet extends RoomCard{
    public boolean processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
-            this.gold += 10;  //TODO only thing that this card could need is that instead of 10 its a number between some range
+            mainAction();
             return true;
          }
       }
@@ -24,10 +24,14 @@ public class Bracelet extends RoomCard{
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            mainAction();
             return true;
          }
       }
       return super.processMouseInput(screenSize, e);
    }
    
+   public void mainAction(){
+      this.gold += 10;  //TODO only thing that this card could need is that instead of 10 its a number between some range
+   }
 }

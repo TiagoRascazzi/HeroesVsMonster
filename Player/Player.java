@@ -270,7 +270,7 @@ public abstract class Player{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
       g.drawString(name, posX, posY);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-         
+      
       if(state == PlayerState.SELECT){
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(1) MOVE", posX+8, posY+25);
