@@ -6,7 +6,7 @@ import java.awt.Point;
 public class PotionSearch extends SearchCard{
    
    public PotionSearch(){
-      super(0);
+      super(16);
       active = true;
    }
    

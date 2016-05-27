@@ -6,7 +6,7 @@ import java.awt.Point;
 public class EmptySearch extends SearchCard{
    
    public EmptySearch(){
-      super(0);
+      super(14);
       active = true;
    }
    

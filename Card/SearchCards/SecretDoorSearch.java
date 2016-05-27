@@ -6,7 +6,7 @@ import java.awt.Point;
 public class SecretDoorSearch extends SearchCard{
    
    public SecretDoorSearch(){
-      super(0);
+      super(17);
       active = true;
    }
    

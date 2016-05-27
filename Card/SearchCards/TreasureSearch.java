@@ -6,7 +6,7 @@ import java.awt.Point;
 public class TreasureSearch extends SearchCard{
    
    public TreasureSearch(){
-      super(0);
+      super(19);
       active = true;
    }
    

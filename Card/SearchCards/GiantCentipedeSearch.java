@@ -6,7 +6,7 @@ import java.awt.Point;
 public class GiantCentipedeSearch extends SearchCard{
    
    public GiantCentipedeSearch(){
-      super(0);
+      super(15);
       active = true;
    }
    

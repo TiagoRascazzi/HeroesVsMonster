@@ -29,7 +29,7 @@ public class Display extends HVMPanel{
       //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
       
       //load all the image for cards
-      cardTextures = new ImageIcon[15];
+      cardTextures = new ImageIcon[20];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
       cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
@@ -44,8 +44,14 @@ public class Display extends HVMPanel{
       cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
       //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
-      cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
-        
+      
+      cardTextures[14] = new ImageIcon("Img/Cards/SearchCard/EmptySearch.png");
+      cardTextures[15] = new ImageIcon("Img/Cards/SearchCard/GiantCentipedeSearch.png");
+      cardTextures[16] = new ImageIcon("Img/Cards/SearchCard/PotionSearch.png");
+      cardTextures[17] = new ImageIcon("Img/Cards/SearchCard/SecretDoorSearch.png");
+      cardTextures[18] = new ImageIcon("Img/Cards/SearchCard/TrapSearch.png");
+      cardTextures[19] = new ImageIcon("Img/Cards/SearchCard/TreasureSearch.png");
+              
       //load all the image for tiles
       tileTextures = new ImageIcon[26];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
@@ -248,7 +254,7 @@ public class Display extends HVMPanel{
          g.setColor(new Color(65, 105, 225, 225));
          g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
          
-         //IF YOU GET AN ERROR HERE CHECK IF YOU DECOMMENTED THE IMAGEICON
+         //IF YOU GET AN ERROR HERE CHECK IF YOU DECOMMENTED THE IMAGEICON ON TOP
          g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4), (int)(screenWidth/4), (int)(screenHeight/2), null);
          
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20));          

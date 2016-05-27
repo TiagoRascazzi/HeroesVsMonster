@@ -6,7 +6,7 @@ import java.awt.Point;
 public class TrapSearch extends SearchCard{
    
    public TrapSearch(){
-      super(0);
+      super(18);
       active = true;
    }
    
