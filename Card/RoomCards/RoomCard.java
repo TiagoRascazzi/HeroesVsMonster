@@ -30,7 +30,6 @@ public abstract class RoomCard extends ActionCard{
       //wr.add(1, new CurseOfTheWizard()); 
       //wr.add(1, new DeadAdventurer());
       //wr.add(1, new GiantSpider());
-      //wr.add(1, new Monster());
       //wr.add(1, new SneakAttack());
       //wr.add(1, new TrapDoor());
       

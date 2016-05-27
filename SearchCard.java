@@ -10,7 +10,7 @@ public abstract class SearchCard extends ActionCard{
    }
    
    public SearchCard getRandom(){
-      WeightedRandom<SearchCard> wr = new WeightedRandom<SearchCard>();
+      WeightedRandom<RoomCard> wr = new WeightedRandom<RoomCard>();
       //DO ONE A THE TIME
       wr.add(1, new Empty());
       wr.add(1, new GoldenGuineas());

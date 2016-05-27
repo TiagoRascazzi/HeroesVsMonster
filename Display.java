@@ -12,6 +12,7 @@ public class Display extends HVMPanel{
    private static Dimension boardSize = new Dimension(0, 0);   //save the number of row and col in the board 
    private static ImageIcon[] tileTextures;                    //array that contain all the texture for the tiles
    private static ImageIcon[] cardTextures;                    //array that contain all the texture for the cards
+   private static ImageIcon[] scTextures;                        //array that contain all the texture for the searchcards
    private static ImageIcon startImg;                          //the picture for the start screen 
    private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
@@ -25,7 +26,8 @@ public class Display extends HVMPanel{
       sunImg = new ImageIcon("Img/sun.png"); 
       sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
       
-      
+      scTextures = new ImageIcon[1];
+      scTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       //NEVER CHANGE THE TEXTURE ID, JUST ADD
       //load all the image for cards
       cardTextures = new ImageIcon[17];
@@ -38,14 +40,11 @@ public class Display extends HVMPanel{
       cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
       //cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
       //ca1rdTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
-      //cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Monster.png"); 
-      cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
-      //cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
-      cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
-      //cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
-      cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
-      //cardTextures[15] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
-      //cardTextures[16] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
+      //cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
+      cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
+      //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
+      cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
         
       //load all the image for tiles
       tileTextures = new ImageIcon[26];

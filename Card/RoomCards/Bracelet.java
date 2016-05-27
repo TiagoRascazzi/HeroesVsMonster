@@ -33,7 +33,7 @@ public class Bracelet extends RoomCard{
    }
    
    public void mainAction(){
-      this.gold += 10;  //TODO only thing that this card could need is that instead of 10 its a number between some range
-      Display.showTextPopup("You received 10 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+10));
+      this.gold += 40;  //TODO only thing that this card could need is that instead of 10 its a number between some range
+      Display.showTextPopup("You received 40 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+40));
    }
 }

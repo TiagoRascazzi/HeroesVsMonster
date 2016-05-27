@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 
-public class Jewellery extends RoomCard{
+public class ShuffleTheDeckS extends SearchCard{
    
-   public Jewellery(){
-      super(2);
+   public ShuffleTheDeckS(){
+      super(0);
       active = true;
    }
    
@@ -31,11 +31,4 @@ public class Jewellery extends RoomCard{
       }
       return super.processMouseInput(screenSize, e);
    }
-   
-   public void mainAction(){
-      this.gold += 30;  //TODO only thing that this card could need is that instead of 10 its a number between some range
-      Display.showTextPopup("You received 30 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+30));
-   }
-   
-   
 }
