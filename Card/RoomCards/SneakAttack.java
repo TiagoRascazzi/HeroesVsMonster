@@ -6,7 +6,7 @@ import java.awt.Point;
 public class SneakAttack extends RoomCard{
    
    public SneakAttack(){
-      super(11);
+      super(10);
       active = true;
    }
    

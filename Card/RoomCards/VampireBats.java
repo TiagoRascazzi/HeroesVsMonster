@@ -7,7 +7,7 @@ import java.util.Random;
 public class VampireBats extends RoomCard{
    
    public VampireBats(){
-      super(14);
+      super(13);
       active = true;
    }
    

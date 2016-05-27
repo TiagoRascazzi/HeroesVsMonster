@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public abstract class Player{
    
-   private enum PlayerState {SELECT, MOVE, SEARCH, COMBAT, CARD};
+   private enum PlayerState {SELECT, MOVE, COMBAT, CARD};
    private PlayerState state = PlayerState.SELECT;
    
    private ImageIcon image;
@@ -60,8 +60,8 @@ public abstract class Player{
          if(e.getKeyCode() == KeyEvent.VK_1){
             state = PlayerState.MOVE;
          }else if(e.getKeyCode() == KeyEvent.VK_2){
-            search();
-            state = PlayerState.SEARCH;
+            playerCurrentCard = SearchCard.getRandom(); //search
+            state = PlayerState.CARD;
          }else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
             return true;
          }
@@ -71,8 +71,6 @@ public abstract class Player{
             state = PlayerState.SELECT;
          else
             return move(p);
-      }else if(state == PlayerState.SEARCH){
-         state = PlayerState.SELECT;
       }else if(state == PlayerState.CARD){
          ActionCard tmpCard = playerCurrentCard.processKeyInput(e);
          if(tmpCard != null && !hasSameCard(tmpCard))
@@ -85,24 +83,24 @@ public abstract class Player{
    
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(state == PlayerState.SELECT){
+         //TODO MOUSE CLICK INPUT BASED RELATIVE TO SCREEN AND NUMBER OF BUTTONS
          if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
             state = PlayerState.MOVE;
-         }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
-            search();
-            state = PlayerState.SEARCH;
+         }/*else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
+            playerCurrentCard = SearchCard.getRandom();  //search
+            state = PlayerState.CARD;
          }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
             return true;
          }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          }
+         */
       }else if(state == PlayerState.MOVE){
          Point p = getMouseMove(e);
          if(p == null)
             state = PlayerState.SELECT;
          else
             return move(p);
-      }else if(state == PlayerState.SEARCH){
-         state = PlayerState.SELECT;
       }else if(state == PlayerState.CARD){
          ActionCard tmpCard = playerCurrentCard.processMouseInput(screenSize, e);
          if(tmpCard != null && !hasSameCard(tmpCard))
@@ -264,63 +262,61 @@ public abstract class Player{
    public int getNumOfPlayersAt(Point p){
       int count = 0;
       for(int i = 0; i < HVMPanel.players.size(); i++)
-         if(HVMPanel.players.get(i).getPosX() == p.x && HVMPanel.players.get(i).getPosY() == p.y)
+         if(HVMPanel.players.get(i).isAlive() && HVMPanel.players.get(i).getPosX() == p.x && HVMPanel.players.get(i).getPosY() == p.y)
             count++;
       return count;
    }
    
-   public void search(){
-      //get a card from search deck if room wasnt search more then twice consecusively
-      //random search card
-   }
-   
-   public void drawAction(Graphics2D g, int posX, int posY){ 
+   public void drawAction(Graphics2D g, int pX, int pY){ 
       
-      actionPosX = posX;
-      actionPosY = posY;
+      actionPosX = pX;
+      actionPosY = pY;
       
       g.setColor(Color.RED);   
       g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-      g.drawString(name, posX, posY);
+      g.drawString(name, pX, pY);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
       
       if(state == PlayerState.SELECT){
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
-         g.drawString("(1) MOVE", posX+8, posY+25);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
-         g.drawString("(2) SEARCH", posX+8, posY+50);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
-         g.drawString("(3) SKIP TURN", posX+8, posY+75);
          int count = 0;
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
+         g.drawString("("+(count+1)+") MOVE", pX+8, pY+25+25*count);
+         count++;
+         
+         if(HVMPanel.board.get(posY, posX).isSearchable()){
+            GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
+            g.drawString("("+(count+1)+") SEARCH", pX+8, pY+25+25*count);
+            count++;
+         }
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
+         g.drawString("("+(count+1)+") SKIP TURN", pX+8, pY+25+25*count);
+         count++;
+         
          for(int i=0; i<playerCards.size(); i++){
             if(playerCards.get(i).getPrintableAction() != null){
                for(int j=0; j<playerCards.get(i).getPrintableAction().length; j++){
-                  GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115+25*count, posY+140+25*count);
-                  g.drawString("("+(count+4)+")"+playerCards.get(i).getPrintableAction()[0], posX+8, posY+100+25*count);
+                  GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
+                  g.drawString("("+(count+1)+")"+playerCards.get(i).getPrintableAction()[0], pX+8, pY+25+25*count);
                   count++;
                }
             }
          }
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115+25*count, posY+140+25*count);
-         g.drawString("(esc) PAUSE", posX+8, posY+100+25*count);  //TODO fix click on pause with more stuff
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
+         g.drawString("(esc) PAUSE", pX+8, pY+25+25*count);  //TODO fix click on pause with more stuff
          
       }else if(state == PlayerState.MOVE){
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
-         g.drawString("(\u2190) LEFT", posX+8, posY+25);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+65, posY+90);
-         g.drawString("(\u2192) RIGTH", posX+8, posY+50);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
-         g.drawString("(\u2191) UP", posX+8, posY+75);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
-         g.drawString("(\u2193) DOWN", posX+8, posY+100);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+140, posY+165);
-         g.drawString("any other key to return", posX+8, posY+125);
-      }else if(state == PlayerState.SEARCH){
-         g.drawString("SEARCHING", posX+8, posY+25);
-         GUI.chgColorOnHover(g, Color.RED, Color.RED, posX+8, posX+148, posY+65, posY+90);
-         g.drawString("any key to return", posX+8, posY+50);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40, pY+65);
+         g.drawString("(\u2190) LEFT", pX+8, pY+25);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+65, pY+90);
+         g.drawString("(\u2192) RIGTH", pX+8, pY+50);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+90, pY+115);
+         g.drawString("(\u2191) UP", pX+8, pY+75);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+115, pY+140);
+         g.drawString("(\u2193) DOWN", pX+8, pY+100);
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+140, pY+165);
+         g.drawString("any other key to return", pX+8, pY+125);
       }else if(state == PlayerState.CARD){
-         playerCurrentCard.drawAction(g, posX, posY);
+         playerCurrentCard.drawAction(g, pX, pY);
       }
    } 
    

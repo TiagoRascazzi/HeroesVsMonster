@@ -6,7 +6,7 @@ import java.awt.Point;
 public class TrapDoor extends RoomCard{
    
    public TrapDoor(){
-      super(13);
+      super(12);
       active = true;
    }
    

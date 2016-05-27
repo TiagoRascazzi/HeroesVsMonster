@@ -150,7 +150,7 @@ public class HVMPanel extends JPanel{
          if(players.get(i).isAlive())
             atLeastOneAlive = true;
             
-      if(!atLeastOneAlive || timeOfDay<=0){
+      if(   (!atLeastOneAlive || timeOfDay<=0) ){
          //show end screen
          gameState = GameState.END;
          System.out.println("THE GAME HAS ENDED");

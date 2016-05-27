@@ -12,7 +12,6 @@ public class Display extends HVMPanel{
    private static Dimension boardSize = new Dimension(0, 0);   //save the number of row and col in the board 
    private static ImageIcon[] tileTextures;                    //array that contain all the texture for the tiles
    private static ImageIcon[] cardTextures;                    //array that contain all the texture for the cards
-   private static ImageIcon[] scTextures;                        //array that contain all the texture for the searchcards
    private static ImageIcon startImg;                          //the picture for the start screen 
    private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
@@ -26,11 +25,11 @@ public class Display extends HVMPanel{
       sunImg = new ImageIcon("Img/sun.png"); 
       sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
       
-      scTextures = new ImageIcon[1];
-      scTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
-      //NEVER CHANGE THE TEXTURE ID, JUST ADD
+      //NEVER CHANGE THE TEXTURE ID, JUST ADD OR COMMENT OUT
+      //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
+      
       //load all the image for cards
-      cardTextures = new ImageIcon[17];
+      cardTextures = new ImageIcon[15];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
       cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
@@ -45,6 +44,7 @@ public class Display extends HVMPanel{
       cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
       //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
+      cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
         
       //load all the image for tiles
       tileTextures = new ImageIcon[26];
@@ -253,7 +253,7 @@ public class Display extends HVMPanel{
          
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20));          
          GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
-         g.drawString("ENTER", (int)(screenWidth/2)-25, (int)(screenHeight-(3*screenHeight/16)));
+         g.drawString("ENTER", (int)(screenWidth/2)-(g.getFontMetrics().stringWidth("ENTER")/2), (int)(screenHeight-(3*screenHeight/16)));
          
       }
    }
@@ -275,11 +275,14 @@ public class Display extends HVMPanel{
          
          g.setFont(new Font("TimesRoman", Font.PLAIN, 50));    
          g.setColor(Color.RED);
-         g.drawString( TextPopupValue, (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4));
-               
+         
+         String[]str = TextPopupValue.split("\n");         
+         for(int i =0; i<str.length; i++)
+            g.drawString( str[i], (int)(screenWidth/2)-(g.getFontMetrics().stringWidth(str[i])/2), (int)(screenHeight/2)-(int)(screenHeight/4)+(60*i));
+         
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
          GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
-         g.drawString("ENTER", (int)(screenWidth/2)-25, (int)(screenHeight-(3*screenHeight/16)));
+         g.drawString("ENTER", (int)(screenWidth/2)-(g.getFontMetrics().stringWidth("ENTER")/2), (int)(screenHeight-(3*screenHeight/16)));
    }
    
    public static ImageIcon getCardTextures(int tID){

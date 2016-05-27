@@ -12,6 +12,7 @@ public class CornerTile extends Tile{
     
    public CornerTile(int orientation){
       super(orientation, 1, true, false, false, true, false, true);
+      setSearchable(false);
    }
 
    

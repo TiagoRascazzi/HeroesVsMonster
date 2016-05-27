@@ -8,15 +8,7 @@ public class ThreeWayCorridors extends Tile{
    public ThreeWayCorridors(){
             
       super(10, true, false, true, true, false, true);
-      
-   //private int textureID;
-   //private int maxNumOfPlayers;
-   //private boolean keepPlayin;
-   //private boolean giveRoomCard; 
-   //private boolean leftSide;
-   //private boolean rightSide;
-   //private boolean topSide;
-   //private boolean bottomSide;
+      setSearchable(false);
    }
    
 }

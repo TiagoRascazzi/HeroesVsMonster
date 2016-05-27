@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Potion extends RoomCard{
    
    public Potion(){
-      super(10);
+      super(9);
       active = true;
    }
    

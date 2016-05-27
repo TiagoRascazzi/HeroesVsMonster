@@ -19,6 +19,7 @@ public abstract class Tile{
    
    private boolean keepPlaying;
    private boolean giveRoomCard;
+   private boolean searchable;
    
    public Tile(int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       orientation = LEFT;
@@ -31,6 +32,7 @@ public abstract class Tile{
       rightSide = rs;
       topSide = ts;
       bottomSide = bs;
+      searchable = true;
    }
    public Tile(int orien, int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       textureID = tID;
@@ -42,6 +44,7 @@ public abstract class Tile{
       topSide = ts;
       bottomSide = bs;
       setOrientation(orien);
+      searchable = true;
    }
    
    public int getMaxNumOfPlayers(){
@@ -177,6 +180,12 @@ public abstract class Tile{
    }
    public boolean isBottomSideOpen(){
       return bottomSide;
+   }
+   public boolean isSearchable(){
+      return searchable;
+   }
+   public void setSearchable(boolean b){
+      searchable = b;
    }
   
 }
