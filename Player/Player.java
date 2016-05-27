@@ -60,8 +60,10 @@ public abstract class Player{
          if(e.getKeyCode() == KeyEvent.VK_1){
             state = PlayerState.MOVE;
          }else if(e.getKeyCode() == KeyEvent.VK_2){
-            playerCurrentCard = SearchCard.getRandom(); //search
-            state = PlayerState.CARD;
+            if(HVMPanel.board.get(posY, posX).isSearchable()){
+               playerCurrentCard = SearchCard.getRandom(); //search
+               state = PlayerState.CARD;
+            }
          }else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
             return true;
          }
@@ -87,8 +89,10 @@ public abstract class Player{
          if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
             state = PlayerState.MOVE;
          }/*else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
-            playerCurrentCard = SearchCard.getRandom();  //search
-            state = PlayerState.CARD;
+               if(HVMPanel.board.get(posY, posX).isSearchable()){
+                  playerCurrentCard = SearchCard.getRandom(); //search
+                  state = PlayerState.CARD;
+               }
          }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
             return true;
          }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){

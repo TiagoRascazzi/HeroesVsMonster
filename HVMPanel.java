@@ -30,16 +30,18 @@ public class HVMPanel extends JPanel{
       Display.loadImages();
       
       //TMP FOR TESTING PURPOSE
-      gameState = GameState.GAME;
-      players.add(new SirRohan());
-      board = new SparseMatrix(13, 10);
-      timeOfDay = 26;
-      board.add(0, 0, new CornerTile(CornerTile.TOP_LEFT));
-      board.add(board.numRows()-1, board.numColumns()-1, new CornerTile(CornerTile.BOTTOM_RIGHT));
-      board.add(board.numRows()-1, 0, new CornerTile(CornerTile.BOTTOM_LEFT));
-      board.add(0, board.numColumns()-1, new CornerTile(CornerTile.TOP_RIGHT));
-      board.add(board.numRows()/2, board.numColumns()/2-1, new TreasureChamberTile(Tile.LEFT));
-      board.add(board.numRows()/2, board.numColumns()/2, new TreasureChamberTile(Tile.RIGHT));      
+      if(false){
+         gameState = GameState.GAME;
+         players.add(new SirRohan());
+         board = new SparseMatrix(13, 10);
+         timeOfDay = 26;
+         board.add(0, 0, new CornerTile(CornerTile.TOP_LEFT));
+         board.add(board.numRows()-1, board.numColumns()-1, new CornerTile(CornerTile.BOTTOM_RIGHT));
+         board.add(board.numRows()-1, 0, new CornerTile(CornerTile.BOTTOM_LEFT));
+         board.add(0, board.numColumns()-1, new CornerTile(CornerTile.TOP_RIGHT));
+         board.add(board.numRows()/2, board.numColumns()/2-1, new TreasureChamberTile(Tile.LEFT));
+         board.add(board.numRows()/2, board.numColumns()/2, new TreasureChamberTile(Tile.RIGHT));     
+      }   
    }
    
    //reset the game to default
