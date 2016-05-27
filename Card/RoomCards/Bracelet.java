@@ -7,25 +7,26 @@ public class Bracelet extends RoomCard{
    
    public Bracelet(){
       super(3);
+      active = true;
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){
       super.drawAction(g, posX, posY);
    }
-   public boolean processKeyInput(KeyEvent e){
+   public ActionCard processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
             mainAction();
-            return true;
+            active = false;
          }
       }
       return super.processKeyInput(e);
    }
-   public boolean processMouseInput(Point screenSize, MouseEvent e){
+   public ActionCard processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
             mainAction();
-            return true;
+            active = false;
          }
       }
       return super.processMouseInput(screenSize, e);
@@ -33,5 +34,6 @@ public class Bracelet extends RoomCard{
    
    public void mainAction(){
       this.gold += 10;  //TODO only thing that this card could need is that instead of 10 its a number between some range
+      Display.showTextPopup("You received 10 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+10));
    }
 }

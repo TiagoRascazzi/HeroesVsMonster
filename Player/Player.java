@@ -74,7 +74,10 @@ public abstract class Player{
       }else if(state == PlayerState.SEARCH){
          state = PlayerState.SELECT;
       }else if(state == PlayerState.CARD){
-         if(playerCurrentCard.processKeyInput(e))
+         ActionCard tmpCard = playerCurrentCard.processKeyInput(e);
+         if(tmpCard != null && !hasSameCard(tmpCard))
+            playerCards.add(tmpCard);
+         if(!playerCurrentCard.isActive())
             return afterReceivedCard();
       }
       return false;
@@ -101,10 +104,20 @@ public abstract class Player{
       }else if(state == PlayerState.SEARCH){
          state = PlayerState.SELECT;
       }else if(state == PlayerState.CARD){
-         if(playerCurrentCard.processMouseInput(screenSize, e))
+         ActionCard tmpCard = playerCurrentCard.processMouseInput(screenSize, e);
+         if(tmpCard != null && !hasSameCard(tmpCard))
+            playerCards.add(tmpCard);
+         if(!playerCurrentCard.isActive())
             return afterReceivedCard();
          
       }
+      return false;
+   }
+   
+   public boolean hasSameCard(ActionCard ac){
+      for(int i=0; i<playerCards.size(); i++)
+         if(playerCards.get(i).getClass().equals( ac.getClass()))
+            return true;
       return false;
    }
    
@@ -278,8 +291,19 @@ public abstract class Player{
          g.drawString("(2) SEARCH", posX+8, posY+50);
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+90, posY+115);
          g.drawString("(3) SKIP TURN", posX+8, posY+75);
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115, posY+140);
-         g.drawString("(esc) PAUSE", posX+8, posY+100);
+         int count = 0;
+         for(int i=0; i<playerCards.size(); i++){
+            if(playerCards.get(i).getPrintableAction() != null){
+               for(int j=0; j<playerCards.get(i).getPrintableAction().length; j++){
+                  GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115+25*count, posY+140+25*count);
+                  g.drawString("("+(count+4)+")"+playerCards.get(i).getPrintableAction()[0], posX+8, posY+100+25*count);
+                  count++;
+               }
+            }
+         }
+         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+115+25*count, posY+140+25*count);
+         g.drawString("(esc) PAUSE", posX+8, posY+100+25*count);  //TODO fix click on pause with more stuff
+         
       }else if(state == PlayerState.MOVE){
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, posX+8, posX+148, posY+40, posY+65);
          g.drawString("(\u2190) LEFT", posX+8, posY+25);
@@ -309,12 +333,20 @@ public abstract class Player{
          g.drawImage(lifeIcon.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);
    } 
    
+   public void drawCards(Graphics2D g, int posX, int posY){
+      for(int i=0; i<playerCards.size(); i++)
+         g.drawImage(Display.getCardTextures(playerCards.get(i).getTextureID()).getImage(), posX+(70*(i%3))-10, posY-(100*((i/3)+1))-10, 70, 100, null);
+   }
+   
    public boolean isMoving(){
       return state == PlayerState.MOVE;
    }
    
    public int life(){
       return life;
+   }
+   public int gold(){
+      return gold;
    }
    public boolean isAlive(){
       return life > 0;

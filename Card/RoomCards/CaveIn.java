@@ -12,6 +12,7 @@ public class CaveIn extends RoomCard{
    public CaveIn(){
       super(1);
       actionPos = new Point(0, 0);
+      active = true;
    }
    
    public void drawAction(Graphics2D g, int posX, int posY){
@@ -34,58 +35,43 @@ public class CaveIn extends RoomCard{
       super.drawAction(g, posX, posY);
    }
    
-   public boolean processKeyInput(KeyEvent e){
+   public ActionCard processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){
-         if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+         if(e.getKeyCode() == KeyEvent.VK_ENTER )
             cardState = CardState.ACTION;
-         }
       }else if(cardState == CardState.ACTION){
-         if(e.getKeyCode() == KeyEvent.VK_1 ){
-            mainAction(1);
-            return true;
-         }else if(e.getKeyCode() == KeyEvent.VK_2 ){
-            mainAction(2);
-            return true;
-         }else if(e.getKeyCode() == KeyEvent.VK_3 ){
-            mainAction(3);
-            return true;
-         }else if(e.getKeyCode() == KeyEvent.VK_4 ){
-            mainAction(4);
-            return true;
-         }else if(e.getKeyCode() == KeyEvent.VK_5 ){
-            mainAction(5);
-            return true;
-         }else if(e.getKeyCode() == KeyEvent.VK_6 ){
-            mainAction(6);
-            return true;
+         if(e.getKeyCode() == KeyEvent.VK_1 || e.getKeyCode() == KeyEvent.VK_2 || 
+             e.getKeyCode() == KeyEvent.VK_3 || e.getKeyCode() == KeyEvent.VK_4 || 
+             e.getKeyCode() == KeyEvent.VK_5 || e.getKeyCode() == KeyEvent.VK_6){
+            mainAction(e.getKeyChar()-'0');
+            active = false;
          }
       }
       return super.processKeyInput(e);
    }
-   public boolean processMouseInput(Point screenSize, MouseEvent e){
+   public ActionCard processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
-         if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+         if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) )
             cardState = CardState.ACTION;
-         }
       }else if(cardState == CardState.ACTION){
          if(GUI.hover(actionPos.x+8, actionPos.x+40, actionPos.y+65, actionPos.y+90)){
             mainAction(1);
-            return true;
+            active = false;
          }else if(GUI.hover(actionPos.x+40, actionPos.x+72, actionPos.y+65, actionPos.y+90)){
             mainAction(2);
-            return true;
+            active = false;
          }else if(GUI.hover(actionPos.x+72, actionPos.x+104, actionPos.y+65, actionPos.y+90)){
             mainAction(3);
-            return true;
+            active = false;
          }else if(GUI.hover(actionPos.x+8, actionPos.x+40, actionPos.y+90, actionPos.y+115)){
             mainAction(4);
-            return true;
+            active = false;
          }else if(GUI.hover(actionPos.x+40, actionPos.x+72, actionPos.y+90, actionPos.y+115)){
             mainAction(5);
-            return true;
+            active = false;
          }else if(GUI.hover(actionPos.x+72, actionPos.x+104, actionPos.y+90, actionPos.y+115)){
             mainAction(6);
-            return true;
+            active = false;
          }
       }
       return super.processMouseInput(screenSize, e);
@@ -95,10 +81,12 @@ public class CaveIn extends RoomCard{
       Random random = new Random();
       int dice = random.nextInt(6) + 1;
       
-      if(dice == guess) //maybe print what happened
+      if(dice == guess)
          damage += 1000000;
       else
          damage += random.nextInt(6) + 1;
+      
+      Display.showTextPopup("You lost: "+damage+" lives");
    }
    
 }

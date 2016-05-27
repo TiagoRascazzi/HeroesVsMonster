@@ -11,6 +11,7 @@ public abstract class ActionCard{
    
    protected int damage = 0;
    protected int gold = 0;
+   protected boolean active = false;
    
    
    public ActionCard(int tID){
@@ -26,22 +27,22 @@ public abstract class ActionCard{
       
    }
    
-   public boolean processKeyInput(KeyEvent e){
+   public ActionCard processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
             cardState = CardState.ACTION;
          }
       }
-      return false;
+      return null;
    }
    
-   public boolean processMouseInput(Point screenSize, MouseEvent e){
+   public ActionCard processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
             cardState = CardState.ACTION;
          }
       }
-      return false;
+      return null;
    }
    
    public boolean isShowing(){
@@ -53,6 +54,12 @@ public abstract class ActionCard{
    }
    public int getGold(){
       return gold;
+   }
+   public boolean isActive(){
+      return active;
+   }
+   public String[] getPrintableAction(){
+      return null;
    }
    
 }

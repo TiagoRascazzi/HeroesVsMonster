@@ -9,7 +9,7 @@ import java.awt.Color;
 
 public class HVMPanel extends JPanel{
    
-   public enum GameState {START, MAIN, GAME, PAUSE, END};  // enum of all the state that the game has
+   public enum GameState {START, MAIN, GAME, TEXTPOPUP, PAUSE, END};  // enum of all the state that the game has
    private static BGMusicPlayer bgMusicPlayer;        // used to play the music in the backgroung
    
    protected static MainMenu mainmenu;                // object to display main menu
@@ -95,6 +95,9 @@ public class HVMPanel extends JPanel{
          }else if(e.getKeyCode() == KeyEvent.VK_R){
             gameState = GameState.MAIN;   // restart the game
          }
+      }else if(gameState == GameState.TEXTPOPUP){
+         if(e.getKeyCode() == KeyEvent.VK_ENTER)
+            Display.hideTextPopup();
       }
       repaint();
    }
@@ -123,6 +126,9 @@ public class HVMPanel extends JPanel{
                gameState = GameState.MAIN;   // restart the game
             else if(GUI.hover(100, 230, 255, 285))
                System.exit(0);               // close the game application
+         }else if(gameState == GameState.TEXTPOPUP){
+            if(GUI.hover((int)(getSize().getWidth()/2)-25, (int)(getSize().getWidth()/2)-25+75, (int)(getSize().getHeight()-(3*getSize().getHeight()/16))+10, (int)(getSize().getHeight()-(3*getSize().getHeight()/16))+30) )
+               Display.hideTextPopup();
          }
       }
       repaint();
@@ -130,6 +136,8 @@ public class HVMPanel extends JPanel{
    
    //goes to next player if its the last one go back to first and remove one sun
    public void nextPlayer(){
+      
+      
       int lastPlayer = currentPlayer;
       currentPlayer++;
       if(currentPlayer>=players.size()){
@@ -141,7 +149,12 @@ public class HVMPanel extends JPanel{
       for(int i=0; i<players.size(); i++)
          if(players.get(i).isAlive())
             atLeastOneAlive = true;
-      if(atLeastOneAlive){
+            
+      if(!atLeastOneAlive || timeOfDay<=0){
+         //show end screen
+         gameState = GameState.END;
+         System.out.println("THE GAME HAS ENDED");
+      }else{
          while(!players.get(currentPlayer).isAlive()){
             currentPlayer++;
             if(currentPlayer>=players.size()){
@@ -149,10 +162,6 @@ public class HVMPanel extends JPanel{
                timeOfDay--;
             }
          }
-      }else{
-         //show end screen
-         gameState = GameState.END;
-         System.out.println("THE GAME HAS ENDED");
       }
    }
    

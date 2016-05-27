@@ -16,6 +16,7 @@ public class Display extends HVMPanel{
    private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
    private static ImageIcon sidebarBG;                         //the picture background of the sidebar 
+   private static String TextPopupValue = "";
    
    public static void loadImages(){
       //load backgroung and icon image
@@ -38,9 +39,9 @@ public class Display extends HVMPanel{
       //cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
       //ca1rdTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
       //cardTextures[9] = new ImageIcon("Img/Cards/RoomCard/Monster.png"); 
-      //cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
+      cardTextures[10] = new ImageIcon("Img/Cards/RoomCard/Potion.png"); 
       //cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/SneakAttack.png"); 
-      //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
+      cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
       //cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[14] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
       //cardTextures[15] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
@@ -95,6 +96,11 @@ public class Display extends HVMPanel{
          drawPauseMenu(g, screenWidth, screenHeight);
       }else if(gameState == GameState.END){
          g.drawImage(endImg.getImage(),0, 0, screenWidth, screenHeight, null);
+      }else if(gameState == GameState.TEXTPOPUP){
+         drawBoard(g, screenWidth, screenHeight);
+         drawSidebar(g, screenWidth, screenHeight);
+         drawCard(g, screenWidth, screenHeight);
+         drawTextPopup(g, screenWidth, screenHeight);
       }
    }
    
@@ -194,23 +200,26 @@ public class Display extends HVMPanel{
    
    //Draw the side bar
    public static void drawSidebar(Graphics2D g, int screenWidth, int screenHeight){ 
-      //draw the sidebar background  
-      g.drawImage(sidebarBG.getImage(), (int)boardSize.getWidth(), 0, screenWidth -(int)boardSize.getWidth(), screenHeight, null);
       
       if(screenWidth>screenHeight){ //draw sidebar on side
-         drawSunTrack(g, (int)boardSize.getWidth(), 0);
-         players.get(currentPlayer).drawAction(g, (int)boardSize.getWidth()+8, 175);
-         players.get(currentPlayer).drawLifeGold(g, (int)boardSize.getWidth()+8, 325);
+         int x = Math.min((int)(boardSize.getWidth()-80+(screenWidth-boardSize.getWidth())/2), (int)boardSize.getWidth()+100 );
+         g.drawImage(sidebarBG.getImage(), (int)boardSize.getWidth(), 0, screenWidth -(int)boardSize.getWidth(), screenHeight, null);
+         players.get(currentPlayer).drawCards(g, x, screenHeight);
+         drawSunTrack(g, x, 200);
+         players.get(currentPlayer).drawAction(g, x, 35);
+         players.get(currentPlayer).drawLifeGold(g, x, 325);
       }else{   //draw sidebar on bottom
-         drawSunTrack(g, 0, (int)boardSize.getHeight());
-         players.get(currentPlayer).drawAction(g, 175, (int)boardSize.getHeight()+28);
-         players.get(currentPlayer).drawLifeGold(g, 325, (int)boardSize.getHeight()+20);
+         g.drawImage(sidebarBG.getImage(), 0, (int)boardSize.getHeight(), screenWidth, screenHeight-(int)boardSize.getHeight(), null);
+         drawSunTrack(g, 155, (int)boardSize.getHeight()+28+10);
+         players.get(currentPlayer).drawAction(g, 5, (int)boardSize.getHeight()+40+10);
+         players.get(currentPlayer).drawLifeGold(g, 330, (int)boardSize.getHeight()+40+10);
       }
    }
    
    //The suns to display time left
    public static void drawSunTrack(Graphics2D g, int posX, int posY){
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+      g.setColor(Color.ORANGE);
       g.drawString("Sun track", posX+26, posY+20); 
 	   for(int i=0; i<timeOfDay; i++)
          g.drawImage(sunImg.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);
@@ -240,12 +249,41 @@ public class Display extends HVMPanel{
          g.setColor(new Color(65, 105, 225, 225));
          g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
          
+         //IF YOU GET AN ERROR HERE CHECK IF YOU DECOMMENTED THE IMAGEICON
          g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4), (int)(screenWidth/4), (int)(screenHeight/2), null);
          
-         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));          
          GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
          g.drawString("ENTER", (int)(screenWidth/2)-25, (int)(screenHeight-(3*screenHeight/16)));
          
       }
+   }
+   
+   public static void showTextPopup(String s){
+      gameState = GameState.TEXTPOPUP;
+      TextPopupValue = s;
+   }
+   public static void hideTextPopup(){
+      gameState = GameState.GAME;
+      TextPopupValue = "";
+   }
+   public static void drawTextPopup(Graphics2D g, int screenWidth, int screenHeight){
+         
+         //TODO center text and take care of new lines
+         
+         g.setColor(new Color(65, 105, 225, 225));
+         g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
+         
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 50));    
+         g.setColor(Color.RED);
+         g.drawString( TextPopupValue, (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4));
+               
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+         GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
+         g.drawString("ENTER", (int)(screenWidth/2)-25, (int)(screenHeight-(3*screenHeight/16)));
+   }
+   
+   public static ImageIcon getCardTextures(int tID){
+      return cardTextures[tID];
    }
 }
