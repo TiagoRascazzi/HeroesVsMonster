@@ -57,16 +57,25 @@ public abstract class Player{
    
    public boolean processKeyInput(KeyEvent e){            
       if(state == PlayerState.SELECT){
-         if(e.getKeyCode() == KeyEvent.VK_1){
+         
+         int count = 0;
+         if(e.getKeyChar() == ((count+1)+"").charAt(0))  //move
             state = PlayerState.MOVE;
-         }else if(e.getKeyCode() == KeyEvent.VK_2){
-            if(HVMPanel.board.get(posY, posX).isSearchable()){
+         count++;
+         
+         if(HVMPanel.board.get(posY, posX).isSearchable()){
+            if(e.getKeyChar() == ((count+1)+"").charAt(0)){
                playerCurrentCard = SearchCard.getRandom(); //search
                state = PlayerState.CARD;
             }
-         }else if(e.getKeyCode() == KeyEvent.VK_3){ //if skip
-            return true;
+            count++;
          }
+         
+         if(e.getKeyChar() == ((count+1)+"").charAt(0)) //if skip
+            return true;
+         //count++;
+         
+         
       }else if(state == PlayerState.MOVE){
          Point p = getKeyMove(e);
          if(p == null)
@@ -85,20 +94,35 @@ public abstract class Player{
    
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(state == PlayerState.SELECT){
-         //TODO MOUSE CLICK INPUT BASED RELATIVE TO SCREEN AND NUMBER OF BUTTONS
-         if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40, actionPosY+65)){
+         
+         int count = 0;
+         if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count)))   //move
             state = PlayerState.MOVE;
-         }/*else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+65, actionPosY+90)){
-               if(HVMPanel.board.get(posY, posX).isSearchable()){
-                  playerCurrentCard = SearchCard.getRandom(); //search
-                  state = PlayerState.CARD;
-               }
-         }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+90, actionPosY+115)){//if skip
-            return true;
-         }else if(GUI.hover(actionPosX, actionPosX+140, actionPosY+115, actionPosY+140)){
-            HVMPanel.gameState = HVMPanel.GameState.PAUSE;
+         count++;
+         
+         if(HVMPanel.board.get(posY, posX).isSearchable()){
+            if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count))){  //search
+               playerCurrentCard = SearchCard.getRandom();
+               state = PlayerState.CARD;
+            }
+            count++;
          }
-         */
+         
+         if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count))){  //if skip
+            state = PlayerState.SELECT;
+            return true;
+         }
+         count++;
+         
+         //TODO CARD ACTION
+         for(int i=0; i<playerCards.size(); i++)
+            if(playerCards.get(i).getPrintableAction() != null)
+               count += playerCards.get(i).getPrintableAction().length;
+         
+         if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count)))   //pause
+            HVMPanel.gameState = HVMPanel.GameState.PAUSE;
+         //count++
+         
       }else if(state == PlayerState.MOVE){
          Point p = getMouseMove(e);
          if(p == null)

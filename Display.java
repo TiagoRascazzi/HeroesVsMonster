@@ -84,7 +84,7 @@ public class Display extends HVMPanel{
    }
    
    //method direction what to draw depending on the game state
-   public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){ 
+   public static void drawGame(Graphics2D g, int screenWidth, int screenHeight){   
       g.setColor(new Color(5, 5, 5));
       g.fillRect(0, 0, screenWidth, screenHeight); 
       if(gameState == GameState.START){
