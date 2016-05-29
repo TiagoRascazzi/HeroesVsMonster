@@ -19,4 +19,10 @@ public class GUI{
       if(hover(x1, x2, y1, y2))
          g.setColor(c2);
    } 
+   public static void coverOnHover(Graphics2D g,Color c, int screenWidth, int screenHeight, int posX, int posY, int width, int heigth){
+      if(GUI.hover(posX, posX+width, posY, posY+heigth)){
+         g.setColor(c);
+         g.fillRoundRect( posX, posY, width, heigth, screenWidth/64, screenHeight/64); 
+      }
+   }
 }

@@ -12,6 +12,7 @@ public class Display extends HVMPanel{
    private static Dimension boardSize = new Dimension(0, 0);   //save the number of row and col in the board 
    private static ImageIcon[] tileTextures;                    //array that contain all the texture for the tiles
    private static ImageIcon[] cardTextures;                    //array that contain all the texture for the cards
+   private static ImageIcon[] combatTextures;
    private static ImageIcon startImg;                          //the picture for the start screen 
    private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
@@ -89,6 +90,11 @@ public class Display extends HVMPanel{
       tileTextures[24] = new ImageIcon("Img/Tile/2WayCorridor.png");
       tileTextures[25] = new ImageIcon("Img/Tile/2WayStraightEmptyRoom.png");
     
+      combatTextures = new ImageIcon[3];
+      combatTextures[0] = new ImageIcon("Img/Combat/LeapAside.png");
+      combatTextures[1] = new ImageIcon("Img/Combat/MightyBlow.png");
+      combatTextures[2] = new ImageIcon("Img/Combat/Slash.png");
+      
    }
    
    //method direction what to draw depending on the game state
@@ -273,11 +279,31 @@ public class Display extends HVMPanel{
       }
    }
    
+   //TOD maybe put it in monsterCard class
    //draw all thig the thing that appear when a playerer is figthing a monster
    public static void drawCombat(Graphics2D g, int screenWidth, int screenHeight){
       if(players.get(currentPlayer).getCurrentCard() instanceof MonsterCard && ((MonsterCard)players.get(currentPlayer).getCurrentCard()).isInCombat()){
          g.setColor(new Color(195, 176, 145, 245));
          g.fillRoundRect( (int)(screenWidth/24), (int)(screenHeight/24), (int)(screenWidth/1.0875), (int)(screenHeight/1.0875), screenWidth/8, screenHeight/8); 
+         
+         Color color = new Color(255, 0, 0, 125);
+         int width = (int)(screenWidth/8);
+         int heigth = (int)(screenHeight/4);
+         int space = (int)(screenWidth/64);
+         
+         int centerPosX = (int)(screenWidth/2)-(int)(width/2);
+         int bottomPosY = (int)(screenHeight-(screenHeight/3));//(int)(screenHeight/2)-(int)(heigth/2);
+         
+         g.drawImage( combatTextures[0].getImage(), centerPosX-width-space, bottomPosY, width, heigth, null);
+         GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX-width-space, bottomPosY, width, heigth);
+         
+         g.drawImage( combatTextures[1].getImage(), centerPosX, bottomPosY, width, heigth, null);
+         GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX, bottomPosY, width, heigth);
+         
+         g.drawImage( combatTextures[2].getImage(), centerPosX+width+space, bottomPosY, width, heigth, null);
+         GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX+width+space, bottomPosY, width, heigth);
+         
+         
       }
    }
    
