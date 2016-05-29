@@ -19,12 +19,21 @@ public class Display extends HVMPanel{
    private static ImageIcon sidebarBG;                         //the picture background of the sidebar 
    private static String TextPopupValue = "";
    
+   //Tmp for until the draw combat is not in monsterCard class
+   private static ImageIcon playerHealth;
+   private static ImageIcon monsterHealth;
+   
    public static void loadImages(){
       //load backgroung and icon image
       startImg = new ImageIcon("Img/start.jpg");
       endImg = new ImageIcon("Img/end.jpg");
       sunImg = new ImageIcon("Img/sun.png"); 
       sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
+      
+      //Tmp for until the draw combat is not in monsterCard class
+      playerHealth = new ImageIcon("Img/hearth.png");
+      monsterHealth = new ImageIcon("Img/hearthMonster.png");
+      
       
       //NEVER CHANGE THE TEXTURE ID, JUST ADD OR COMMENT OUT
       //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
@@ -279,13 +288,15 @@ public class Display extends HVMPanel{
       }
    }
    
-   //TOD maybe put it in monsterCard class
+   //TODO maybe put it in monsterCard class
    //draw all thig the thing that appear when a playerer is figthing a monster
    public static void drawCombat(Graphics2D g, int screenWidth, int screenHeight){
       if(players.get(currentPlayer).getCurrentCard() instanceof MonsterCard && ((MonsterCard)players.get(currentPlayer).getCurrentCard()).isInCombat()){
+         //draw backgroung
          g.setColor(new Color(195, 176, 145, 245));
          g.fillRoundRect( (int)(screenWidth/24), (int)(screenHeight/24), (int)(screenWidth/1.0875), (int)(screenHeight/1.0875), screenWidth/8, screenHeight/8); 
          
+         //draw player options
          Color color = new Color(255, 0, 0, 125);
          int width = (int)(screenWidth/8);
          int heigth = (int)(screenHeight/4);
@@ -303,7 +314,56 @@ public class Display extends HVMPanel{
          g.drawImage( combatTextures[2].getImage(), centerPosX+width+space, bottomPosY, width, heigth, null);
          GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX+width+space, bottomPosY, width, heigth);
          
+         int hearthSize = (int)(Math.min(screenWidth, screenHeight)/32*1.5) ;
          
+         //draw players lives
+         int plPosX = (int)(screenWidth/2);
+         int plPosY = (int)(screenHeight-(screenHeight/32+screenHeight/16*0.85));
+         int playerLives = 10;  //TODO get real
+         
+         if(playerLives%2==0){
+            for(int i=0; i<playerLives; i++){
+               if(i >= playerLives/2)
+                  g.drawImage( playerHealth.getImage(), plPosX-(i*hearthSize)+hearthSize*(playerLives-2)/2, plPosY, hearthSize, hearthSize, null);
+               else
+                  g.drawImage( playerHealth.getImage(), plPosX+(i*hearthSize), plPosY, hearthSize, hearthSize, null);
+            }
+         }else{
+            for(int i=0; i<playerLives; i++){
+               if(i == playerLives/2)
+                  g.drawImage( playerHealth.getImage(), plPosX-hearthSize/2, plPosY, hearthSize, hearthSize, null);
+               else if(i < playerLives/2)
+                  g.drawImage( playerHealth.getImage(), plPosX-(i*hearthSize)-3*hearthSize/2, plPosY, hearthSize, hearthSize, null);
+               else
+                  g.drawImage( playerHealth.getImage(), plPosX+(i*hearthSize)-hearthSize*(playerLives)/2, plPosY, hearthSize, hearthSize, null);
+            }
+         }
+          
+         //draw monster lives         
+         int mlPosX = (int)(screenWidth/2)-(int)(hearthSize/2);
+         int mlPosY = (int)(screenHeight/32+screenWidth/64);
+         int monsterLives = 11; //TODO get real
+         
+         //TODO fix this it is not working
+         /*if(monsterLives%2==0){
+            for(int i=0; i<monsterLives; i++){
+               if(i >= monsterLives/2)
+                  g.drawImage( monsterHealth.getImage(), mlPosX-(i*hearthSize)+hearthSize*(playerLives-1)/2, mlPosY, hearthSize, hearthSize, null);
+               else
+                  g.drawImage( monsterHealth.getImage(), mlPosX+(i*hearthSize)+hearthSize/2, mlPosY, hearthSize, hearthSize, null);
+            }
+         }else{
+            for(int i=0; i<monsterLives; i++){
+               if(i == monsterLives/2)
+                  g.drawImage( monsterHealth.getImage(), mlPosX-hearthSize/2, mlPosY, hearthSize, hearthSize, null);
+               else if(i < monsterLives/2)
+                  g.drawImage( monsterHealth.getImage(), mlPosX-(i*hearthSize)-3*hearthSize/2, mlPosY, hearthSize, hearthSize, null);
+               else
+                  g.drawImage( monsterHealth.getImage(), mlPosX+(i*hearthSize)-hearthSize*(playerLives)/2, mlPosY, hearthSize, hearthSize, null);
+            }
+         }*/
+         
+         g.drawImage( monsterHealth.getImage(), mlPosX, mlPosY, hearthSize, hearthSize, null);
       }
    }
    

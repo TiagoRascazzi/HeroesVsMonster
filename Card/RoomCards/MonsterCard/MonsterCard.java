@@ -121,19 +121,23 @@ public abstract class MonsterCard extends RoomCard{
             int bottomPosY = (int)(screenSize.y-(screenSize.y/3));
             if(GUI.hover(centerPosX-width-space, centerPosX-width-space+width, bottomPosY, bottomPosY+heigth)){ 
                System.out.println("You selected LeapAside");
+               combat("LeapAside");
             }
             if(GUI.hover(centerPosX, centerPosX+width, bottomPosY, bottomPosY+heigth)){
                System.out.println("You selected MightyBlow");
+               combat("MightyBlow");
             }
             if(GUI.hover(centerPosX+width+space, centerPosX+width+space+width, bottomPosY, bottomPosY+heigth)){
                System.out.println("You selected Slash");
+               combat("Slash");
             }
          }
       }
       return super.processMouseInput(screenSize, e);
    }
    
-   public void combat(){
+   public void combat(String playerTatic){
+      String monsterTactic = getMonsterTactic();
       
    }
    public void escape(){
@@ -150,8 +154,8 @@ public abstract class MonsterCard extends RoomCard{
    }
    
    //AI
-   public void attack(){
-   
+   public String getMonsterTactic(){
+      return "";
    }
    
    public int getMonsterLives(){
