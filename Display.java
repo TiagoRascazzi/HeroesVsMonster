@@ -29,7 +29,7 @@ public class Display extends HVMPanel{
       //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
       
       //load all the image for cards
-      cardTextures = new ImageIcon[20];
+      cardTextures = new ImageIcon[25];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
       cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
@@ -50,7 +50,15 @@ public class Display extends HVMPanel{
       cardTextures[16] = new ImageIcon("Img/Cards/SearchCard/PotionSearch.png");
       cardTextures[17] = new ImageIcon("Img/Cards/SearchCard/SecretDoorSearch.png");
       cardTextures[18] = new ImageIcon("Img/Cards/SearchCard/TrapSearch.png");
-      cardTextures[19] = new ImageIcon("Img/Cards/SearchCard/TreasureSearch.png");
+      cardTextures[19] = new ImageIcon("Img/Cards/SearchCard/TreasureSearch.png")
+      ;
+      cardTextures[20] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/ChampionOfChaos.png");
+      cardTextures[21] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/DeathWarrior.png");
+      cardTextures[22] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/Goblin.png");
+      cardTextures[23] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/MountainTroll.png");
+      cardTextures[24] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/Orc.png");
+      
+      
               
       //load all the image for tiles
       tileTextures = new ImageIcon[26];
@@ -95,6 +103,7 @@ public class Display extends HVMPanel{
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
          drawCard(g, screenWidth, screenHeight);
+         drawCombat(g, screenWidth, screenHeight);
       }else if(gameState == GameState.PAUSE){
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
@@ -261,6 +270,14 @@ public class Display extends HVMPanel{
          GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
          g.drawString("ENTER", (int)(screenWidth/2)-(g.getFontMetrics().stringWidth("ENTER")/2), (int)(screenHeight-(3*screenHeight/16)));
          
+      }
+   }
+   
+   //draw all thig the thing that appear when a playerer is figthing a monster
+   public static void drawCombat(Graphics2D g, int screenWidth, int screenHeight){
+      if(players.get(currentPlayer).getCurrentCard() instanceof MonsterCard && ((MonsterCard)players.get(currentPlayer).getCurrentCard()).isInCombat()){
+         g.setColor(new Color(195, 176, 145, 245));
+         g.fillRoundRect( (int)(screenWidth/24), (int)(screenHeight/24), (int)(screenWidth/1.0875), (int)(screenHeight/1.0875), screenWidth/8, screenHeight/8); 
       }
    }
    

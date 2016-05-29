@@ -8,6 +8,7 @@ public abstract class ActionCard{
    protected enum CardState {SHOW, ACTION, OPT1, OPT2, OPT3, OPT4, OPT5};
    protected CardState cardState;
    private int textureID;
+   protected Point actionPos;
    
    protected int damage = 0;
    protected int gold = 0;
@@ -17,15 +18,14 @@ public abstract class ActionCard{
    public ActionCard(int tID){
       textureID =  tID;
       cardState = CardState.SHOW;
+      actionPos = new Point(0, 0);
    }
    
    public int getTextureID(){
       return textureID;
    }
    
-   public void drawAction(Graphics2D g, int posX, int posY){
-      
-   }
+   public void drawAction(Graphics2D g, int posX, int posY){}
    
    public ActionCard processKeyInput(KeyEvent e){
       if(cardState == CardState.SHOW){

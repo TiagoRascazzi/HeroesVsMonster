@@ -6,12 +6,9 @@ import java.util.Random;
 import java.awt.Color;
 
 public class CaveIn extends RoomCard{
-   
-   private Point actionPos;
-   
+      
    public CaveIn(){
       super(1);
-      actionPos = new Point(0, 0);
       active = true;
    }
    

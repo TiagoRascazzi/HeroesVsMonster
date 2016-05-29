@@ -15,6 +15,7 @@ public abstract class RoomCard extends ActionCard{
       
       
       // Comment those to test the card while coding them one at the time
+      /*
       wr.add(1, new EmptyRoom());         //DONE   
       wr.add(1, new CaveIn());            //DONE
       wr.add(1, new Jewellery());         //DONE
@@ -22,11 +23,20 @@ public abstract class RoomCard extends ActionCard{
       wr.add(1, new CrossfireTrap());     //DONE
       wr.add(1, new VampireBats());       //DONE
       wr.add(1, new Potion());            //DONE
-      
+      */
              
-      wr.add(1, new TorchGoesOut());    //not DONE 
+      //wr.add(1, new TorchGoesOut());      //not DONE 
       
-      //wr.add(1, new Crypt());             //Finish those one later
+      
+      //Monstercards                      //not DONE working on them now
+      wr.add(1, new ChampionOfChaos());   //not DONE
+      wr.add(1, new DeathWarrior());      //not DONE
+      wr.add(1, new Goblin());            //not DONE
+      wr.add(1, new MountainTroll());     //not DONE
+      wr.add(1, new Orc());               //not DONE
+      
+      
+      //wr.add(1, new Crypt());           //Finish those one later
       //wr.add(1, new CurseOfTheWizard()); 
       //wr.add(1, new DeadAdventurer());
       //wr.add(1, new GiantSpider());

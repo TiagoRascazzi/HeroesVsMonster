@@ -58,20 +58,20 @@ public abstract class Player{
    public boolean processKeyInput(KeyEvent e){            
       if(state == PlayerState.SELECT){
          
-         int count = 0;
-         if(e.getKeyChar() == ((count+1)+"").charAt(0))  //move
+         int count = 1;
+         if(e.getKeyChar() == (count+"").charAt(0))  //move
             state = PlayerState.MOVE;
          count++;
          
          if(HVMPanel.board.get(posY, posX).isSearchable()){
-            if(e.getKeyChar() == ((count+1)+"").charAt(0)){
+            if(e.getKeyChar() == (count+"").charAt(0)){
                playerCurrentCard = SearchCard.getRandom(); //search
                state = PlayerState.CARD;
             }
             count++;
          }
          
-         if(e.getKeyChar() == ((count+1)+"").charAt(0)) //if skip
+         if(e.getKeyChar() == (count+"").charAt(0)) //if skip
             return true;
          //count++;
          

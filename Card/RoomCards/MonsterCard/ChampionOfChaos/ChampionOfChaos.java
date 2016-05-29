@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 
-public class DeathWarrior extends RoomCard{
+public class ChampionOfChaos extends MonsterCard{
    
-   public DeathWarrior(){
-      super(0);
+   public ChampionOfChaos(){
+      super(20, 10, "Card/RoomCards/MonsterCard/ChampionOfChaos", 4);
       active = true;
    }
    
@@ -14,19 +14,20 @@ public class DeathWarrior extends RoomCard{
       super.drawAction(g, posX, posY);
    }
    public ActionCard processKeyInput(KeyEvent e){ 
-      if(cardState == CardState.SHOW){
+      /*if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
             active = false;
          }
-      }
+      }*/
       return super.processKeyInput(e);  
    }
    public ActionCard processMouseInput(Point screenSize, MouseEvent e){
-      if(cardState == CardState.SHOW){
+      /*if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
             active = false;
          }
       }
+      */
       return super.processMouseInput(screenSize, e);
    }
    
