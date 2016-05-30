@@ -32,6 +32,7 @@ public abstract class Player{
    private int gold;
    private int posX;
    private int posY;
+   private Point lastPos;
    
    private int actionPosX;
    private int actionPosY;
@@ -47,6 +48,7 @@ public abstract class Player{
       
       posX = x;
       posY = y;
+      lastPos = new Point(x, y);
       life = maxLife;
       
       this.strength = strength;
@@ -151,8 +153,10 @@ public abstract class Player{
       state = PlayerState.SELECT;
       life -= playerCurrentCard.getDamage();
       gold += playerCurrentCard.getGold();
-      if(life<=0)
+      if(life<=0){
+         Display.showTextPopup("You just died");
          return true;
+      }
       playerCurrentCard = null;
       if(!HVMPanel.board.get(posY, posX).keepsPlaying())
          return true;
@@ -222,8 +226,9 @@ public abstract class Player{
          if(isValidMove(p)){
             if(HVMPanel.board.get(p.y, p.x) == null)  
                HVMPanel.board.add(p.y, p.x, tile);
-            posX = p.x;
-            posY = p.y;
+               lastPos.setLocation(posX, posY);
+               posX = p.x;
+               posY = p.y;
             if(HVMPanel.board.get(posY, posX).givesRoomCard()){
                playerCurrentCard = RoomCard.getRandom();
                state = PlayerState.CARD;
@@ -366,6 +371,9 @@ public abstract class Player{
       return state == PlayerState.MOVE;
    }
    
+   public void loseLife(int n){
+      life-=n;
+   }
    public int life(){
       return life;
    }
@@ -389,6 +397,10 @@ public abstract class Player{
    }
    public int getPosY(){
       return posY;
+   }
+   public void returnToLastPos(){
+      posX = lastPos.x;
+      posY = lastPos.y;
    }
    public Image getImage(){
       return image.getImage();

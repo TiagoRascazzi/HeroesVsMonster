@@ -319,7 +319,7 @@ public class Display extends HVMPanel{
          //draw players lives
          int plPosX = (int)(screenWidth/2);
          int plPosY = (int)(screenHeight-(screenHeight/32+screenHeight/16*0.85));
-         int playerLives = 10;  //TODO get real
+         int playerLives = HVMPanel.players.get(HVMPanel.currentPlayer).life();
          
          if(playerLives%2==0){
             for(int i=0; i<playerLives; i++){
@@ -340,17 +340,16 @@ public class Display extends HVMPanel{
          }
           
          //draw monster lives         
-         int mlPosX = (int)(screenWidth/2)-(int)(hearthSize/2);
+         int mlPosX = (int)(screenWidth/2-hearthSize/2);
          int mlPosY = (int)(screenHeight/32+screenWidth/64);
-         int monsterLives = 11; //TODO get real
+         int monsterLives = ((MonsterCard)HVMPanel.players.get(HVMPanel.currentPlayer).getCurrentCard()).getMonsterLives();
          
-         //TODO fix this it is not working
-         /*if(monsterLives%2==0){
+         if(monsterLives%2==0){
             for(int i=0; i<monsterLives; i++){
                if(i >= monsterLives/2)
-                  g.drawImage( monsterHealth.getImage(), mlPosX-(i*hearthSize)+hearthSize*(playerLives-1)/2, mlPosY, hearthSize, hearthSize, null);
+                  g.drawImage( monsterHealth.getImage(), mlPosX-(i*hearthSize)+hearthSize*(monsterLives-2)/2, mlPosY, hearthSize, hearthSize, null);
                else
-                  g.drawImage( monsterHealth.getImage(), mlPosX+(i*hearthSize)+hearthSize/2, mlPosY, hearthSize, hearthSize, null);
+                  g.drawImage( monsterHealth.getImage(), mlPosX+(i*hearthSize), mlPosY, hearthSize, hearthSize, null);
             }
          }else{
             for(int i=0; i<monsterLives; i++){
@@ -359,11 +358,19 @@ public class Display extends HVMPanel{
                else if(i < monsterLives/2)
                   g.drawImage( monsterHealth.getImage(), mlPosX-(i*hearthSize)-3*hearthSize/2, mlPosY, hearthSize, hearthSize, null);
                else
-                  g.drawImage( monsterHealth.getImage(), mlPosX+(i*hearthSize)-hearthSize*(playerLives)/2, mlPosY, hearthSize, hearthSize, null);
+                  g.drawImage( monsterHealth.getImage(), mlPosX+(i*hearthSize)-hearthSize*(monsterLives)/2, mlPosY, hearthSize, hearthSize, null);
             }
-         }*/
+         }
          
-         g.drawImage( monsterHealth.getImage(), mlPosX, mlPosY, hearthSize, hearthSize, null);
+         //draw combat message
+         g.setColor(new Color(65, 105, 225, 225));
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 45)); 
+         String[]str = ((MonsterCard)HVMPanel.players.get(HVMPanel.currentPlayer).getCurrentCard()).getCombatMessage().split("\n");      
+         for(int i =0; i<str.length; i++)
+            g.drawString( str[i], (int)(screenWidth/2)-(g.getFontMetrics().stringWidth(str[i])/2), (int)(screenHeight/2)-(int)(screenHeight/4)+(60*i));
+         
+         
+         
       }
    }
    
