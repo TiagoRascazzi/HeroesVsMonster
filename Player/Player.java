@@ -78,13 +78,15 @@ public abstract class Player{
          //count++;
          
          
-      }else if(state == PlayerState.MOVE){
+      }
+      else if(state == PlayerState.MOVE){
          Point p = getKeyMove(e);
          if(p == null)
             state = PlayerState.SELECT;
          else
             return move(p);
-      }else if(state == PlayerState.CARD){
+      }
+      else if(state == PlayerState.CARD){
          ActionCard tmpCard = playerCurrentCard.processKeyInput(e);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
@@ -125,13 +127,15 @@ public abstract class Player{
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
          //count++
          
-      }else if(state == PlayerState.MOVE){
+      }
+      else if(state == PlayerState.MOVE){
          Point p = getMouseMove(e);
          if(p == null)
             state = PlayerState.SELECT;
          else
             return move(p);
-      }else if(state == PlayerState.CARD){
+      }
+      else if(state == PlayerState.CARD){
          ActionCard tmpCard = playerCurrentCard.processMouseInput(screenSize, e);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
@@ -214,21 +218,27 @@ public abstract class Player{
          Tile tile = null;
          if(HVMPanel.board.get(p.y, p.x) == null)
             tile = Tile.getRandomTile();
-            if(tile != null){
-               if(p.x == posX+1)
-                  tile.setOrientation(Tile.LEFT);
-               else if(p.x == posX-1)
-                  tile.setOrientation(Tile.RIGHT);
-               else if(p.y == posY+1)
-                  tile.setOrientation(Tile.TOP);
-               else if(p.y == posY-1)
-                  tile.setOrientation(Tile.BOTTOM);
-            }
+         if(tile != null){
+            if(p.x == posX+1)
+               tile.setOrientation(Tile.LEFT);
+            else if(p.x == posX-1)
+               tile.setOrientation(Tile.RIGHT);
+            else if(p.y == posY+1)
+               tile.setOrientation(Tile.TOP);
+            else if(p.y == posY-1)
+               tile.setOrientation(Tile.BOTTOM);
+         }
          else
             tile = HVMPanel.board.get(p.y, p.x);
          
          if(isValidMove(p)){
-            if(HVMPanel.board.get(p.y, p.x) == null)  
+            if(HVMPanel.board.get(p.y, p.x) == null) 
+               
+               /*if(hasDoor(p))
+                  System.out.println("DOOR");
+               if(hasDoor(tile, p))
+                  System.out.println("DOOR");*/
+                   
                HVMPanel.board.add(p.y, p.x, tile);
                lastPos.setLocation(posX, posY);
                posX = p.x;
@@ -239,11 +249,42 @@ public abstract class Player{
       return false;
    }
    
+   /* TODO
+   public boolean hasDoor(Point p){
+      Tile t = HVMPanel.board.get(posY, posX);
+      if(p.x == posX+1 && t.getDoors()[1]){
+         System.out.println("1");
+         return true;
+      }else if(p.x == posX-1 && t.getDoors()[3]){
+         System.out.println("2");
+         return true;
+      }else if(p.y == posY+1 && t.getDoors()[2]){
+         System.out.println("3");
+         return true;
+      }else if(p.y == posY-1 && t.getDoors()[0]){
+         System.out.println("4");
+         return true; 
+      }
+      return false;  
+   }
+   public boolean hasDoor(Tile t, Point p){
+      if(p.x == posX+1 && t.getDoors()[1])
+         return true;
+      if(p.x == posX-1 && t.getDoors()[3])
+         return true;
+      if(p.y == posY+1 && t.getDoors()[2])
+         return true;
+      if(p.y == posY-1 && t.getDoors()[0])
+         return true; 
+      return false;  
+   }*/
+   
    public boolean afterMove(){
       if(HVMPanel.board.get(posY, posX).givesRoomCard()){
          playerCurrentCard = RoomCard.getRandom();
          state = PlayerState.CARD;
-      }else if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
+      }
+      else if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
          state = PlayerState.SELECT;
          playerCurrentCard = null;
          return true;
@@ -261,7 +302,8 @@ public abstract class Player{
                         return true;
                      }
                   }
-               }else{ // if has no tile
+               }
+               else{ // if has no tile
                   return true;
                }
             }
@@ -346,7 +388,8 @@ public abstract class Player{
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
          g.drawString("(esc) PAUSE", pX+8, pY+25+25*count);  //TODO fix click on pause with more stuff
          
-      }else if(state == PlayerState.MOVE){
+      }
+      else if(state == PlayerState.MOVE){
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40, pY+65);
          g.drawString("(\u2190) LEFT", pX+8, pY+25);
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+65, pY+90);
@@ -357,7 +400,8 @@ public abstract class Player{
          g.drawString("(\u2193) DOWN", pX+8, pY+100);
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+140, pY+165);
          g.drawString("any other key to return", pX+8, pY+125);
-      }else if(state == PlayerState.CARD){
+      }
+      else if(state == PlayerState.CARD){
          playerCurrentCard.drawAction(g, pX, pY);
       }
    } 

@@ -55,14 +55,14 @@ public abstract class Tile{
    public void setPossibleDoor(boolean top, boolean rigth, boolean bottom, boolean left){
       Random random = new Random();
       int prob = 10;
-      if(top && random.nextInt(prob) < 1)
+      //if(top && random.nextInt(prob) < 1)
          Doors[0] = true;
-      if(rigth && random.nextInt(prob) < 1)
-         Doors[1] = true;
-      if(bottom && random.nextInt(prob) < 1)
-         Doors[2] = true;
-      if(left && random.nextInt(prob) < 1)
-         Doors[3] = true;
+      //if(rigth && random.nextInt(prob) < 1)
+      //   Doors[1] = true;
+      //if(bottom && random.nextInt(prob) < 1)
+      //   Doors[2] = true;
+      //if(left && random.nextInt(prob) < 1)
+      //   Doors[3] = true;
    }
    
    public int getMaxNumOfPlayers(){
