@@ -71,7 +71,7 @@ public class Display extends HVMPanel{
       
               
       //load all the image for tiles
-      tileTextures = new ImageIcon[26];
+      tileTextures = new ImageIcon[27];
       tileTextures[0] = new ImageIcon("Img/Tile/TestTileImg.png");
       tileTextures[1] = new ImageIcon("Img/Tile/Corner.png");
       tileTextures[2] = new ImageIcon("Img/Tile/Border.png");
@@ -98,6 +98,7 @@ public class Display extends HVMPanel{
       tileTextures[23] = new ImageIcon("Img/Tile/3WayEmptyRoom.png");
       tileTextures[24] = new ImageIcon("Img/Tile/2WayCorridor.png");
       tileTextures[25] = new ImageIcon("Img/Tile/2WayStraightEmptyRoom.png");
+      tileTextures[26] = new ImageIcon("Img/Tile/Door.png");
     
       combatTextures = new ImageIcon[3];
       combatTextures[0] = new ImageIcon("Img/Combat/LeapAside.png");
@@ -176,6 +177,24 @@ public class Display extends HVMPanel{
                //Draw the tile
                transform.scale(tileScale, tileScale);
                g.drawImage(tileTextures[board.get(i, j).getTextureID()].getImage(), transform, null); 
+               
+               if(!(board.get(i, j) instanceof CornerTile)){ //translation and rotation if any other tile
+                  boolean[]doors = new boolean[4];  //TODO get door array from tile
+                  doors[0] = true;  //TOP
+                  doors[1] = true;  //RIGTH
+                  doors[2] = true;  //BOTTOM
+                  doors[3] = true;  //LEFT
+                  doors = board.get(i, j).getDoors();
+                  for(int k=0; k<doors.length; k++){
+                     if(doors[k]){
+                        transform.setToRotation(board.get(i, j).getRotation()+Math.toRadians(90*k), j*tileSize+borderSize+(tileSize/2), i*tileSize+borderSize+(tileSize/2));
+                        transform.translate(j*tileSize+borderSize+tileSize/3, i*tileSize+borderSize);
+                        transform.scale(tileScale/3, tileScale/3);
+                        g.drawImage(tileTextures[26].getImage(), transform, null);
+                     }
+                  }
+               }
+               
             }else{ 
                //empty cell
                transform.setToTranslation(j*tileSize+borderSize, i*tileSize+borderSize);
@@ -188,6 +207,7 @@ public class Display extends HVMPanel{
                transform.scale(tileScale, tileScale);
                g.drawImage(tileTextures[5].getImage(), transform, null); 
             }
+            
          }
       }
       
@@ -319,12 +339,18 @@ public class Display extends HVMPanel{
          int bottomPosY = (int)(screenHeight-(screenHeight/3));//(int)(screenHeight/2)-(int)(heigth/2);
          
          g.drawImage( combatTextures[0].getImage(), centerPosX-width-space, bottomPosY, width, heigth, null);
+         g.setColor(Color.RED);
+         g.drawString( "(1)", centerPosX-width/2-space-(g.getFontMetrics().stringWidth("(1)")/2), bottomPosY+9*heigth/10);
          GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX-width-space, bottomPosY, width, heigth);
          
          g.drawImage( combatTextures[1].getImage(), centerPosX, bottomPosY, width, heigth, null);
+         g.setColor(Color.RED);
+         g.drawString( "(2)", centerPosX+width/2-(g.getFontMetrics().stringWidth("(2)")/2), bottomPosY+9*heigth/10);
          GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX, bottomPosY, width, heigth);
          
          g.drawImage( combatTextures[2].getImage(), centerPosX+width+space, bottomPosY, width, heigth, null);
+         g.setColor(Color.RED);
+         g.drawString( "(3)", centerPosX+3*width/2+space-(g.getFontMetrics().stringWidth("(3)")/2), bottomPosY+9*heigth/10);
          GUI.coverOnHover(g, color, screenWidth, screenHeight, centerPosX+width+space, bottomPosY, width, heigth);
          
          int hearthSize = (int)(Math.min(screenWidth, screenHeight)/32*1.5) ;

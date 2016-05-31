@@ -1,5 +1,6 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.util.Random;
 
 public abstract class Tile{
    
@@ -21,6 +22,8 @@ public abstract class Tile{
    private boolean giveRoomCard;
    private boolean searchable;
    
+   private boolean[]Doors = new boolean[4];
+   
    public Tile(int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       orientation = LEFT;
 
@@ -33,6 +36,7 @@ public abstract class Tile{
       topSide = ts;
       bottomSide = bs;
       searchable = true;
+      Doors = new boolean[]{false, false, false, false};
    }
    public Tile(int orien, int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       textureID = tID;
@@ -45,6 +49,20 @@ public abstract class Tile{
       bottomSide = bs;
       setOrientation(orien);
       searchable = true;
+      Doors = new boolean[]{false, false, false, false};
+   }
+   
+   public void setPossibleDoor(boolean top, boolean rigth, boolean bottom, boolean left){
+      Random random = new Random();
+      int prob = 10;
+      if(top && random.nextInt(prob) < 1)
+         Doors[0] = true;
+      if(rigth && random.nextInt(prob) < 1)
+         Doors[1] = true;
+      if(bottom && random.nextInt(prob) < 1)
+         Doors[2] = true;
+      if(left && random.nextInt(prob) < 1)
+         Doors[3] = true;
    }
    
    public int getMaxNumOfPlayers(){
@@ -54,40 +72,83 @@ public abstract class Tile{
       return textureID;
    } 
    
-   public void setOrientation(int orien){     
-      if(orien == TOP){
-         boolean tmp1 = leftSide;
-         boolean tmp2 = rightSide;
-        
-         leftSide = bottomSide;
-         rightSide = topSide;
-         topSide = tmp1;
-         bottomSide = tmp2;          
-                
-      }else if(orien == BOTTOM){
-         boolean tmp1 = leftSide;
-         boolean tmp2 = rightSide;
-        
-         leftSide = topSide;
-         rightSide = bottomSide;
-         topSide = tmp2;
-         bottomSide = tmp1;
-        
-      }else if(orien == LEFT){
-       //DO NOTHING
-      }else if(orien == RIGHT){
-         boolean tmp1 = leftSide;
-         boolean tmp2 = topSide;
-        
-         leftSide = rightSide;
-         rightSide = tmp1;
-         topSide = bottomSide;
-         bottomSide = tmp2;
-        
+   public void setOrientation(int orien){    
+      
+      //default orientation of picture
+      orientation = LEFT;
+       
+      if(orien == TOP){ 
+         rotate90DegClockwise();
+      }else if(orien == RIGHT){ 
+         rotate180DegClockwise();
+       }else if(orien == BOTTOM){ 
+         rotate270DegClockwise();
       }
-      orientation = orien;
    } 
-  
+   
+   //deg is a multiple of 90
+   public void rotateClockwise(int deg){
+      
+      if((deg/90)%4 == 0){        //0
+         //Do nothing
+      }else if((deg/90)%4 == 1){  //90
+         rotate90DegClockwise();
+      }else if((deg/90)%4 == 2){  //180
+         rotate180DegClockwise();
+      }else if((deg/90)%4 == 3){  //270
+         rotate270DegClockwise();
+      }
+   }
+   
+   public void rotate90DegClockwise(){
+      boolean tmp1 = leftSide;
+      boolean tmp2 = rightSide;
+     
+      leftSide = bottomSide;
+      rightSide = topSide;
+      topSide = tmp1;
+      bottomSide = tmp2; 
+      
+      orientation = getNextCwRotation(orientation);
+   }
+   
+   public void rotate180DegClockwise(){
+      boolean tmp1 = leftSide;
+      boolean tmp2 = topSide;
+      
+      leftSide = rightSide;
+      rightSide = tmp1;
+      topSide = bottomSide;
+      bottomSide = tmp2;
+      
+      orientation = getNextCwRotation(getNextCwRotation(orientation));
+   }
+   
+   
+   public void rotate270DegClockwise(){
+      boolean tmp1 = leftSide;
+      boolean tmp2 = rightSide;
+     
+      leftSide = topSide;
+      rightSide = bottomSide;
+      topSide = tmp2;
+      bottomSide = tmp1;
+      
+      orientation = getNextCwRotation(getNextCwRotation(getNextCwRotation(orientation)));
+   }
+   
+   public int getNextCwRotation(int orien){
+      if(orien == TOP)
+         return RIGHT;
+      if(orien == BOTTOM)
+         return LEFT;
+      if(orien == LEFT)
+         return TOP;
+      if(orien == RIGHT)
+         return BOTTOM;
+      return -1;
+   }
+   
    public double getRotation(){
       if(orientation == TOP)
          return Math.toRadians(90);
@@ -135,31 +196,9 @@ public abstract class Tile{
       return wr.next();
    }
    
-   //deg is a multiple of 90
-   public void rotateClockwise(int deg){
-      if((deg/90)%4 == 0){        //0
-         //Do nothing
-      }else if((deg/90)%4 == 1){  //90
-         //setOrientation(getNextCwRotation(orientation));  //cannot use setorentation has to make own code
-      }else if((deg/90)%4 == 2){  //180
-         //setOrientation(getNextCwRotation(getNextCwRotation(orientation)));
-      }else if((deg/90)%4 == 3){  //270
-         //setOrientation(getNextCwRotation(getNextCwRotation(getNextCwRotation(orientation))));
-      }
+   public boolean[]getDoors(){
+      return Doors;
    }
-   
-   public int getNextCwRotation(int orien){
-      if(orien == TOP)
-         return RIGHT;
-      if(orien == BOTTOM)
-         return LEFT;
-      if(orien == LEFT)
-         return TOP;
-      if(orien == RIGHT)
-         return BOTTOM;
-      return -1;
-   }
-   
    public void changeMaxNumOfPlayers(int mnop){
       maxNumOfPlayers = mnop;
    }
