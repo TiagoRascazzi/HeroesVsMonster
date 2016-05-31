@@ -408,8 +408,11 @@ public abstract class Player{
       return posY;
    }
    public void returnToLastPos(){
+      int tmpX = posX;
+      int tmpY = posY;
       posX = lastPos.x;
       posY = lastPos.y;
+      lastPos.setLocation(tmpX, tmpY);
    }
    public Image getImage(){
       return image.getImage();

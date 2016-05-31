@@ -124,7 +124,7 @@ public class Display extends HVMPanel{
          drawSidebar(g, screenWidth, screenHeight);
          drawPauseMenu(g, screenWidth, screenHeight);
       }else if(gameState == GameState.END){
-         g.drawImage(endImg.getImage(),0, 0, screenWidth, screenHeight, null);
+         drawEndScreen(g, screenWidth, screenHeight);
       }else if(gameState == GameState.TEXTPOPUP){
          drawBoard(g, screenWidth, screenHeight);
          drawSidebar(g, screenWidth, screenHeight);
@@ -269,6 +269,19 @@ public class Display extends HVMPanel{
       g.drawString("(r) RESTART", 100, 200);
       GUI.chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
       g.drawString("(q) QUIT", 100, 250);
+   }
+   
+   public static void drawEndScreen(Graphics2D g, int screenWidth, int screenHeight){
+      g.drawImage(endImg.getImage(),0, 0, screenWidth, screenHeight, null);
+         
+      g.setColor(Color.RED);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
+      g.drawString("GAME OVER", 50, 75);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 32)); 
+      GUI.chgColorOnHover(g, Color.RED, Color.WHITE, 100, 230, 155, 185);
+      g.drawString("(r) RESTART", 100, 155);
+      GUI.chgColorOnHover(g, Color.RED, Color.WHITE, 100, 230, 205, 235);
+      g.drawString("(q) QUIT", 100, 205);
    }
    
    //Draw the card that the player received

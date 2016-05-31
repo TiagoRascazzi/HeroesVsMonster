@@ -97,6 +97,11 @@ public class HVMPanel extends JPanel{
          }else if(e.getKeyCode() == KeyEvent.VK_R){
             gameState = GameState.MAIN;   // restart the game
          }
+      }else if(gameState == GameState.END){
+         if(e.getKeyCode() == KeyEvent.VK_R)
+            gameState = GameState.MAIN;
+         else if(e.getKeyCode() == KeyEvent.VK_Q)
+            System.exit(0);
       }else if(gameState == GameState.TEXTPOPUP){
          if(e.getKeyCode() == KeyEvent.VK_ENTER)
             Display.hideTextPopup();
@@ -128,6 +133,11 @@ public class HVMPanel extends JPanel{
                gameState = GameState.MAIN;   // restart the game
             else if(GUI.hover(100, 230, 255, 285))
                System.exit(0);               // close the game application
+         }else if(gameState == GameState.END){
+            if(GUI.hover(100, 310, 155, 185))
+               gameState = GameState.MAIN;
+            else if(GUI.hover(100, 230, 205, 235))
+               System.exit(0);
          }else if(gameState == GameState.TEXTPOPUP){
             if(GUI.hover((int)(getSize().getWidth()/2)-25, (int)(getSize().getWidth()/2)-25+75, (int)(getSize().getHeight()-(3*getSize().getHeight()/16))+10, (int)(getSize().getHeight()-(3*getSize().getHeight()/16))+30) )
                Display.hideTextPopup();
