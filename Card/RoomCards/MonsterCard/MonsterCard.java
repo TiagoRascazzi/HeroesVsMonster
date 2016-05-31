@@ -37,6 +37,7 @@ public abstract class MonsterCard extends RoomCard{
       
    }
    
+   //get a random file and get its values
    public void getRandomFileData(String path, int numOfMonst)throws IOException{
       
       String randFilename = String.format("%03d", (int)(Math.random() * (numOfMonst + 1)) );
@@ -106,11 +107,11 @@ public abstract class MonsterCard extends RoomCard{
                whatsNext(new ArrayList<Integer>(EscapeVals));
          }else if(mscState == MonsterCardState.COMBAT){
             if(e.getKeyCode() == KeyEvent.VK_1 )
-               combat("LeapAside");
+               figth("LeapAside");
             else if(e.getKeyCode() == KeyEvent.VK_2 )
-               combat("MightyBlow");
+               figth("MightyBlow");
             else if(e.getKeyCode() == KeyEvent.VK_3 )
-               combat("Slash");
+               figth("Slash");
          }
       }
       return super.processKeyInput(e);  
@@ -133,11 +134,11 @@ public abstract class MonsterCard extends RoomCard{
             int centerPosX = (int)(screenSize.x/2)-(int)(width/2);
             int bottomPosY = (int)(screenSize.y-(screenSize.y/3));
             if(GUI.hover(centerPosX-width-space, centerPosX-width-space+width, bottomPosY, bottomPosY+heigth))
-               combat("LeapAside");
+               figth("LeapAside");
             else if(GUI.hover(centerPosX, centerPosX+width, bottomPosY, bottomPosY+heigth))
-               combat("MightyBlow");
+               figth("MightyBlow");
             else if(GUI.hover(centerPosX+width+space, centerPosX+width+space+width, bottomPosY, bottomPosY+heigth))
-               combat("Slash");
+               figth("Slash");
          }
       }
       return super.processMouseInput(screenSize, e);
@@ -146,41 +147,31 @@ public abstract class MonsterCard extends RoomCard{
    //funtion that decide what happen depending on the file input
    public void whatsNext(ArrayList<Integer>CurrentVals){
       if(CurrentVals.get(0) == 1){ //Combat
-         System.out.println("COMBAT");          // <- print for testing purpose
-         System.out.println(CurrentVals);       // <- print for testing purpose
          CurrentVals.remove(0);
          int numOfLifeOfMonster = CurrentVals.remove(0);
          mscState = MonsterCardState.COMBAT;
-         System.out.println(CurrentVals);       // <- print for testing purpose
       }else if(CurrentVals.get(0) == 2){ //Flee
-         System.out.println("FLEE");            // <- print for testing purpose
-         System.out.println(CurrentVals);       // <- print for testing purpose
          CurrentVals.remove(0);
          active = false;
          Display.showTextPopup("The monster fleed");
-         System.out.println(CurrentVals);       // <- print for testing purpose
       }else if(CurrentVals.get(0) == 3){ //Escape
-         System.out.println("ESCAPE");          // <- print for testing purpose
-         System.out.println(CurrentVals);       // <- print for testing purpose
          CurrentVals.remove(0);
          Display.showTextPopup("You escaped");
          HVMPanel.players.get(HVMPanel.currentPlayer).returnToLastPos();
          active = false;
-         System.out.println(CurrentVals);       // <- print for testing purpose
+         newRoomCard = true;
       }else if(CurrentVals.get(0) == 4){ //Slash recursive
-         System.out.println("SLASH");           // <- print for testing purpose
-         System.out.println(CurrentVals);       // <- print for testing purpose
          CurrentVals.remove(0);
          int lifeLost = CurrentVals.remove(0);
          HVMPanel.players.get(HVMPanel.currentPlayer).loseLife(lifeLost);
          Display.showTextPopup("You got slash\nand loss "+lifeLost+" lives");
-         System.out.println(CurrentVals);       // <- print for testing purpose
          if(CurrentVals.size() > 0)
             whatsNext(CurrentVals);
       }
    }
    
-   public void combat(String playerTatic){
+   //compare both attact and damage player accordingly 
+   public void figth(String playerTatic){
       String monsterTactic = getMonsterTactic();
       combatMessage = "The  monster selected:\n"+monsterTactic+"\n\n";
       int ml = 0, pl = 0;
@@ -219,6 +210,7 @@ public abstract class MonsterCard extends RoomCard{
          return "Slash";
       return "";
    }
+   
    
    public int getMonsterLives(){
       return monsterLifes;

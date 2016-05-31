@@ -57,7 +57,7 @@ public abstract class Player{
       this.luck = luck;
    }
    
-   public boolean processKeyInput(KeyEvent e){            
+   public boolean processKeyInput(KeyEvent e){   
       if(state == PlayerState.SELECT){
          
          int count = 1;
@@ -157,8 +157,12 @@ public abstract class Player{
          Display.showTextPopup("You just died");
          return true;
       }
+      ActionCard oldCard = playerCurrentCard;
       playerCurrentCard = null;
-      if(!HVMPanel.board.get(posY, posX).keepsPlaying())
+      
+      if(oldCard.receiveNewRoomCard())
+         afterMove();
+      else if(!HVMPanel.board.get(posY, posX).keepsPlaying())
          return true;
       return false;
    }
@@ -229,15 +233,20 @@ public abstract class Player{
                lastPos.setLocation(posX, posY);
                posX = p.x;
                posY = p.y;
-            if(HVMPanel.board.get(posY, posX).givesRoomCard()){
-               playerCurrentCard = RoomCard.getRandom();
-               state = PlayerState.CARD;
-            }else if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
-               state = PlayerState.SELECT;
-               playerCurrentCard = null;
-               return true;
-            }
+               return afterMove();
          }
+      }
+      return false;
+   }
+   
+   public boolean afterMove(){
+      if(HVMPanel.board.get(posY, posX).givesRoomCard()){
+         playerCurrentCard = RoomCard.getRandom();
+         state = PlayerState.CARD;
+      }else if(!HVMPanel.board.get(posY, posX).keepsPlaying()){
+         state = PlayerState.SELECT;
+         playerCurrentCard = null;
+         return true;
       }
       return false;
    }

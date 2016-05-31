@@ -13,6 +13,7 @@ public abstract class ActionCard{
    protected int damage = 0;
    protected int gold = 0;
    protected boolean active = false;
+   protected boolean newRoomCard = false;
    
    
    public ActionCard(int tID){
@@ -57,6 +58,9 @@ public abstract class ActionCard{
    }
    public boolean isActive(){
       return active;
+   }
+   public boolean receiveNewRoomCard(){
+      return newRoomCard;
    }
    public String[] getPrintableAction(){
       return null;
