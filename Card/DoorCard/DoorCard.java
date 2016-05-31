@@ -1,5 +1,7 @@
 public class DoorCard extends ActionCard{
    
+   //TODO the door is only added to the fourwayroom tile
+   
    public DoorCard(int tID){
       super(tID);
    }
