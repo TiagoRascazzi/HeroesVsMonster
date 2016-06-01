@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Goblin extends MonsterCard{
    
    public Goblin(){
-      super(22, 10, "Card/RoomCards/MonsterCard/Goblin", 4);
+      super(22, "Card/RoomCards/MonsterCard/Goblin", 14);
       active = true;
    }
    

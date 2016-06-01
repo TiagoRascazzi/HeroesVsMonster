@@ -6,7 +6,7 @@ import java.awt.Point;
 public class Orc extends MonsterCard{
    
    public Orc(){
-      super(24, 10, "Card/RoomCards/MonsterCard/Orc", 4);
+      super(24, "Card/RoomCards/MonsterCard/Orc", 14);
       active = true;
    }
    

@@ -24,10 +24,9 @@ public abstract class MonsterCard extends RoomCard{
    
    protected String combatMessage = "";
    
-   public MonsterCard(int tID, int mlives, String path, int numOfMonst){
+   public MonsterCard(int tID, String path, int numOfMonst){
       super(tID);
       mscState = MonsterCardState.SELECT;
-      monsterLifes = mlives;
       
       try{
          getRandomFileData(path, numOfMonst);
@@ -41,11 +40,7 @@ public abstract class MonsterCard extends RoomCard{
    public void getRandomFileData(String path, int numOfMonst)throws IOException{
       
       String randFilename = String.format("%03d", (int)(Math.random() * (numOfMonst + 1)) );
-      //System.out.println(randFilename);  //print the random filename
-      
-      //tmp for testing purpose while monster file are not done
-      //BufferedReader bufferedReader = new BufferedReader(new FileReader(path+"/"+randFilename+".monster"));
-      BufferedReader bufferedReader = new BufferedReader(new FileReader("Card/RoomCards/MonsterCard/ChampionOfChaos/000.monster"));
+      BufferedReader bufferedReader = new BufferedReader(new FileReader(path+"/"+randFilename+".monster"));
       
       String line;
       int count = 0;
@@ -65,18 +60,6 @@ public abstract class MonsterCard extends RoomCard{
          }
       }
       bufferedReader.close();
-      
-      /*  To print them to the screen for testing
-      System.out.print("AttackVals: ");
-      for(int i=0; i<AttackVals.length; i++)
-         System.out.print(AttackVals[i]+" ");
-      System.out.print("\nWaitAndSeeVals: ");
-      for(int i=0; i<WaitAndSeeVals.length; i++)
-         System.out.print(WaitAndSeeVals[i]+" ");
-      System.out.print("\nEscapeVals: ");
-      for(int i=0; i<EscapeVals.length; i++)
-         System.out.print(EscapeVals[i]+" ");
-      */
    }
    
    
@@ -148,7 +131,7 @@ public abstract class MonsterCard extends RoomCard{
    public void whatsNext(ArrayList<Integer>CurrentVals){
       if(CurrentVals.get(0) == 1){ //Combat
          CurrentVals.remove(0);
-         int numOfLifeOfMonster = CurrentVals.remove(0);
+         monsterLifes = CurrentVals.remove(0);
          mscState = MonsterCardState.COMBAT;
       }else if(CurrentVals.get(0) == 2){ //Flee
          CurrentVals.remove(0);

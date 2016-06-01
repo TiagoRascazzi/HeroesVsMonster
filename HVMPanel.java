@@ -9,7 +9,7 @@ import java.awt.Color;
 
 public class HVMPanel extends JPanel{
    
-   public enum GameState {START, MAIN, GAME, TEXTPOPUP, PAUSE, END};  // enum of all the state that the game has
+   public enum GameState {START, MAIN, GAME, TEXTPOPUP, CARDPOPUP, PAUSE, END};  // enum of all the state that the game has
    private static BGMusicPlayer bgMusicPlayer;        // used to play the music in the backgroung
    
    protected static MainMenu mainmenu;                // object to display main menu
@@ -102,7 +102,7 @@ public class HVMPanel extends JPanel{
             gameState = GameState.MAIN;
          else if(e.getKeyCode() == KeyEvent.VK_Q)
             System.exit(0);
-      }else if(gameState == GameState.TEXTPOPUP){
+      }else if(gameState == GameState.TEXTPOPUP || gameState == GameState.CARDPOPUP){
          if(e.getKeyCode() == KeyEvent.VK_ENTER)
             Display.hideTextPopup();
       }
@@ -138,7 +138,7 @@ public class HVMPanel extends JPanel{
                gameState = GameState.MAIN;
             else if(GUI.hover(100, 230, 205, 235))
                System.exit(0);
-         }else if(gameState == GameState.TEXTPOPUP){
+         }else if(gameState == GameState.TEXTPOPUP || gameState == GameState.CARDPOPUP){
             if(GUI.hover((int)(getSize().getWidth()/2)-25, (int)(getSize().getWidth()/2)-25+75, (int)(getSize().getHeight()-(3*getSize().getHeight()/16))+10, (int)(getSize().getHeight()-(3*getSize().getHeight()/16))+30) )
                Display.hideTextPopup();
          }

@@ -18,6 +18,7 @@ public class Display extends HVMPanel{
    private static ImageIcon sunImg;                            //the picture for the sun icon
    private static ImageIcon sidebarBG;                         //the picture background of the sidebar 
    private static String TextPopupValue = "";
+   private static ActionCard CardPopupValue = null;
    
    //Tmp for until the draw combat is not in monsterCard class
    private static ImageIcon playerHealth;
@@ -135,6 +136,11 @@ public class Display extends HVMPanel{
          drawSidebar(g, screenWidth, screenHeight);
          drawCard(g, screenWidth, screenHeight);
          drawTextPopup(g, screenWidth, screenHeight);
+      }else if(gameState == GameState.CARDPOPUP){
+         drawBoard(g, screenWidth, screenHeight);
+         drawSidebar(g, screenWidth, screenHeight);
+         drawCard(g, screenWidth, screenHeight);
+         drawCardPopup(g, screenWidth, screenHeight, CardPopupValue);
       }
    }
    
@@ -425,9 +431,15 @@ public class Display extends HVMPanel{
       gameState = GameState.GAME;
       TextPopupValue = "";
    }
+   public static void showCardPopup(ActionCard c){
+      gameState = GameState.CARDPOPUP;
+      CardPopupValue = c;
+   }
+   public static void hideCardPopup(){
+      gameState = GameState.GAME;
+      CardPopupValue = null;
+   }
    public static void drawTextPopup(Graphics2D g, int screenWidth, int screenHeight){
-         
-         //TODO center text and take care of new lines
          
          g.setColor(new Color(65, 105, 225, 225));
          g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
@@ -442,7 +454,23 @@ public class Display extends HVMPanel{
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
          GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
          g.drawString("ENTER", (int)(screenWidth/2)-(g.getFontMetrics().stringWidth("ENTER")/2), (int)(screenHeight-(3*screenHeight/16)));
+   }   
+   
+   public static void drawCardPopup(Graphics2D g, int screenWidth, int screenHeight, ActionCard c){
+      if(c != null && c.isShowing()){
+         g.setColor(new Color(65, 105, 225, 225));
+         g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
+         
+         g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4), (int)(screenWidth/4), (int)(screenHeight/2), null);
+         
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));          
+         GUI.chgColorOnHover(g, Color.RED, Color.BLACK, (int)(screenWidth/2)-25, (int)(screenWidth/2)-25+75, (int)(screenHeight-(3*screenHeight/16))+10, (int)(screenHeight-(3*screenHeight/16))+30);
+         g.drawString("ENTER", (int)(screenWidth/2)-(g.getFontMetrics().stringWidth("ENTER")/2), (int)(screenHeight-(3*screenHeight/16)));
+         
+      }
    }
+   
+   
    
    public static ImageIcon getCardTextures(int tID){
       return cardTextures[tID];

@@ -6,7 +6,7 @@ import java.awt.Point;
 public class MountainTroll extends MonsterCard{
    
    public MountainTroll(){
-      super(23, 10, "Card/RoomCards/MonsterCard/MountainTroll", 4);
+      super(23, "Card/RoomCards/MonsterCard/MountainTroll", 14);
       active = true;
    }
    

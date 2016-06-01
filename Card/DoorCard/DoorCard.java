@@ -12,7 +12,11 @@ public class DoorCard extends ActionCard{
       
       wr.add(1, new DoorJammed(p));   
       wr.add(1, new DoorOpens(p));
-      wr.add(1, new DoorTrap(p));
+      wr.add(1, new DoorTrap(p)); 
+ 
+      //wr.add(1, "DoorJammed");   
+      //wr.add(1, "DoorOpens");
+      //wr.add(1, "DoorTrap");
       
       return wr.next();  // return the random card 
    }

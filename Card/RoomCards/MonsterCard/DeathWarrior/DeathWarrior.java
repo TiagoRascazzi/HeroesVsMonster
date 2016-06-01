@@ -6,7 +6,7 @@ import java.awt.Point;
 public class DeathWarrior extends MonsterCard{
    
    public DeathWarrior(){
-      super(21, 10, "Card/RoomCards/MonsterCard/DeathWarrior", 4);
+      super(21, "Card/RoomCards/MonsterCard/DeathWarrior", 14);
       active = true;
    }
    

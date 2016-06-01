@@ -55,13 +55,13 @@ public abstract class Tile{
    public void setPossibleDoor(boolean top, boolean rigth, boolean bottom, boolean left){
       Random random = new Random();
       int prob = 10;
-      //if(top && random.nextInt(prob) < 1)
+      if(top && random.nextInt(prob) < 1)
          Doors[0] = true;
-      //if(rigth && random.nextInt(prob) < 1)
+      if(rigth && random.nextInt(prob) < 1)
          Doors[1] = true;
-      //if(bottom && random.nextInt(prob) < 1)
+      if(bottom && random.nextInt(prob) < 1)
          Doors[2] = true;
-      //if(left && random.nextInt(prob) < 1)
+      if(left && random.nextInt(prob) < 1)
          Doors[3] = true;
    }
    
@@ -167,11 +167,11 @@ public abstract class Tile{
       //for testing purpose not to change since we are not done doing the cards
       //wr.add(1, new TestTile());
       
-      //wr.add(5, new RotatingRoom());
-      //wr.add(2, new BottomLessPit());
+      /*wr.add(5, new RotatingRoom());
+      wr.add(2, new BottomLessPit());
       
-      //wr.add(5, new EndEmptyRoom());
-      //wr.add(1, new EndPortcullis());      
+      wr.add(5, new EndEmptyRoom());
+      wr.add(1, new EndPortcullis());      
       
       wr.add(2, new OneWayCorridor());
       wr.add(3, new OneWayPortcullis());
@@ -187,12 +187,11 @@ public abstract class Tile{
       wr.add(30, new ThreeWayEmptyRoom());
       wr.add(6, new ThreeWayPortcullis());
       
-      wr.add(15, new FourWayEmptyRoom());
-      wr.add(2, new FourWayPit());
+      */wr.add(15, new FourWayEmptyRoom());
+      /*wr.add(2, new FourWayPit());
       wr.add(3, new FourWayTrap());
       wr.add(2, new FourWayCorridors());
-      
-          
+      */    
       return wr.next();
    }
    

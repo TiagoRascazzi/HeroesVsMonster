@@ -25,16 +25,15 @@ public abstract class RoomCard extends ActionCard{
       wr.add(1, new Potion());            //DONE
       wr.add(1, new CurseOfTheWizard());  //DONE
       
-             
+      //Monstercards                      //DONE
+      wr.add(1, new ChampionOfChaos());   //DONE
+      wr.add(1, new DeathWarrior());      //DONE
+      wr.add(1, new Goblin());            //DONE
+      wr.add(1, new MountainTroll());     //DONE
+      wr.add(1, new Orc());               //DONE
+        
+        
       //wr.add(1, new TorchGoesOut());      //not DONE 
-      
-      
-      //Monstercards                      //not DONE working on them now
-      wr.add(1, new ChampionOfChaos());   //not DONE
-      wr.add(1, new DeathWarrior());      //not DONE
-      wr.add(1, new Goblin());            //not DONE
-      wr.add(1, new MountainTroll());     //not DONE
-      wr.add(1, new Orc());               //not DONE
       
       
       //Finish those one later

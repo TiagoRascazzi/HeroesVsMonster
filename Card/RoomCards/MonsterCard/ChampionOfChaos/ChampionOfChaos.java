@@ -6,7 +6,7 @@ import java.awt.Point;
 public class ChampionOfChaos extends MonsterCard{
    
    public ChampionOfChaos(){
-      super(20, 10, "Card/RoomCards/MonsterCard/ChampionOfChaos", 4);
+      super(20, "Card/RoomCards/MonsterCard/ChampionOfChaos", 14);
       active = true;
    }
    

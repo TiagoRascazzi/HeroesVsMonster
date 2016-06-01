@@ -16,7 +16,6 @@ public abstract class ActionCard{
    protected boolean newRoomCard = false;
    protected Point moveTo = null;
    
-   
    public ActionCard(int tID){
       textureID =  tID;
       cardState = CardState.SHOW;
@@ -49,8 +48,7 @@ public abstract class ActionCard{
    
    public boolean isShowing(){
       return cardState == CardState.SHOW;
-   }
-      
+   } 
    public int getDamage(){
       return damage;
    }

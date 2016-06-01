@@ -92,7 +92,7 @@ public abstract class Player{
             move(playerCurrentCard.getMoveTo(), true);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
-         if(!playerCurrentCard.isActive())
+         if(playerCurrentCard != null && !playerCurrentCard.isActive())
             return afterReceivedCard();
       }
       return false;
@@ -143,7 +143,7 @@ public abstract class Player{
             move(playerCurrentCard.getMoveTo(), true);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
-         if(!playerCurrentCard.isActive())
+         if(playerCurrentCard != null && !playerCurrentCard.isActive())
             return afterReceivedCard();
          
       }
@@ -169,7 +169,7 @@ public abstract class Player{
       playerCurrentCard = null;
       
       if(oldCard.receiveNewRoomCard())
-         afterMove(false);
+         afterMove();
       else if(!HVMPanel.board.get(posY, posX).keepsPlaying())
          return true;
       return false;
@@ -217,7 +217,6 @@ public abstract class Player{
    }
    
    public boolean move(Point p, boolean door){
-   
       if(isValidMove(p)){ //test if it is in the board
          Tile tile = null;
          if(HVMPanel.board.get(p.y, p.x) == null)
@@ -237,21 +236,24 @@ public abstract class Player{
          
          if(isValidMove(p)){
             
-            System.out.println("MOVE");
-            System.out.println(door);
-            
-            if(!door && hasDoor(p)){
-               System.out.println("DOOR1");
+            if(!door && hasDoor(p) || hasDoor(tile, p)){
+               HVMPanel.board.add(p.y, p.x, tile);
                playerCurrentCard = DoorCard.getRandom(p);
                state = PlayerState.CARD;
-               System.out.println(playerCurrentCard);
+               if(playerCurrentCard instanceof DoorOpens){
+                  lastPos.setLocation(posX, posY);
+                  posX = p.x;
+                  posY = p.y;
+                  Display.showCardPopup(playerCurrentCard);
+                  return afterMove();
+               }               
                return false;
             }else{
                HVMPanel.board.add(p.y, p.x, tile);
                lastPos.setLocation(posX, posY);
                posX = p.x;
                posY = p.y;
-               return afterMove(door);
+               return afterMove();
             }
          }
       }
@@ -270,8 +272,8 @@ public abstract class Player{
       return false;  
    }
    
-   public boolean afterMove(boolean door){
-      if(!door && HVMPanel.board.get(posY, posX).givesRoomCard()){
+   public boolean afterMove(){
+      if(HVMPanel.board.get(posY, posX).givesRoomCard()){
          playerCurrentCard = RoomCard.getRandom();
          state = PlayerState.CARD;
       }
