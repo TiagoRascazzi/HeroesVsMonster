@@ -84,10 +84,12 @@ public abstract class Player{
          if(p == null)
             state = PlayerState.SELECT;
          else
-            return move(p);
+            return move(p, false);
       }
       else if(state == PlayerState.CARD){
          ActionCard tmpCard = playerCurrentCard.processKeyInput(e);
+         if(playerCurrentCard.getMoveTo() != null)
+            move(playerCurrentCard.getMoveTo(), true);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
          if(!playerCurrentCard.isActive())
@@ -133,10 +135,12 @@ public abstract class Player{
          if(p == null)
             state = PlayerState.SELECT;
          else
-            return move(p);
+            return move(p, false);
       }
       else if(state == PlayerState.CARD){
          ActionCard tmpCard = playerCurrentCard.processMouseInput(screenSize, e);
+         if(playerCurrentCard.getMoveTo() != null)
+            move(playerCurrentCard.getMoveTo(), true);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
          if(!playerCurrentCard.isActive())
@@ -165,7 +169,7 @@ public abstract class Player{
       playerCurrentCard = null;
       
       if(oldCard.receiveNewRoomCard())
-         afterMove();
+         afterMove(false);
       else if(!HVMPanel.board.get(posY, posX).keepsPlaying())
          return true;
       return false;
@@ -212,7 +216,7 @@ public abstract class Player{
       return p;
    }
    
-   public boolean move(Point p){
+   public boolean move(Point p, boolean door){
    
       if(isValidMove(p)){ //test if it is in the board
          Tile tile = null;
@@ -232,55 +236,42 @@ public abstract class Player{
             tile = HVMPanel.board.get(p.y, p.x);
          
          if(isValidMove(p)){
-            if(HVMPanel.board.get(p.y, p.x) == null) 
-               
-               /*if(hasDoor(p))
-                  System.out.println("DOOR");
-               if(hasDoor(tile, p))
-                  System.out.println("DOOR");*/
-                   
+            
+            System.out.println("MOVE");
+            System.out.println(door);
+            
+            if(!door && hasDoor(p)){
+               System.out.println("DOOR1");
+               playerCurrentCard = DoorCard.getRandom(p);
+               state = PlayerState.CARD;
+               System.out.println(playerCurrentCard);
+               return false;
+            }else{
                HVMPanel.board.add(p.y, p.x, tile);
                lastPos.setLocation(posX, posY);
                posX = p.x;
                posY = p.y;
-               return afterMove();
+               return afterMove(door);
+            }
          }
       }
       return false;
    }
    
-   /* TODO
    public boolean hasDoor(Point p){
-      Tile t = HVMPanel.board.get(posY, posX);
-      if(p.x == posX+1 && t.getDoors()[1]){
-         System.out.println("1");
-         return true;
-      }else if(p.x == posX-1 && t.getDoors()[3]){
-         System.out.println("2");
-         return true;
-      }else if(p.y == posY+1 && t.getDoors()[2]){
-         System.out.println("3");
-         return true;
-      }else if(p.y == posY-1 && t.getDoors()[0]){
-         System.out.println("4");
+      Tile t = HVMPanel.board.get(posY, posX);      
+      if(p.x == posX+1 && t.getDoors()[1] || p.x == posX-1 && t.getDoors()[3] || p.y == posY+1 && t.getDoors()[2] || p.y == posY-1 && t.getDoors()[0])
          return true; 
-      }
       return false;  
    }
    public boolean hasDoor(Tile t, Point p){
-      if(p.x == posX+1 && t.getDoors()[1])
-         return true;
-      if(p.x == posX-1 && t.getDoors()[3])
-         return true;
-      if(p.y == posY+1 && t.getDoors()[2])
-         return true;
-      if(p.y == posY-1 && t.getDoors()[0])
+      if(p.x == posX+1 && t.getDoors()[3] || p.x == posX-1 && t.getDoors()[1] || p.y == posY+1 && t.getDoors()[0] || p.y == posY-1 && t.getDoors()[2])
          return true; 
       return false;  
-   }*/
+   }
    
-   public boolean afterMove(){
-      if(HVMPanel.board.get(posY, posX).givesRoomCard()){
+   public boolean afterMove(boolean door){
+      if(!door && HVMPanel.board.get(posY, posX).givesRoomCard()){
          playerCurrentCard = RoomCard.getRandom();
          state = PlayerState.CARD;
       }

@@ -58,11 +58,11 @@ public abstract class Tile{
       //if(top && random.nextInt(prob) < 1)
          Doors[0] = true;
       //if(rigth && random.nextInt(prob) < 1)
-      //   Doors[1] = true;
+         Doors[1] = true;
       //if(bottom && random.nextInt(prob) < 1)
-      //   Doors[2] = true;
+         Doors[2] = true;
       //if(left && random.nextInt(prob) < 1)
-      //   Doors[3] = true;
+         Doors[3] = true;
    }
    
    public int getMaxNumOfPlayers(){

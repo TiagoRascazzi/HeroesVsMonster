@@ -39,7 +39,7 @@ public class Display extends HVMPanel{
       //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
       
       //load all the image for cards
-      cardTextures = new ImageIcon[25];
+      cardTextures = new ImageIcon[28];
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
       cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
@@ -67,6 +67,10 @@ public class Display extends HVMPanel{
       cardTextures[22] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/Goblin.png");
       cardTextures[23] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/MountainTroll.png");
       cardTextures[24] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/Orc.png");
+      
+      cardTextures[25] = new ImageIcon("Img/Cards/DoorCard/DoorJammed.png");
+      cardTextures[26] = new ImageIcon("Img/Cards/DoorCard/DoorOpens.png");
+      cardTextures[27] = new ImageIcon("Img/Cards/DoorCard/DoorTrap.png");
       
       
               
@@ -179,15 +183,15 @@ public class Display extends HVMPanel{
                g.drawImage(tileTextures[board.get(i, j).getTextureID()].getImage(), transform, null); 
                
                if(!(board.get(i, j) instanceof CornerTile)){ //translation and rotation if any other tile
-                  boolean[]doors = new boolean[4];  //TODO get door array from tile
-                  doors[0] = true;  //TOP
-                  doors[1] = true;  //RIGTH
-                  doors[2] = true;  //BOTTOM
-                  doors[3] = true;  //LEFT
-                  doors = board.get(i, j).getDoors();
+                  //boolean[]doors = new boolean[4];  //TODO get door array from tile
+                  //doors[0] = true;  //TOP
+                  //doors[1] = true;  //RIGTH
+                  //doors[2] = true;  //BOTTOM
+                  //doors[3] = true;  //LEFT
+                  boolean[]doors = board.get(i, j).getDoors();
                   for(int k=0; k<doors.length; k++){
                      if(doors[k]){
-                        transform.setToRotation(board.get(i, j).getRotation()+Math.toRadians(90*k), j*tileSize+borderSize+(tileSize/2), i*tileSize+borderSize+(tileSize/2));
+                        transform.setToRotation(Math.toRadians(90*k), j*tileSize+borderSize+(tileSize/2), i*tileSize+borderSize+(tileSize/2));
                         transform.translate(j*tileSize+borderSize+tileSize/3, i*tileSize+borderSize);
                         transform.scale(tileScale/3, tileScale/3);
                         g.drawImage(tileTextures[26].getImage(), transform, null);

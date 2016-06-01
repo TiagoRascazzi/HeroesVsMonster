@@ -14,6 +14,7 @@ public abstract class ActionCard{
    protected int gold = 0;
    protected boolean active = false;
    protected boolean newRoomCard = false;
+   protected Point moveTo = null;
    
    
    public ActionCard(int tID){
@@ -64,6 +65,9 @@ public abstract class ActionCard{
    }
    public String[] getPrintableAction(){
       return null;
+   }
+   public Point getMoveTo(){
+      return moveTo;
    }
    
 }
