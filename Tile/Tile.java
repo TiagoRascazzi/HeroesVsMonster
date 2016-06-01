@@ -174,22 +174,22 @@ public abstract class Tile{
       //wr.add(1, new EndPortcullis());      
       
       wr.add(2, new OneWayCorridor());
-      //wr.add(3, new OneWayPortcullis());
+      wr.add(3, new OneWayPortcullis());
       
-      //wr.add(15, new TwoWayEmptyRoom());
-      //wr.add(2, new TwoWayDarkRoom());
-      //wr.add(8, new TwoWayStraightEmptyRoom());
+      wr.add(15, new TwoWayEmptyRoom());
+      wr.add(2, new TwoWayDarkRoom());
+      wr.add(8, new TwoWayStraightEmptyRoom());
       wr.add(4, new TwoWayCorridor());
       
       wr.add(8, new ThreeWayCorridors());
-      //wr.add(2, new ThreeWayTrap());
-      //wr.add(2, new ThreeWayDarkRoom());
-      //wr.add(30, new ThreeWayEmptyRoom());
-      //wr.add(6, new ThreeWayPortcullis());
+      wr.add(2, new ThreeWayTrap());
+      wr.add(2, new ThreeWayDarkRoom());
+      wr.add(30, new ThreeWayEmptyRoom());
+      wr.add(6, new ThreeWayPortcullis());
       
       wr.add(15, new FourWayEmptyRoom());
-      //wr.add(2, new FourWayPit());
-      //wr.add(3, new FourWayTrap());
+      wr.add(2, new FourWayPit());
+      wr.add(3, new FourWayTrap());
       wr.add(2, new FourWayCorridors());
       
           
