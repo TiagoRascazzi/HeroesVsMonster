@@ -49,6 +49,7 @@ public class HVMPanel extends JPanel{
       mainmenu = new MainMenu("Img/main.jpg");
       board = new SparseMatrix(13, 10);
       timeOfDay = 26;
+      DragonCounter.setTotal(10);
       
       //set players start position
       for(int i=0; i<players.size(); i++){

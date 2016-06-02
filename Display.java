@@ -40,7 +40,8 @@ public class Display extends HVMPanel{
       //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
       
       //load all the image for cards
-      cardTextures = new ImageIcon[28];
+      cardTextures = new ImageIcon[30];
+      //roomcard
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
       cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
@@ -55,20 +56,22 @@ public class Display extends HVMPanel{
       cardTextures[11] = new ImageIcon("Img/Cards/RoomCard/TorchGoesOut.png"); 
       //cardTextures[12] = new ImageIcon("Img/Cards/RoomCard/TrapDoor.png"); 
       cardTextures[13] = new ImageIcon("Img/Cards/RoomCard/VampireBats.png"); 
-      
+      //searchcard
       cardTextures[14] = new ImageIcon("Img/Cards/SearchCard/EmptySearch.png");
       cardTextures[15] = new ImageIcon("Img/Cards/SearchCard/GiantCentipedeSearch.png");
       cardTextures[16] = new ImageIcon("Img/Cards/SearchCard/PotionSearch.png");
       cardTextures[17] = new ImageIcon("Img/Cards/SearchCard/SecretDoorSearch.png");
       cardTextures[18] = new ImageIcon("Img/Cards/SearchCard/TrapSearch.png");
-      cardTextures[19] = new ImageIcon("Img/Cards/SearchCard/TreasureSearch.png")
-      ;
+      cardTextures[19] = new ImageIcon("Img/Cards/SearchCard/GoldenGuineasSearch.png");
+      cardTextures[28] = new ImageIcon("Img/Cards/SearchCard/JewellerySearch.png");
+      cardTextures[29] = new ImageIcon("Img/Cards/SearchCard/RingSearch.png");
+      //monster roomcard
       cardTextures[20] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/ChampionOfChaos.png");
       cardTextures[21] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/DeathWarrior.png");
       cardTextures[22] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/Goblin.png");
       cardTextures[23] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/MountainTroll.png");
       cardTextures[24] = new ImageIcon("Img/Cards/RoomCard/MonsterCard/Orc.png");
-      
+      //doorcard
       cardTextures[25] = new ImageIcon("Img/Cards/DoorCard/DoorJammed.png");
       cardTextures[26] = new ImageIcon("Img/Cards/DoorCard/DoorOpens.png");
       cardTextures[27] = new ImageIcon("Img/Cards/DoorCard/DoorTrap.png");

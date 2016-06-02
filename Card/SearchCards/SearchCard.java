@@ -13,20 +13,22 @@ public abstract class SearchCard extends ActionCard{
       WeightedRandom<SearchCard> wr = new WeightedRandom<SearchCard>();
       //DO ONE A THE TIME
       wr.add(1, new EmptySearch());
-      wr.add(1, new GiantCentipedeSearch());
+      
+      //DONE
       wr.add(1, new PotionSearch());
+      wr.add(1, new GiantCentipedeSearch());
+      
+      //DONE BUT NEED TO INSERT CORRECT VALUE
+      wr.add(1, new RingSearch());
+      wr.add(1, new JewellerySearch());
+      wr.add(1, new GoldenGuineasSearch());
+      
+      //not DONE
       wr.add(1, new SecretDoorSearch());
-      wr.add(1, new TrapSearch());
-      wr.add(1, new TreasureSearch());
-      //wr.add(1, new Empty());
-      //wr.add(1, new GoldenGuineas());
-      //wr.add(1, new Jewellery());
-      //wr.add(1, new Potion());
-      //wr.add(1, new Ring());
-      //wr.add(1, new RubyBracelet());
-      //wr.add(1, new SecretDoor());
-      //wr.add(1, new ShuffleTheDeck());
-      //wr.add(1, new Trap());
+      
+      //TODO
+      //wr.add(1, new TrapSearch());
+      
       return wr.next();  // return the random card 
    
    }

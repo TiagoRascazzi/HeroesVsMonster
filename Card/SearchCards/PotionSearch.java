@@ -17,6 +17,7 @@ public class PotionSearch extends SearchCard{
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
             active = false;
+            return new Potion();
          }
       }
       return super.processKeyInput(e);
@@ -25,6 +26,7 @@ public class PotionSearch extends SearchCard{
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
             active = false;
+            return new Potion();
          }
       }
       return super.processMouseInput(screenSize, e);

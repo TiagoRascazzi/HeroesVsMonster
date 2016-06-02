@@ -11,7 +11,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2549;g
+!2678;g
 %\011Card%sSearchCards%sGiantCentipedeSearch.java
 %\011Card%sRoomCards%sDeadAdventurer.java
 %\011Card%sDoorCard%sDoorCard.java
@@ -26,6 +26,7 @@ s#l0
 %\011Tile%sOneWayCorridor.java
 %\011Player%sPlayer.java
 %\011Tile%sTestTile.java
+%\011Card%sSearchCards%sJewellerySearch.java
 %\011Card%sRoomCards%sVampireBats.java
 %\011Card%sRoomCards%sMonsterCard%sGoblin%sGoblin.java
 %\011Tile%sThreeWayDarkRoom.java
@@ -40,7 +41,6 @@ s#l0
 %\011Tile%sRotatingRoom.java
 %\011Card%sRoomCards%sMonsterCard%sOrc%sOrc.java
 %\011Card%sRoomCards%sRoomCard.java
-%\011Card%sSearchCards%sTreasureSearch.java
 %\011Card%sRoomCards%sSneakAttack.java
 %\011Tile%sTreasureChamberTile.java
 %\011Tile%sTwoWayEmptyRoom.java
@@ -63,7 +63,10 @@ s#l0
 %\011Tile%sTwoWayCorridor.java
 %\011Utils%ssparseMatrix%sMatrixable.java
 %\011Card%sSearchCards%sEmptySearch.java
+%\011Card%sSearchCards%sRingSearch.java
+%\011DragonCounter%sDragonCounter.java
 %\011Card%sRoomCards%sTrapDoor.java
+%\011Card%sSearchCards%sGoldenGuineasSearch.java
 %\011Tile%sThreeWayEmptyRoom.java
 %\011Tile%sBottomLessPit.java
 %\011Tile%sThreeWayCorridors.java
@@ -83,7 +86,7 @@ s#l0
 %\011Utils%sGUI.java
 %\011Tile%sThreeWayPortcullis.java
 %\011Card%sSearchCards%sTrapSearch.java
-!2549;f
+!2678;f
 %\011Card%sSearchCards%sGiantCentipedeSearch.java
 %\011Card%sRoomCards%sDeadAdventurer.java
 %\011Card%sDoorCard%sDoorCard.java
@@ -98,6 +101,7 @@ s#l0
 %\011Tile%sOneWayCorridor.java
 %\011Player%sPlayer.java
 %\011Tile%sTestTile.java
+%\011Card%sSearchCards%sJewellerySearch.java
 %\011Card%sRoomCards%sVampireBats.java
 %\011Card%sRoomCards%sMonsterCard%sGoblin%sGoblin.java
 %\011Tile%sThreeWayDarkRoom.java
@@ -112,7 +116,6 @@ s#l0
 %\011Tile%sRotatingRoom.java
 %\011Card%sRoomCards%sMonsterCard%sOrc%sOrc.java
 %\011Card%sRoomCards%sRoomCard.java
-%\011Card%sSearchCards%sTreasureSearch.java
 %\011Card%sRoomCards%sSneakAttack.java
 %\011Tile%sTreasureChamberTile.java
 %\011Tile%sTwoWayEmptyRoom.java
@@ -135,7 +138,10 @@ s#l0
 %\011Tile%sTwoWayCorridor.java
 %\011Utils%ssparseMatrix%sMatrixable.java
 %\011Card%sSearchCards%sEmptySearch.java
+%\011Card%sSearchCards%sRingSearch.java
+%\011DragonCounter%sDragonCounter.java
 %\011Card%sRoomCards%sTrapDoor.java
+%\011Card%sSearchCards%sGoldenGuineasSearch.java
 %\011Tile%sThreeWayEmptyRoom.java
 %\011Tile%sBottomLessPit.java
 %\011Tile%sThreeWayCorridors.java

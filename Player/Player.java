@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Point;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Player{
    
@@ -73,8 +74,11 @@ public abstract class Player{
             count++;
          }
          
-         if(e.getKeyChar() == (count+"").charAt(0)) //if skip
+         if(e.getKeyChar() == (count+"").charAt(0)){ //if skip
+            if(HVMPanel.board.get(posY, posX) instanceof TreasureChamberTile)
+               treasureChamberAction();
             return true;
+         }
          //count++;
          
          
@@ -237,9 +241,11 @@ public abstract class Player{
          if(isValidMove(p)){
             
             if(!door && hasDoor(p) || hasDoor(tile, p)){
-               HVMPanel.board.add(p.y, p.x, tile);
                playerCurrentCard = DoorCard.getRandom(p);
                state = PlayerState.CARD;
+               
+               if(playerCurrentCard instanceof DoorOpens || (hasDoor(p) && hasDoor(tile, p)))
+                  HVMPanel.board.add(p.y, p.x, tile);
                if(playerCurrentCard instanceof DoorOpens){
                   lastPos.setLocation(posX, posY);
                   posX = p.x;
@@ -253,11 +259,23 @@ public abstract class Player{
                lastPos.setLocation(posX, posY);
                posX = p.x;
                posY = p.y;
+               if(tile instanceof TreasureChamberTile)
+                  treasureChamberAction();
                return afterMove();
             }
          }
       }
       return false;
+   }
+   
+   public void treasureChamberAction(){
+      Random random = new Random();
+      int g = random.nextInt(80)*10+200; //between 200-1000 by step of ten
+      gold += g;
+      Display.showTextPopup("You have collected "+g+" gold\nyou have a total of "+gold);
+      String dc = DragonCounter.getRandom();
+      if(dc.equals("DragonWakesUp"))
+         Display.showTextPopup("THE DRAGON WOKE UP !!!");
    }
    
    public boolean hasDoor(Point p){
