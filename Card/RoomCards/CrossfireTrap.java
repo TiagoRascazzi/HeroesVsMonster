@@ -36,6 +36,7 @@ public class CrossfireTrap extends RoomCard{
    public void mainAction(){
       Random random = new Random();
       damage = random.nextInt(12) + 1;
+      BGMusicPlayer.playSound(2);
       Display.showTextPopup("You have lost "+damage+" lifes");
    }
    

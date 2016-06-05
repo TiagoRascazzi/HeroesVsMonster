@@ -41,6 +41,7 @@ public class VampireBats extends RoomCard{
       }else if(typeOfDice == 2){
          damage += random.nextInt(12) + 1;
       }
+      BGMusicPlayer.playSound(2);
       Display.showTextPopup("You have lost "+damage+" lifes");
    }
    

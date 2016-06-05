@@ -250,6 +250,7 @@ public abstract class Player{
                   lastPos.setLocation(posX, posY);
                   posX = p.x;
                   posY = p.y;
+                  BGMusicPlayer.playSound(4);
                   Display.showCardPopup(playerCurrentCard);
                   return afterMove();
                }               
@@ -259,6 +260,7 @@ public abstract class Player{
                lastPos.setLocation(posX, posY);
                posX = p.x;
                posY = p.y;
+               BGMusicPlayer.playSound(0);
                if(tile instanceof TreasureChamberTile)
                   treasureChamberAction();
                return afterMove();
@@ -272,6 +274,7 @@ public abstract class Player{
       Random random = new Random();
       int g = random.nextInt(80)*10+200; //between 200-1000 by step of ten
       gold += g;
+      BGMusicPlayer.playSound(3);
       Display.showTextPopup("You have collected "+g+" gold\nyou have a total of "+gold);
       String dc = DragonCounter.getRandom();
       if(dc.equals("DragonWakesUp"))

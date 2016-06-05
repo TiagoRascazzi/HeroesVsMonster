@@ -132,6 +132,7 @@ public abstract class MonsterCard extends RoomCard{
       if(CurrentVals.get(0) == 1){ //Combat
          CurrentVals.remove(0);
          monsterLifes = CurrentVals.remove(0);
+         BGMusicPlayer.playMusic(6);
          mscState = MonsterCardState.COMBAT;
       }else if(CurrentVals.get(0) == 2){ //Flee
          CurrentVals.remove(0);
@@ -175,10 +176,14 @@ public abstract class MonsterCard extends RoomCard{
       HVMPanel.players.get(HVMPanel.currentPlayer).loseLife(pl);
       combatMessage += "The monster lost: "+ml+"\n";
       combatMessage += "You lost: "+pl+"\n";
+      if(pl>0)
+         BGMusicPlayer.playSound(2);
       
       //check if someone died
-      if(HVMPanel.players.get(HVMPanel.currentPlayer).life() <= 0 || monsterLifes <= 0)
+      if(HVMPanel.players.get(HVMPanel.currentPlayer).life() <= 0 || monsterLifes <= 0){
+         BGMusicPlayer.playRandomMusic();
          active = false;
+      }
    }
    
    //AI just a random

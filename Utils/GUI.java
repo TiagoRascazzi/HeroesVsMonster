@@ -2,8 +2,9 @@ import java.awt.Point;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.ImageIcon;
 
-public class GUI{
+public class GUI extends Display{
 
    private static Point mouse;
    
@@ -24,5 +25,11 @@ public class GUI{
          g.setColor(c);
          g.fillRoundRect( posX, posY, width, heigth, screenWidth/64, screenHeight/64); 
       }
+   }
+   
+   public static ImageIcon changeImageOnHover(ImageIcon img, ImageIcon imgHover, int x1, int x2, int y1, int y2){
+      if(hover(x1, x2, y1, y2))
+         return imgHover;
+      return img;
    }
 }

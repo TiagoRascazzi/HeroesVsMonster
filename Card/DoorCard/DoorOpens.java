@@ -17,6 +17,7 @@ public class DoorOpens extends DoorCard{
    public ActionCard processKeyInput(KeyEvent e){ 
       if(cardState == CardState.SHOW){
          if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+            BGMusicPlayer.playSound(4);
             active = false;
          }
       }
@@ -26,6 +27,7 @@ public class DoorOpens extends DoorCard{
    public ActionCard processMouseInput(Point screenSize, MouseEvent e){
       if(cardState == CardState.SHOW){
          if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            BGMusicPlayer.playSound(4);
             active = false;
          }
       }

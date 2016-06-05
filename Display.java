@@ -17,6 +17,12 @@ public class Display extends HVMPanel{
    private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
    private static ImageIcon sidebarBG;                         //the picture background of the sidebar 
+   private static ImageIcon volumeBar;
+   private static ImageIcon volumePlus;
+   private static ImageIcon volumeMinus; 
+   private static ImageIcon volumePlusHover;
+   private static ImageIcon volumeMinusHover;
+   
    private static String TextPopupValue = "";
    private static ActionCard CardPopupValue = null;
    
@@ -30,6 +36,12 @@ public class Display extends HVMPanel{
       endImg = new ImageIcon("Img/end.jpg");
       sunImg = new ImageIcon("Img/sun.png"); 
       sidebarBG = new ImageIcon("Img/sidebarBG.jpg");
+      
+      volumeBar = new ImageIcon("Img/Volume/volumeBar.png");
+      volumePlus = new ImageIcon("Img/Volume/volumePlus.png");
+      volumeMinus = new ImageIcon("Img/Volume/volumeMinus.png");
+      volumePlusHover = new ImageIcon("Img/Volume/volumePlusHover.png");
+      volumeMinusHover = new ImageIcon("Img/Volume/volumeMinusHover.png");
       
       //Tmp for until the draw combat is not in monsterCard class
       playerHealth = new ImageIcon("Img/hearth.png");
@@ -302,6 +314,41 @@ public class Display extends HVMPanel{
       g.drawString("(r) RESTART", 100, 200);
       GUI.chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
       g.drawString("(q) QUIT", 100, 250);
+      
+      GUI.chgColorOnHover(g, Color.RED, Color.BLACK, 100, 230, 255, 285);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
+      g.drawString("Volume", 350, 100);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 26)); 
+      g.drawString("Main", 375, 150);
+      g.drawString("Music", 375, 200);
+      g.drawString("Sound", 375, 250);
+      
+      g.setColor(Color.RED);
+      
+      //main volume bar
+      ImageIcon volumeMinusAfter = GUI.changeImageOnHover(volumeMinus, volumeMinusHover, 485, 505, 160, 180);
+      g.drawImage(volumeMinusAfter.getImage(), 475, 130, 20, 20, null);
+      for(int i=0; i<BGMusicPlayer.getMainVolume(); i++)
+         g.drawImage(volumeBar.getImage(), 500+10*i, 130, 5, 20, null);
+      ImageIcon volumePlusAfter = GUI.changeImageOnHover(volumePlus, volumePlusHover, 500+10*11, 500+10*11+20, 160, 180);
+      g.drawImage(volumePlusAfter.getImage(), 500+10*10, 130, 20, 20, null);
+      
+      //music volume bar
+      volumeMinusAfter = GUI.changeImageOnHover(volumeMinus, volumeMinusHover, 485, 505, 210, 230);
+      g.drawImage(volumeMinusAfter.getImage(), 475, 180, 20, 20, null);
+      for(int i=0; i<BGMusicPlayer.getMusicVolume(); i++)
+         g.drawImage(volumeBar.getImage(), 500+10*i, 180, 5, 20, null);
+      volumePlusAfter = GUI.changeImageOnHover(volumePlus, volumePlusHover, 500+10*11, 500+10*11+20, 210, 230);
+      g.drawImage(volumePlusAfter.getImage(), 500+10*10, 180, 20, 20, null);
+
+      //sound volume bar
+      volumeMinusAfter = GUI.changeImageOnHover(volumeMinus, volumeMinusHover, 485, 505, 260, 280);
+      g.drawImage(volumeMinusAfter.getImage(), 475, 230, 20, 20, null);
+      for(int i=0; i<BGMusicPlayer.getSoundVolume(); i++)
+         g.drawImage(volumeBar.getImage(), 500+10*i, 230, 5, 20, null);
+      volumePlusAfter = GUI.changeImageOnHover(volumePlus, volumePlusHover, 500+10*11, 500+10*11+20, 260, 280);
+      g.drawImage(volumePlusAfter.getImage(), 500+10*10, 230, 20, 20, null);
+      
    }
    
    public static void drawEndScreen(Graphics2D g, int screenWidth, int screenHeight){

@@ -37,6 +37,7 @@ public class DoorTrap extends DoorCard{
    public void mainAction(){
       Random random = new Random();
       damage = random.nextInt(6) + 1;
+      BGMusicPlayer.playSound(2);
       Display.showTextPopup("You have lost "+damage+" lifes");
    }
 }

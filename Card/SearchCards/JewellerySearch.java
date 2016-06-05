@@ -34,6 +34,7 @@ public class JewellerySearch extends SearchCard{
    
    public void mainAction(){
       this.gold += 30;
+      BGMusicPlayer.playSound(3);
       Display.showTextPopup("You received 30 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+30));
    }
 }

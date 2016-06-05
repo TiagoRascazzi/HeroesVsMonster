@@ -20,7 +20,9 @@ public class HVMPanel extends JPanel{
    public static int timeOfDay;                       // represent what
    
    public HVMPanel(){
-      bgMusicPlayer = new BGMusicPlayer();
+      //bgMusicPlayer = new BGMusicPlayer();
+      BGMusicPlayer.loadMusics();
+      BGMusicPlayer.playMusic(0);
       //bgMusicPlayer.playMusic(0);
       GUI.update(new Point(0, 0));
       mainmenu = new MainMenu("Img/main.jpg");
@@ -134,6 +136,20 @@ public class HVMPanel extends JPanel{
                gameState = GameState.MAIN;   // restart the game
             else if(GUI.hover(100, 230, 255, 285))
                System.exit(0);               // close the game application
+            else if(GUI.hover(485, 505, 160, 180))   //if main volume down
+               BGMusicPlayer.decreaseMainVolume();
+            else if(GUI.hover(500+10*11, 500+10*11+20, 160, 180))   //if main volume up
+               BGMusicPlayer.increaseMainVolume();
+            else if(GUI.hover(485, 505, 210, 230))   //if music volume down
+               BGMusicPlayer.decreaseMusicVolume();
+            else if(GUI.hover(500+10*11, 500+10*11+20, 210, 230))   //if music volume up
+               BGMusicPlayer.increaseMusicVolume();
+            else if(GUI.hover(485, 505, 260, 280))   //if sound volume down
+               BGMusicPlayer.decreaseSoundVolume();
+            else if(GUI.hover(500+10*11, 500+10*11+20, 260, 280))   //if sound volume up
+               BGMusicPlayer.increaseSoundVolume();
+            
+            
          }else if(gameState == GameState.END){
             if(GUI.hover(100, 310, 155, 185))
                gameState = GameState.MAIN;
@@ -166,6 +182,8 @@ public class HVMPanel extends JPanel{
       if(   (!atLeastOneAlive || timeOfDay<=0) ){
          //show end screen
          gameState = GameState.END;
+         BGMusicPlayer.stopMusic();
+         BGMusicPlayer.playSound(1);
          System.out.println("THE GAME HAS ENDED");
       }else{
          while(!players.get(currentPlayer).isAlive()){
@@ -180,7 +198,7 @@ public class HVMPanel extends JPanel{
    
    //play a random music change to game state and reset the game
    public void startGame(){
-      //bgMusicPlayer.playRandomMusic();
+      BGMusicPlayer.playRandomMusic();
       gameState = GameState.GAME;
       resetGame();
    }

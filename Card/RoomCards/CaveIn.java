@@ -83,6 +83,7 @@ public class CaveIn extends RoomCard{
       else
          damage += random.nextInt(6) + 1;
       
+      BGMusicPlayer.playSound(2);
       Display.showTextPopup("You lost: "+damage+" lives");
    }
    

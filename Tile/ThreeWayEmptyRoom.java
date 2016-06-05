@@ -8,7 +8,6 @@ public class ThreeWayEmptyRoom extends Tile{
    public ThreeWayEmptyRoom(){
             
       super(23, false, true, true, true, false, true);
-      
    //private int textureID0;
    //private int maxNumOfPlayers;
    //private boolean keepPlaying;
