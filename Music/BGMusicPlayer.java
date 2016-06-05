@@ -46,8 +46,9 @@ public class BGMusicPlayer{
       totalVolume = 9;
       
       wr = new WeightedRandom<Integer>();
-      for(int i=1; i<musicFiles.length; i++)
-         wr.add(1, i);
+      int[]msId = new int[]{1, 2, 3, 4, 5};
+      for(int i=1; i<msId.length; i++)
+         wr.add(1, msId[i]);
       playingRandomMusic = false;
    }
    
