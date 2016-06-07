@@ -7,7 +7,7 @@ public class EndPortcullis extends Tile{
       
    public EndPortcullis(){
             
-      super(19, false, true, true, false, false, false, true);
+      super(19, false, true, true, false, false, false);
       
    //private int textureID0;
    //private int maxNumOfPlayers;

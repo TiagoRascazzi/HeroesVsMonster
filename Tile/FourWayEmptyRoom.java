@@ -7,7 +7,7 @@ public class FourWayEmptyRoom extends Tile{
       
    public FourWayEmptyRoom(){
             
-      super(18, false, true, true, true, true, true, false);
+      super(18, false, true, true, true, true, true);
       setPossibleDoor(true, true, true, true);
    //private int textureID;
    //private int maxNumOfPlayers;

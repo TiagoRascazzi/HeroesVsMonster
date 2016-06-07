@@ -7,7 +7,7 @@ public class TwoWayCorridor extends Tile{
       
    public TwoWayCorridor(){
             
-      super(24, true, false, true, false, false, true, false);
+      super(24, true, false, true, false, false, true);
       setSearchable(false);
    }
    

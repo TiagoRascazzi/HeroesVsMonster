@@ -4,7 +4,7 @@ import javax.sound.sampled.*;
 public class BGMusicPlayer{
    
    private static Clip clip;
-   private static Clip soundClip;
+   private static Clip[] lines;
    private static File[] musicFiles;
    private static File[] soundFiles;
    private static WeightedRandom<Integer> wr;
@@ -14,12 +14,14 @@ public class BGMusicPlayer{
    private static int soundVolume;
    private static int totalVolume;
    
+   
    public static void loadMusics(){
       try{
          clip = (Clip)AudioSystem.getLine(new Line.Info(Clip.class));
          clip.addLineListener(new BGMusicListener());
-         soundClip = (Clip)AudioSystem.getLine(new Line.Info(Clip.class));
-         soundClip.addLineListener(new BGSoundListener());
+         lines = new Clip[25];
+         for(int i=0; i<lines.length; i++)
+            lines[i] = (Clip)AudioSystem.getLine(new Line.Info(Clip.class));
       }
       catch(Exception e){
          e.printStackTrace();
@@ -102,23 +104,31 @@ public class BGMusicPlayer{
    
       
    public static void playSound(int soundId){
-      if(soundClip != null){
-         if(soundClip.isOpen())
-            stopSound();
+      Clip validLine = getNextValidLine();
+      if(validLine != null){
          try{           
-            soundClip.open(AudioSystem.getAudioInputStream(soundFiles[soundId]));
+            validLine.open(AudioSystem.getAudioInputStream(soundFiles[soundId]));
             updateSoundVolume();  
-            soundClip.loop(0);
-         }
-         catch(Exception e){
+            validLine.loop(0);
+         }catch(Exception e){
             e.printStackTrace();
          }
       }
    }
    
+   public static Clip getNextValidLine(){
+      for(int i=0; i<lines.length; i++){
+         if(!lines[i].isOpen())
+            return lines[i];
+      }
+      return null;
+   }
+   
    public static void stopSound(){
-      soundClip.stop();
-      soundClip.close();
+      for(int i=0; i<lines.length; i++){
+         lines[i].stop();
+         lines[i].close();
+      }
    }
    
    public static class BGMusicListener implements LineListener{
@@ -127,14 +137,6 @@ public class BGMusicPlayer{
          if(playingRandomMusic && event.getType() == LineEvent.Type.STOP){
             playRandomMusic();
          }
-      }
-   }
-   public static class BGSoundListener implements LineListener{
-      @Override
-      public void update(LineEvent event){
-         if(event.getType() == LineEvent.Type.STOP){
-            soundClip.close();
-         } 
       }
    }
    
@@ -151,11 +153,13 @@ public class BGMusicPlayer{
       }    
    }
    public static void updateSoundVolume(){
-      if(soundClip.isOpen()){
-         FloatControl volume = (FloatControl) soundClip.getControl(FloatControl.Type.MASTER_GAIN);
-         float vol = ((Math.abs(volume.getMinimum()) + volume.getMaximum()) /20*(soundVolume+10)/20*(totalVolume+10) )+volume.getMinimum();
-         volume.setValue(vol); 
-      }    
+      for(int i=0; i<lines.length; i++){
+         if(lines[i].isOpen()){
+            FloatControl volume = (FloatControl) lines[i].getControl(FloatControl.Type.MASTER_GAIN);
+            float vol = ((Math.abs(volume.getMinimum()) + volume.getMaximum()) /20*(soundVolume+10)/20*(totalVolume+10) )+volume.getMinimum();
+            volume.setValue(vol); 
+         }
+      }  
    }
    
    public static int getMainVolume(){

@@ -8,14 +8,7 @@ public abstract class Tile{
    public static final int BOTTOM = 1;
    public static final int LEFT = 2;
    public static final int RIGHT = 3; 
-   
-   private boolean leftSide;
-   private boolean rightSide;
-   private boolean topSide;
-   private boolean bottomSide;
-   private boolean leftSideOneWay;
   
-   
    private int orientation;
    private int textureID;
    private int maxNumOfPlayers;
@@ -24,8 +17,9 @@ public abstract class Tile{
    private boolean giveRoomCard;
    private boolean searchable;
    
-   private boolean[]OneWay = new boolean[4];
+   private boolean[]Side = new boolean[4];
    private boolean[]Doors = new boolean[4];
+   private boolean[]OneWay = new boolean[4];
    
    public Tile(int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       orientation = LEFT;
@@ -34,12 +28,8 @@ public abstract class Tile{
       maxNumOfPlayers = 1;
       keepPlaying = kp;
       giveRoomCard = grc;
-      leftSide = ls;
-      rightSide = rs;
-      topSide = ts;
-      bottomSide = bs;
-      leftSideOneWay = lsow;
       searchable = true;
+      Side = new boolean[]{ts, rs, bs, ls};
       Doors = new boolean[]{false, false, false, false};
       OneWay = new boolean[]{false, false, false, false};
    }
@@ -48,13 +38,10 @@ public abstract class Tile{
       maxNumOfPlayers = 1;
       keepPlaying = kp;
       giveRoomCard = grc;
-      leftSide = ls;
-      rightSide = rs;
-      topSide = ts;
-      bottomSide = bs;
-      leftSideOneWay = lsow;
       setOrientation(orien);
       searchable = true;
+      
+      Side = new boolean[]{ts, rs, bs, ls};
       Doors = new boolean[]{false, false, false, false};
       OneWay = new boolean[]{false, false, false, false};
    }
@@ -64,7 +51,6 @@ public abstract class Tile{
       OneWay[1] = rigth;
       OneWay[2] = bottom;
       OneWay[3] = left;
-      
    }
    
    public void setPossibleDoor(boolean top, boolean rigth, boolean bottom, boolean left){
@@ -79,13 +65,6 @@ public abstract class Tile{
       if(left && random.nextInt(prob) < 1)
          Doors[3] = true;
    }
-   
-   public int getMaxNumOfPlayers(){
-      return maxNumOfPlayers;
-   }
-   public int getTextureID(){
-      return textureID;
-   } 
    
    public void setOrientation(int orien){    
       
@@ -103,7 +82,6 @@ public abstract class Tile{
    
    //deg is a multiple of 90
    public void rotateClockwise(int deg){
-      
       if((deg/90)%4 == 0){        //0
          //Do nothing
       }else if((deg/90)%4 == 1){  //90
@@ -116,40 +94,51 @@ public abstract class Tile{
    }
    
    public void rotate90DegClockwise(){
-      boolean tmp1 = leftSide;
-      boolean tmp2 = rightSide;
-     
-      leftSide = bottomSide;
-      rightSide = topSide;
-      topSide = tmp1;
-      bottomSide = tmp2; 
+      rotateArr90Deg(Side);
+      rotateArr90Deg(Doors);
+      rotateArr90Deg(OneWay);
       
       orientation = getNextCwRotation(orientation);
    }
+   public void rotateArr90Deg(boolean[]arr){
+      boolean tmp1 = arr[3];
+      boolean tmp2 = arr[1];
+      arr[3] = arr[2];
+      arr[1] = arr[0];
+      arr[0] = tmp1;
+      arr[2] = tmp2;
+   }
    
    public void rotate180DegClockwise(){
-      boolean tmp1 = leftSide;
-      boolean tmp2 = topSide;
-      
-      leftSide = rightSide;
-      rightSide = tmp1;
-      topSide = bottomSide;
-      bottomSide = tmp2;
+      rotateArr180Deg(Side);
+      rotateArr180Deg(Doors);
+      rotateArr180Deg(OneWay);
       
       orientation = getNextCwRotation(getNextCwRotation(orientation));
    }
-   
+   public void rotateArr180Deg(boolean[]arr){
+      boolean tmp1 = arr[3];
+      boolean tmp2 = arr[0];
+      arr[3] = arr[1];
+      arr[1] = tmp1;
+      arr[0] = arr[2];
+      arr[2] = tmp2;
+   }
    
    public void rotate270DegClockwise(){
-      boolean tmp1 = leftSide;
-      boolean tmp2 = rightSide;
-     
-      leftSide = topSide;
-      rightSide = bottomSide;
-      topSide = tmp2;
-      bottomSide = tmp1;
+      rotateArr270Deg(Side);
+      rotateArr270Deg(Doors);
+      rotateArr270Deg(OneWay);
       
       orientation = getNextCwRotation(getNextCwRotation(getNextCwRotation(orientation)));
+   }
+   public void rotateArr270Deg(boolean[]arr){
+      boolean tmp1 = arr[3];
+      boolean tmp2 = arr[1];
+      arr[3] = arr[0];
+      arr[1] = arr[2];
+      arr[0] = tmp2;
+      arr[2] = tmp1; 
    }
    
    public int getNextCwRotation(int orien){
@@ -186,24 +175,24 @@ public abstract class Tile{
       wr.add(2, new BottomLessPit());
       
       wr.add(5, new EndEmptyRoom());
-      */wr.add(1, new EndPortcullis());      
+      *///wr.add(1, new EndPortcullis());      
       
       //wr.add(2, new OneWayCorridor());
-      wr.add(3, new OneWayPortcullis());
+      //wr.add(3, new OneWayPortcullis());
       
      /* wr.add(15, new TwoWayEmptyRoom());
       wr.add(2, new TwoWayDarkRoom());
-      wr.add(8, new TwoWayStraightEmptyRoom());
-      wr.add(4, new TwoWayCorridor());
+     */ //wr.add(8, new TwoWayStraightEmptyRoom());
+      //wr.add(4, new TwoWayCorridor());
       
-      wr.add(8, new ThreeWayCorridors());
+     /* wr.add(8, new ThreeWayCorridors());
       wr.add(2, new ThreeWayTrap());
       wr.add(2, new ThreeWayDarkRoom());
      */ //wr.add(30, new ThreeWayEmptyRoom());
-      wr.add(6, new ThreeWayPortcullis());
+      //wr.add(6, new ThreeWayPortcullis());
       
-     /* wr.add(15, new FourWayEmptyRoom());
-      wr.add(2, new FourWayPit());
+      wr.add(15, new FourWayEmptyRoom());
+     /* wr.add(2, new FourWayPit());
       wr.add(3, new FourWayTrap());
       wr.add(2, new FourWayCorridors());
       */
@@ -214,9 +203,6 @@ public abstract class Tile{
    public boolean[]getDoors(){
       return Doors;
    }
-   public boolean getLeftSideOneWay(){
-      return leftSideOneWay;
-   }
    public void changeMaxNumOfPlayers(int mnop){
       maxNumOfPlayers = mnop;
    }
@@ -226,17 +212,31 @@ public abstract class Tile{
    public boolean givesRoomCard(){
       return giveRoomCard;
    }
+   
+   public boolean getOneWayTop(){
+      return OneWay[0];
+   }
+   public boolean getOneWayRigth(){
+      return OneWay[1];
+   }
+   public boolean getOneWayBottom(){
+      return OneWay[2];
+   }
+   public boolean getOneWayLeft(){
+      return OneWay[3];
+   }
+   
    public boolean isLeftSideOpen(){
-      return leftSide;
+      return Side[3];
    }
    public boolean isRightSideOpen(){
-      return rightSide;
+      return Side[1];
    }
    public boolean isTopSideOpen(){
-      return topSide;
+      return Side[0];
    }
    public boolean isBottomSideOpen(){
-      return bottomSide;
+      return Side[2];
    }
    public boolean isSearchable(){
       return searchable;
@@ -245,4 +245,10 @@ public abstract class Tile{
       searchable = b;
    }
   
+   public int getMaxNumOfPlayers(){
+      return maxNumOfPlayers;
+   }
+   public int getTextureID(){
+      return textureID;
+   } 
 }

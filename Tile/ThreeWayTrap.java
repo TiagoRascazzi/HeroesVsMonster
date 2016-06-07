@@ -7,7 +7,7 @@ public class ThreeWayTrap extends Tile{
       
    public ThreeWayTrap(){
             
-      super(15, false, true, true, true, false, true, false);
+      super(15, false, true, true, true, false, true);
       
    //private int textureID;
    //private int maxNumOfPlayers;

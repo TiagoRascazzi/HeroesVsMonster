@@ -7,7 +7,7 @@ public class ThreeWayDarkRoom extends Tile{
       
    public ThreeWayDarkRoom(){
             
-      super(12, false, true, true, true, false, true, false);
+      super(12, false, true, true, true, false, true);
       
    //private int textureID;
    //private int maxNumOfPlayers;

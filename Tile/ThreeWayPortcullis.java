@@ -7,8 +7,8 @@ public class ThreeWayPortcullis extends Tile{
       
    public ThreeWayPortcullis(){
             
-      super(21, false, true, true, true, false, true, true);
-      
+      super(21, false, true, true, true, false, true);
+      setOneWay(false, false, false, true);      
    //private int textureID0;
    //private int maxNumOfPlayers;
    //private boolean keepPlaying;

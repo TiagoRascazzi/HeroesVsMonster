@@ -263,6 +263,7 @@ public abstract class Player{
                BGMusicPlayer.playSound(0);
                if(tile instanceof TreasureChamberTile)
                   treasureChamberAction();
+               System.out.println(tile);
                return afterMove();
             }
          }
@@ -277,8 +278,12 @@ public abstract class Player{
       BGMusicPlayer.playSound(3);
       Display.showTextPopup("You have collected "+g+" gold\nyou have a total of "+gold);
       String dc = DragonCounter.getRandom();
-      if(dc.equals("DragonWakesUp"))
-         Display.showTextPopup("THE DRAGON WOKE UP !!!");
+      if(dc.equals("DragonWakesUp")){
+         int lf = random.nextInt(12) + 1;
+         Display.showTextPopup("THE DRAGON WOKE UP !!!\n you lost all your gold\nand lost "+lf+" lives");
+         life -= lf;
+         gold = 0;
+      }
    }
    
    public boolean hasDoor(Point p){
@@ -291,12 +296,6 @@ public abstract class Player{
       if(p.x == posX+1 && t.getDoors()[3] || p.x == posX-1 && t.getDoors()[1] || p.y == posY+1 && t.getDoors()[0] || p.y == posY-1 && t.getDoors()[2])
          return true; 
       return false;  
-   }
-   public boolean hasOneWayDoor(Point p){
-      Tile t = HVMPanel.board.get(posY, posX); 
-      if(p.x == posX+1 && t.getLeftSideOneWay() || p.x == posX-1 && t.getLeftSideOneWay() || p.y == posY+1 && t.getLeftSideOneWay() || p.y == posY-1 && t.getLeftSideOneWay())
-         return true;
-      return false;
    }
    
    public boolean afterMove(){
@@ -319,8 +318,8 @@ public abstract class Player{
                if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
                   if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
                      if(canEnter(p)){//test if can enter in tile
-                        if(!hasOneWayDoor(p)){
-                            return true;
+                        if(isOneWay(p)){
+                           return true;
                         }
                      }
                   }
@@ -347,6 +346,12 @@ public abstract class Player{
    public boolean canEnter(Point p){
       Tile tile = HVMPanel.board.get(p.y, p.x);      
       return p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen();
+   }   
+   public boolean isOneWay(Point p){
+      Tile t = HVMPanel.board.get(posY, posX); 
+      if(p.x == posX+1 && t.getOneWayLeft() || p.x == posX-1 && t.getOneWayRigth() || p.y == posY+1 && t.getOneWayTop() || p.y == posY-1 && t.getOneWayBottom())
+         return true;
+      return false;
    }
    
    public boolean isValidFutureMove(Point p, Tile tile){

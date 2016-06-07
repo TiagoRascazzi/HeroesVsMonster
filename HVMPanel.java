@@ -20,10 +20,8 @@ public class HVMPanel extends JPanel{
    public static int timeOfDay;                       // represent what
    
    public HVMPanel(){
-      //bgMusicPlayer = new BGMusicPlayer();
       BGMusicPlayer.loadMusics();
       BGMusicPlayer.playMusic(0);
-      //bgMusicPlayer.playMusic(0);
       GUI.update(new Point(0, 0));
       mainmenu = new MainMenu("Img/main.jpg");
       players = new ArrayList<Player>();
