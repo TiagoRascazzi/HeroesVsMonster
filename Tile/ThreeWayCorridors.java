@@ -7,7 +7,7 @@ public class ThreeWayCorridors extends Tile{
       
    public ThreeWayCorridors(){
             
-      super(10, true, false, true, true, false, true);
+      super(10, true, false, true, true, false, true, false);
       setSearchable(false);
    }
    

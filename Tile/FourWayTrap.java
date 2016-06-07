@@ -7,7 +7,7 @@ public class FourWayTrap extends Tile{
       
    public FourWayTrap(){
             
-      super(16, false, true, true, true, true, true);
+      super(16, false, true, true, true, true, true, false);
       
    //private int textureID;
    //private int maxNumOfPlayers;

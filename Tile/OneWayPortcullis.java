@@ -7,7 +7,7 @@ public class OneWayPortcullis extends Tile{
       
    public OneWayPortcullis(){
             
-      super(20, false, true, true, true, false, false);
+      super(20, false, true, true, true, false, false, true);
       
    //private int textureID0;
    //private int maxNumOfPlayers;

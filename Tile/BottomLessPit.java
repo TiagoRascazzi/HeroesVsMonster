@@ -7,7 +7,7 @@ public class BottomLessPit extends Tile{
       
    public BottomLessPit(){
             
-      super(13, false, true, true, true, false, false);
+      super(13, false, true, true, true, false, false, false);
       setSearchable(false);
    }
    

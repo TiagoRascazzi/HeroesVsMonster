@@ -292,6 +292,12 @@ public abstract class Player{
          return true; 
       return false;  
    }
+   public boolean hasOneWayDoor(Point p){
+      Tile t = HVMPanel.board.get(posY, posX); 
+      if(p.x == posX+1 && t.getLeftSideOneWay() || p.x == posX-1 && t.getLeftSideOneWay() || p.y == posY+1 && t.getLeftSideOneWay() || p.y == posY-1 && t.getLeftSideOneWay())
+         return true;
+      return false;
+   }
    
    public boolean afterMove(){
       if(HVMPanel.board.get(posY, posX).givesRoomCard()){
@@ -313,7 +319,9 @@ public abstract class Player{
                if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
                   if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
                      if(canEnter(p)){//test if can enter in tile
-                        return true;
+                        if(!hasOneWayDoor(p)){
+                            return true;
+                        }
                      }
                   }
                }

@@ -7,7 +7,7 @@ public class TwoWayStraightEmptyRoom extends Tile{
       
    public TwoWayStraightEmptyRoom(){
             
-      super(25, false, true, true, true, false, false);
+      super(25, false, true, true, true, false, false, false);
       
    //private int textureID;
    //private int maxNumOfPlayers;

@@ -13,6 +13,8 @@ public abstract class Tile{
    private boolean rightSide;
    private boolean topSide;
    private boolean bottomSide;
+   private boolean leftSideOneWay;
+  
    
    private int orientation;
    private int textureID;
@@ -22,6 +24,7 @@ public abstract class Tile{
    private boolean giveRoomCard;
    private boolean searchable;
    
+   private boolean[]OneWay = new boolean[4];
    private boolean[]Doors = new boolean[4];
    
    public Tile(int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
@@ -35,8 +38,10 @@ public abstract class Tile{
       rightSide = rs;
       topSide = ts;
       bottomSide = bs;
+      leftSideOneWay = lsow;
       searchable = true;
       Doors = new boolean[]{false, false, false, false};
+      OneWay = new boolean[]{false, false, false, false};
    }
    public Tile(int orien, int tID, boolean kp, boolean grc, boolean ls, boolean rs, boolean ts, boolean bs){
       textureID = tID;
@@ -47,11 +52,20 @@ public abstract class Tile{
       rightSide = rs;
       topSide = ts;
       bottomSide = bs;
+      leftSideOneWay = lsow;
       setOrientation(orien);
       searchable = true;
       Doors = new boolean[]{false, false, false, false};
+      OneWay = new boolean[]{false, false, false, false};
    }
    
+   public void setOneWay(boolean top, boolean rigth, boolean bottom, boolean left){
+      OneWay[0] = top;
+      OneWay[1] = rigth;
+      OneWay[2] = bottom;
+      OneWay[3] = left;
+      
+   }
    
    public void setPossibleDoor(boolean top, boolean rigth, boolean bottom, boolean left){
       Random random = new Random();
@@ -168,16 +182,16 @@ public abstract class Tile{
       //for testing purpose not to change since we are not done doing the cards
       //wr.add(1, new TestTile());
       
-      /*wr.add(5, new RotatingRoom());
+    /*  wr.add(5, new RotatingRoom());
       wr.add(2, new BottomLessPit());
       
       wr.add(5, new EndEmptyRoom());
-      wr.add(1, new EndPortcullis());      
+      */wr.add(1, new EndPortcullis());      
       
-      wr.add(2, new OneWayCorridor());
+      //wr.add(2, new OneWayCorridor());
       wr.add(3, new OneWayPortcullis());
       
-      wr.add(15, new TwoWayEmptyRoom());
+     /* wr.add(15, new TwoWayEmptyRoom());
       wr.add(2, new TwoWayDarkRoom());
       wr.add(8, new TwoWayStraightEmptyRoom());
       wr.add(4, new TwoWayCorridor());
@@ -185,11 +199,11 @@ public abstract class Tile{
       wr.add(8, new ThreeWayCorridors());
       wr.add(2, new ThreeWayTrap());
       wr.add(2, new ThreeWayDarkRoom());
-      */wr.add(30, new ThreeWayEmptyRoom());/*
+     */ //wr.add(30, new ThreeWayEmptyRoom());
       wr.add(6, new ThreeWayPortcullis());
       
-      */wr.add(15, new FourWayEmptyRoom());
-      /*wr.add(2, new FourWayPit());
+     /* wr.add(15, new FourWayEmptyRoom());
+      wr.add(2, new FourWayPit());
       wr.add(3, new FourWayTrap());
       wr.add(2, new FourWayCorridors());
       */
@@ -199,6 +213,9 @@ public abstract class Tile{
    
    public boolean[]getDoors(){
       return Doors;
+   }
+   public boolean getLeftSideOneWay(){
+      return leftSideOneWay;
    }
    public void changeMaxNumOfPlayers(int mnop){
       maxNumOfPlayers = mnop;

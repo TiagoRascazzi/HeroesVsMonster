@@ -7,7 +7,7 @@ public class EndEmptyRoom extends Tile{
       
    public EndEmptyRoom(){
             
-      super(17, false, true, true, false, false, false);
+      super(17, false, true, true, false, false, false, false);
       
    //private int textureID;
    //private int maxNumOfPlayers;
