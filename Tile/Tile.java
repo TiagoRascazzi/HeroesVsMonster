@@ -54,7 +54,7 @@ public abstract class Tile{
    }
    
    public void setPossibleDoor(boolean top, boolean rigth, boolean bottom, boolean left){
-      Random random = new Random();
+      /*Random random = new Random();
       int prob = 10;
       if(top && random.nextInt(prob) < 1)
          Doors[0] = true;
@@ -63,7 +63,7 @@ public abstract class Tile{
       if(bottom && random.nextInt(prob) < 1)
          Doors[2] = true;
       if(left && random.nextInt(prob) < 1)
-         Doors[3] = true;
+         Doors[3] = true;*/
    }
    
    public void setOrientation(int orien){    
@@ -177,7 +177,7 @@ public abstract class Tile{
       wr.add(5, new EndEmptyRoom());
       *///wr.add(1, new EndPortcullis());      
       
-      //wr.add(2, new OneWayCorridor());
+     // wr.add(2, new OneWayCorridor());
       //wr.add(3, new OneWayPortcullis());
       
      /* wr.add(15, new TwoWayEmptyRoom());
@@ -189,9 +189,9 @@ public abstract class Tile{
       wr.add(2, new ThreeWayTrap());
       wr.add(2, new ThreeWayDarkRoom());
      */ //wr.add(30, new ThreeWayEmptyRoom());
-      //wr.add(6, new ThreeWayPortcullis());
+    wr.add(6, new ThreeWayPortcullis());
       
-      wr.add(15, new FourWayEmptyRoom());
+      //wr.add(15, new FourWayEmptyRoom());
      /* wr.add(2, new FourWayPit());
       wr.add(3, new FourWayTrap());
       wr.add(2, new FourWayCorridors());

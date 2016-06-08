@@ -17,6 +17,7 @@ public abstract class Player{
    
    private ImageIcon image;
    private ImageIcon lifeIcon;
+   private ImageIcon strengthIcon;
    private ImageIcon goldIcon;
    private String name;
    
@@ -41,6 +42,7 @@ public abstract class Player{
    public Player(String url, String n, int x, int y, int maxLife, int strength, int agility, int armor, int luck){
       lifeIcon = new ImageIcon("Img/hearth.png");
       goldIcon = new ImageIcon("Img/gold.png");
+      strengthIcon = new ImageIcon("Img/strength.png");
       image = new ImageIcon(url); 
       playerCards =  new ArrayList<ActionCard>();
       playerCurrentCard = null;
@@ -79,8 +81,21 @@ public abstract class Player{
                treasureChamberAction();
             return true;
          }
-         //count++;
+         count++;
          
+         //TODO CARD ACTION
+         for(int i=0; i<playerCards.size(); i++){
+            playerCards.get(i).actionKeyInput(e, count);
+            life -= playerCards.get(i).getDamage();
+            gold += playerCards.get(i).getGold();
+            if(playerCards.get(i).getPrintableAction() != null)
+               count += playerCards.get(i).getPrintableAction().length;
+         }
+         for(int i=0; i<playerCards.size(); i++){
+            if(playerCards.get(i).getRidOfCard()){
+               playerCards.remove(i);
+            }
+         }
          
       }
       else if(state == PlayerState.MOVE){
@@ -125,9 +140,16 @@ public abstract class Player{
          count++;
          
          //TODO CARD ACTION
-         for(int i=0; i<playerCards.size(); i++)
+         for(int i=0; i<playerCards.size(); i++){
+            playerCards.get(i).actionMouseInput(screenSize, new Point(actionPosX, actionPosY), e, count);
             if(playerCards.get(i).getPrintableAction() != null)
                count += playerCards.get(i).getPrintableAction().length;
+         }
+         for(int i=0; i<playerCards.size(); i++){
+            if(playerCards.get(i).getRidOfCard()){
+               playerCards.remove(i);
+            }
+         }
          
          if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count)))   //pause
             HVMPanel.gameState = HVMPanel.GameState.PAUSE;
@@ -243,7 +265,7 @@ public abstract class Player{
             if(!door && hasDoor(p) || hasDoor(tile, p)){
                playerCurrentCard = DoorCard.getRandom(p);
                state = PlayerState.CARD;
-               
+             
                if(playerCurrentCard instanceof DoorOpens || (hasDoor(p) && hasDoor(tile, p)))
                   HVMPanel.board.add(p.y, p.x, tile);
                if(playerCurrentCard instanceof DoorOpens){
@@ -256,19 +278,32 @@ public abstract class Player{
                }               
                return false;
             }else{
-               HVMPanel.board.add(p.y, p.x, tile);
-               lastPos.setLocation(posX, posY);
-               posX = p.x;
-               posY = p.y;
-               BGMusicPlayer.playSound(0);
-               if(tile instanceof TreasureChamberTile)
-                  treasureChamberAction();
-               System.out.println(tile);
-               return afterMove();
+               
+               int temp = (int)(Math.random()*12+1);
+               if( (!(HVMPanel.board.get(posY, posX) instanceof EndPortcullis) && !(HVMPanel.board.get(posY, posX) instanceof OneWayPortcullis) && !(HVMPanel.board.get(posY, posX) instanceof ThreeWayPortcullis)) || isNotInPortcullisDirection(p) || (strength > temp)){
+                  HVMPanel.board.add(p.y, p.x, tile);
+                  lastPos.setLocation(posX, posY);
+                  posX = p.x;
+                  posY = p.y;
+                  BGMusicPlayer.playSound(0);
+                  if(tile instanceof TreasureChamberTile)
+                     treasureChamberAction();
+                  return afterMove();
+               }else if( HVMPanel.board.get(posY, posX) instanceof EndPortcullis || HVMPanel.board.get(posY, posX) instanceof OneWayPortcullis || HVMPanel.board.get(posY, posX) instanceof ThreeWayPortcullis){
+                   Display.showTextPopup("The porculus did'nt move!");
+                   return true;
+               }   
             }
          }
       }
       return false;
+   }
+   
+   public boolean isNotInPortcullisDirection(Point p){
+      Tile t = HVMPanel.board.get(posY, posX);
+      if(p.x == posX-1 && t.getOneWayLeft() || p.x == posX+1 && t.getOneWayRigth() || p.y == posY-1 && t.getOneWayTop() || p.y == posY+1 && t.getOneWayBottom())
+         return false;
+      return true;
    }
    
    public void treasureChamberAction(){
@@ -318,9 +353,7 @@ public abstract class Player{
                if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
                   if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
                      if(canEnter(p)){//test if can enter in tile
-                        if(isOneWay(p)){
                            return true;
-                        }
                      }
                   }
                }
@@ -332,7 +365,6 @@ public abstract class Player{
       }
       return false;
    }
-   
    public boolean isInsideBoard(Point p){
       return p.x>=0 && p.y>=0 && p.x<HVMPanel.board.numColumns() && p.y<HVMPanel.board.numRows();
    }
@@ -348,10 +380,10 @@ public abstract class Player{
       return p.x == posX+1 && tile.isLeftSideOpen() || p.x == posX-1 && tile.isRightSideOpen() || p.y == posY+1 && tile.isTopSideOpen() || p.y == posY-1 && tile.isBottomSideOpen();
    }   
    public boolean isOneWay(Point p){
-      Tile t = HVMPanel.board.get(posY, posX); 
-      if(p.x == posX+1 && t.getOneWayLeft() || p.x == posX-1 && t.getOneWayRigth() || p.y == posY+1 && t.getOneWayTop() || p.y == posY-1 && t.getOneWayBottom())
-         return true;
-      return false;
+      Tile t = HVMPanel.board.get(posY, posX);
+      if(p.x == posX-1 && t.getOneWayLeft() || p.x == posX+1 && t.getOneWayRigth() || p.y == posY-1 && t.getOneWayTop() || p.y == posY+1 && t.getOneWayBottom())
+         return false;
+      return true;
    }
    
    public boolean isValidFutureMove(Point p, Tile tile){
@@ -433,14 +465,25 @@ public abstract class Player{
       }
    } 
    
-   public void drawLifeGold(Graphics2D g, int posX, int posY){
-      g.drawImage(goldIcon.getImage(), posX, posY, 20, 20, null);
-      g.setColor(Color.RED);
+   public void drawLifeGoldStrength(Graphics2D g, int posX, int posY){
+   
+      //Strength
+      g.drawImage(strengthIcon.getImage(), posX, posY, 20, 20, null);
+      g.setColor(Color.WHITE);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-      g.drawString(""+gold, posX+20+2, posY+20-2);
+      g.drawString(""+strength, posX+20+2, posY+20-2);
+      
+      //Gold
+      g.drawImage(goldIcon.getImage(), posX+50, posY, 20, 20, null);
+      g.setColor(Color.WHITE);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+      g.drawString(""+gold, posX+20+2+50, posY+20-2);  
+      
+      //Life
       for(int i=0; i<life; i++)
          g.drawImage(lifeIcon.getImage(), posX+(i%8)*20, posY+25+20*(i/8), 20, 20, null);
    } 
+
    
    public void drawCards(Graphics2D g, int posX, int posY){
       for(int i=0; i<playerCards.size(); i++)

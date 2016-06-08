@@ -15,6 +15,7 @@ public abstract class ActionCard{
    protected boolean active = false;
    protected boolean newRoomCard = false;
    protected Point moveTo = null;
+   protected boolean getRidOfCard = false;
    
    public ActionCard(int tID){
       textureID =  tID;
@@ -45,15 +46,24 @@ public abstract class ActionCard{
       }
       return null;
    }
+   public void actionKeyInput(KeyEvent e, int count){}
+   public void actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){}
    
+   public boolean getRidOfCard(){
+      return getRidOfCard;
+   }
    public boolean isShowing(){
       return cardState == CardState.SHOW;
    } 
    public int getDamage(){
-      return damage;
+      int tmp = damage;
+      damage = 0;
+      return tmp;
    }
    public int getGold(){
-      return gold;
+      int tmp = gold;
+      gold = 0;
+      return tmp;
    }
    public boolean isActive(){
       return active;

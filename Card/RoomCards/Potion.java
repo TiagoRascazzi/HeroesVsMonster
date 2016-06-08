@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
+import java.util.Random;
 
 public class Potion extends RoomCard{
    
@@ -30,6 +31,26 @@ public class Potion extends RoomCard{
          }
       }
       return super.processMouseInput(screenSize, e);
+   }
+   
+   public void actionKeyInput(KeyEvent e, int count){
+      if(e.getKeyChar() == (count+"").charAt(0)){ //if use potion
+         System.out.println("use potion");
+         usePotion();
+      }
+   }
+   public void actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){
+      if(GUI.hover(actionPos.x, actionPos.x+140, actionPos.y+40+(25*count), actionPos.y+40+25+(25*count))){  //if use potion
+         System.out.println("use potion");
+         usePotion();
+      }
+   }
+   
+   public void usePotion(){
+      Random random = new Random();
+      int dice = random.nextInt(12) + 1;
+      damage -= dice;
+      getRidOfCard = true;
    }
    
    public String[] getPrintableAction(){

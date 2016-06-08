@@ -281,12 +281,12 @@ public class Display extends HVMPanel{
          players.get(currentPlayer).drawCards(g, x, screenHeight);
          drawSunTrack(g, x, 200);
          players.get(currentPlayer).drawAction(g, x, 35);
-         players.get(currentPlayer).drawLifeGold(g, x, 325);
+         players.get(currentPlayer).drawLifeGoldStrength(g, x, 325);
       }else{   //draw sidebar on bottom
          g.drawImage(sidebarBG.getImage(), 0, (int)boardSize.getHeight(), screenWidth, screenHeight-(int)boardSize.getHeight(), null);
          drawSunTrack(g, 155, (int)boardSize.getHeight()+28+10);
          players.get(currentPlayer).drawAction(g, 5, (int)boardSize.getHeight()+40+10);
-         players.get(currentPlayer).drawLifeGold(g, 330, (int)boardSize.getHeight()+40+10);
+         players.get(currentPlayer).drawLifeGoldStrength(g, 330, (int)boardSize.getHeight()+40+10);
       }
    }
    
