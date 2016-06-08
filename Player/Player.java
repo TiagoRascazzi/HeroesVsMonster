@@ -63,19 +63,25 @@ public abstract class Player{
    public boolean processKeyInput(KeyEvent e){   
       if(state == PlayerState.SELECT){
          
+         boolean disableDefault = false;
+         for(int i=0; i<playerCards.size(); i++)
+            if(playerCards.get(i).disableDefaultAction() == true)
+               disableDefault = true;
+         
          int count = 1;
-         if(e.getKeyChar() == (count+"").charAt(0))  //move
-            state = PlayerState.MOVE;
-         count++;
-         
-         if(HVMPanel.board.get(posY, posX).isSearchable()){
-            if(e.getKeyChar() == (count+"").charAt(0)){
-               playerCurrentCard = SearchCard.getRandom(); //search
-               state = PlayerState.CARD;
-            }
+         if(!disableDefault){
+            if(e.getKeyChar() == (count+"").charAt(0))  //move
+               state = PlayerState.MOVE;
             count++;
+            
+            if(HVMPanel.board.get(posY, posX).isSearchable()){
+               if(e.getKeyChar() == (count+"").charAt(0)){
+                  playerCurrentCard = SearchCard.getRandom(); //search
+                  state = PlayerState.CARD;
+               }
+               count++;
+            }
          }
-         
          if(e.getKeyChar() == (count+"").charAt(0)){ //if skip
             if(HVMPanel.board.get(posY, posX) instanceof TreasureChamberTile)
                treasureChamberAction();
@@ -85,17 +91,21 @@ public abstract class Player{
          
          //TODO CARD ACTION
          for(int i=0; i<playerCards.size(); i++){
-            playerCards.get(i).actionKeyInput(e, count);
+            boolean done = playerCards.get(i).actionKeyInput(e, count);
             life -= playerCards.get(i).getDamage();
             gold += playerCards.get(i).getGold();
             if(playerCards.get(i).getPrintableAction() != null)
                count += playerCards.get(i).getPrintableAction().length;
-         }
-         for(int i=0; i<playerCards.size(); i++){
-            if(playerCards.get(i).getRidOfCard()){
+            if(playerCards.get(i).getRidOfCard())  //maybe buggy
                playerCards.remove(i);
-            }
+            if(done == true)
+               return true;
          }
+       //  for(int i=0; i<playerCards.size(); i++){
+       //     if(playerCards.get(i).getRidOfCard()){
+       //        playerCards.remove(i);
+       //     }
+       //  }
          
       }
       else if(state == PlayerState.MOVE){
@@ -120,19 +130,25 @@ public abstract class Player{
    public boolean processMouseInput(Point screenSize, MouseEvent e){
       if(state == PlayerState.SELECT){
          
+         boolean disableDefault = false;
+         for(int i=0; i<playerCards.size(); i++)
+            if(playerCards.get(i).disableDefaultAction() == true)
+               disableDefault = true;
+         
          int count = 0;
-         if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count)))   //move
-            state = PlayerState.MOVE;
-         count++;
-         
-         if(HVMPanel.board.get(posY, posX).isSearchable()){
-            if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count))){  //search
-               playerCurrentCard = SearchCard.getRandom();
-               state = PlayerState.CARD;
-            }
+         if(!disableDefault){
+            if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count)))   //move
+               state = PlayerState.MOVE;
             count++;
+            
+            if(HVMPanel.board.get(posY, posX).isSearchable()){
+               if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count))){  //search
+                  playerCurrentCard = SearchCard.getRandom();
+                  state = PlayerState.CARD;
+               }
+               count++;
+            }
          }
-         
          if(GUI.hover(actionPosX, actionPosX+140, actionPosY+40+(25*count), actionPosY+40+25+(25*count))){  //if skip
             state = PlayerState.SELECT;
             return true;
@@ -141,9 +157,11 @@ public abstract class Player{
          
          //TODO CARD ACTION
          for(int i=0; i<playerCards.size(); i++){
-            playerCards.get(i).actionMouseInput(screenSize, new Point(actionPosX, actionPosY), e, count);
+            boolean done = playerCards.get(i).actionMouseInput(screenSize, new Point(actionPosX, actionPosY), e, count);
             if(playerCards.get(i).getPrintableAction() != null)
                count += playerCards.get(i).getPrintableAction().length;
+            if(done == true)
+               return true;
          }
          for(int i=0; i<playerCards.size(); i++){
             if(playerCards.get(i).getRidOfCard()){
@@ -421,15 +439,24 @@ public abstract class Player{
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
       
       if(state == PlayerState.SELECT){
-         int count = 0;
-         GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
-         g.drawString("("+(count+1)+") MOVE", pX+8, pY+25+25*count);
-         count++;
+         boolean disableDefault = false;
+         for(int i=0; i<playerCards.size(); i++)
+            if(playerCards.get(i).disableDefaultAction() == true)
+               disableDefault = true;
+            
          
-         if(HVMPanel.board.get(posY, posX).isSearchable()){
+         
+         int count = 0;
+         if(!disableDefault){
             GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
-            g.drawString("("+(count+1)+") SEARCH", pX+8, pY+25+25*count);
+            g.drawString("("+(count+1)+") MOVE", pX+8, pY+25+25*count);
             count++;
+            
+            if(HVMPanel.board.get(posY, posX).isSearchable()){
+               GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
+               g.drawString("("+(count+1)+") SEARCH", pX+8, pY+25+25*count);
+               count++;
+            }
          }
          GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
          g.drawString("("+(count+1)+") SKIP TURN", pX+8, pY+25+25*count);
@@ -439,7 +466,7 @@ public abstract class Player{
             if(playerCards.get(i).getPrintableAction() != null){
                for(int j=0; j<playerCards.get(i).getPrintableAction().length; j++){
                   GUI.chgColorOnHover(g, Color.RED, Color.WHITE, pX+8, pX+148, pY+40+25*count, pY+65+25*count);
-                  g.drawString("("+(count+1)+")"+playerCards.get(i).getPrintableAction()[0], pX+8, pY+25+25*count);
+                  g.drawString("("+(count+1)+")"+playerCards.get(i).getPrintableAction()[j], pX+8, pY+25+25*count);
                   count++;
                }
             }

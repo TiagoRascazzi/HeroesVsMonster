@@ -17,7 +17,7 @@ public abstract class RoomCard extends ActionCard{
       // Comment those to test the card while coding them one at the time
       
       //wr.add(1, new EmptyRoom());         //DONE   
-      wr.add(1, new CaveIn());            //DONE
+      //wr.add(1, new CaveIn());            //DONE
      // wr.add(1, new Jewellery());         //DONE
       //wr.add(1, new Bracelet());          //DONE
      // wr.add(1, new CrossfireTrap());     //DONE
@@ -33,7 +33,7 @@ public abstract class RoomCard extends ActionCard{
 //wr.add(1, new Orc());               //DONE
         
         
-     // wr.add(1, new TorchGoesOut());      //not DONE 
+      wr.add(1, new TorchGoesOut());      //not DONE 
       
       
       //Finish those one later

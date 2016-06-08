@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.Random;
 
 public class Potion extends RoomCard{
+ 
    
    public Potion(){
       super(9);
@@ -33,17 +34,19 @@ public class Potion extends RoomCard{
       return super.processMouseInput(screenSize, e);
    }
    
-   public void actionKeyInput(KeyEvent e, int count){
+   public boolean actionKeyInput(KeyEvent e, int count){
       if(e.getKeyChar() == (count+"").charAt(0)){ //if use potion
          System.out.println("use potion");
          usePotion();
       }
+      return false;
    }
-   public void actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){
+   public boolean actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){
       if(GUI.hover(actionPos.x, actionPos.x+140, actionPos.y+40+(25*count), actionPos.y+40+25+(25*count))){  //if use potion
          System.out.println("use potion");
          usePotion();
       }
+      return false;
    }
    
    public void usePotion(){

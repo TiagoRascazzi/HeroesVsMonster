@@ -46,9 +46,12 @@ public abstract class ActionCard{
       }
       return null;
    }
-   public void actionKeyInput(KeyEvent e, int count){}
-   public void actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){}
+   public boolean actionKeyInput(KeyEvent e, int count){return false;}
+   public boolean actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){return false;}
    
+   public boolean disableDefaultAction(){
+      return false;
+   }
    public boolean getRidOfCard(){
       return getRidOfCard;
    }
