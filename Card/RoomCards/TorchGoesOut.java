@@ -41,7 +41,8 @@ public class TorchGoesOut extends RoomCard{
       
       
       if(selectedNumSel == 1 || selectedNumSel == 2 || selectedNumSel == 3){
-         //selectedNum[selectedNumSel-1] = ; //TODO get wich one is click and put it in array
+         //TODO get wich one is click and put it in array
+         //selectedNum[selectedNumSel-1] = ; //<- put the value here
          selectedNumSel++;
       }else{
          if(e.getKeyChar() == (count+"").charAt(0)){ //if you try
@@ -66,7 +67,8 @@ public class TorchGoesOut extends RoomCard{
    public boolean actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){
       
       if(selectedNumSel == 1 || selectedNumSel == 2 || selectedNumSel == 3){
-         //selectedNum[selectedNumSel-1] = ; //TODO get wich one is click and put it in array
+         //TODO get wich one is click and put it in array
+         //selectedNum[selectedNumSel-1] = ; //<- put the value here
          selectedNumSel++;
       }else{
          if(GUI.hover(actionPos.x, actionPos.x+140, actionPos.y+40+(25*count), actionPos.y+40+25+(25*count))){  //if you try
@@ -99,24 +101,21 @@ public class TorchGoesOut extends RoomCard{
    
    public String[] getPrintableAction(){
       if(selectedNumSel == 1 || selectedNumSel == 2 || selectedNumSel == 3){
-      
-        //TODO REMOVE ONE ALREADY USED working maybe but need to get input to test
-        ArrayList<Integer> act = new ArrayList<Integer>();
-        for(int i=0; i<6; i++){
-           boolean done = false;
-           for(int j=0; j<selectedNum.length; j++)
-              if(i != selectedNum[j])
-                 done = true;
-           if(done)
-              act.add(i);
-        }
-        String[] actions = new String[act.size()]; 
-        for (int i=0; i < actions.length; i++){
-           actions[i] = ""+(act.get(i).intValue()+1);
-        } 
         
-
-         //String[] actions = {"1", "2", "3", "4", "5", "6"};
+         ArrayList<Integer> act = new ArrayList<Integer>();
+         for(int i=1; i<=6; i++){
+            boolean done = false;
+            for(int j=0; j<selectedNum.length; j++)
+               if(i != selectedNum[j])
+                  done = true;
+            if(done)
+               act.add(i);
+         }
+         String[] actions = new String[act.size()]; 
+         for (int i=0; i < actions.length; i++){
+            actions[i] = " "+act.get(i).intValue();
+         } 
+          
          return actions;
       }else{
          String[] actions = {"Try to ligth your torch"};

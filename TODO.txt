@@ -1,0 +1,41 @@
+for the random use this 
+
+// a number between  1-6
+Random random = new Random();
+int dice = random.nextInt(6) + 1;
+
+// a number between  1-12
+Random random = new Random();
+int dice = random.nextInt(12) + 1;
+
+
+ROOMCARDS
+	TorchGoesOut
+	    everything should be working you just need to 
+		get wich number was pressed in both actionKeyInput and actionMouseInput
+		actionKeyInput
+		   get which one was pressed by the number on the keyboard
+		actionMouseInput
+		   get which one was clicked with the mouse
+	Crypt
+	   similar then the room card so you have to create a cryptCard.java similar to the roomcard.java with similar method and variable and do something similar in the player.java file then what is done for the roomcard (look everywhere)
+	   Empty - emptyCrypt.java
+	      do nothing
+	   Potion - potionCrypt.java
+	      just return a new potion room card like the potionsearch.java
+	   Treasure
+	      similar to the jewellery.java
+	      guineas - guineasCrypt.java
+		  jewelled Dagger - jewelledDaggerCrypt.java
+		  bracellet  - bracelletCrypt.java
+		  brooch  -  broochCrypt.java
+	   trap   -  trapCrypt.java
+	      get a random number and make the damage equal to it
+	   skeleton   -  skeletonCrypt.java
+	      get a random number between 1-6 if the number is less then 3 nothing happen else figth 
+	   
+	   
+	DeadAdventurer
+	GiantSpider
+	SneakAttack
+	TrapDoor
