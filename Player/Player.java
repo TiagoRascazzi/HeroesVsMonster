@@ -386,8 +386,8 @@ public abstract class Player{
                else{ // if has no tile
                   return true;
                }
-            }
-         }
+            }     
+         }// its your end
       }
       return false;
    }

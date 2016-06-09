@@ -38,12 +38,13 @@ public abstract class Tile{
       maxNumOfPlayers = 1;
       keepPlaying = kp;
       giveRoomCard = grc;
-      setOrientation(orien);
       searchable = true;
       
       Side = new boolean[]{ts, rs, bs, ls};
       Doors = new boolean[]{false, false, false, false};
       OneWay = new boolean[]{false, false, false, false};
+      
+      setOrientation(orien);
    }
    
    public void setOneWay(boolean top, boolean rigth, boolean bottom, boolean left){
@@ -175,10 +176,10 @@ public abstract class Tile{
       wr.add(2, new BottomLessPit());
       
       wr.add(5, new EndEmptyRoom());
-      wr.add(1, new EndPortcullis());      
+      //wr.add(1, new EndPortcullis());      
       
       wr.add(2, new OneWayCorridor());
-      wr.add(3, new OneWayPortcullis());
+      //wr.add(3, new OneWayPortcullis());
       
       wr.add(15, new TwoWayEmptyRoom());
       wr.add(2, new TwoWayDarkRoom());
@@ -189,7 +190,7 @@ public abstract class Tile{
       wr.add(2, new ThreeWayTrap());
       wr.add(2, new ThreeWayDarkRoom());
       wr.add(30, new ThreeWayEmptyRoom());
-      wr.add(6, new ThreeWayPortcullis());
+      //wr.add(6, new ThreeWayPortcullis());
       
       wr.add(15, new FourWayEmptyRoom());
       wr.add(2, new FourWayPit());
