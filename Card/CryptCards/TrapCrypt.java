@@ -2,11 +2,12 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
+import java.util.Random;
 
-public class RingSearch extends SearchCard{
+public class TrapCrypt extends CryptCards{
    
-   public RingSearch(){
-      super(29);
+   public TrapCrypt(){
+      super(37);
       active = true;
    }
    
@@ -31,10 +32,11 @@ public class RingSearch extends SearchCard{
       }
       return super.processMouseInput(screenSize, e);
    }
-   
-   public void mainAction(){
-      this.gold += 90;
-      BGMusicPlayer.playSound(3);
-      Display.showTextPopup("You received 90 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+90));
+    public void mainAction(){
+      Random random = new Random();
+      damage += random.nextInt(12) + 1;
+      BGMusicPlayer.playSound(2);
+      Display.showTextPopup("You have lost "+damage+" lifes");
    }
+
 }

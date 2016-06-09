@@ -116,12 +116,16 @@ public abstract class Player{
             return move(p, false);
       }
       else if(state == PlayerState.CARD){
-         ActionCard tmpCard = playerCurrentCard.processKeyInput(e);
+         ActionCard tmpCard = playerCurrentCard.processKeyInput(e);               
          if(playerCurrentCard.getMoveTo() != null)
             move(playerCurrentCard.getMoveTo(), true);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
-         if(playerCurrentCard != null && !playerCurrentCard.isActive())
+         
+         ActionCard tmpCard2 = playerCurrentCard.getNewCard();
+         if(tmpCard2 != null)
+            playerCurrentCard = tmpCard2;
+         else if(playerCurrentCard != null && !playerCurrentCard.isActive())
             return afterReceivedCard();
       }
       return false;
@@ -187,7 +191,11 @@ public abstract class Player{
             move(playerCurrentCard.getMoveTo(), true);
          if(tmpCard != null && !hasSameCard(tmpCard))
             playerCards.add(tmpCard);
-         if(playerCurrentCard != null && !playerCurrentCard.isActive())
+            
+         ActionCard tmpCard2 = playerCurrentCard.getNewCard();
+         if(tmpCard2 != null)
+            playerCurrentCard = tmpCard2;
+         else if(playerCurrentCard != null && !playerCurrentCard.isActive())
             return afterReceivedCard();
          
       }

@@ -1,16 +1,44 @@
 tID    Img name
-0  ->  EmptyRoom.png
-1  ->  CaveIn.png
-2  ->  Jewellery.png
-3  ->  Bracelet.png
-4  ->  CrossfireTrap.png
-5  ->  Crypt.png
-6  ->  CurseOfTheWizard.png
-7  ->  DeadAdventurer.png
-8  ->  GiantSpider.png
-9  ->  Monster.png
-10 ->  Potion.png
-11 ->  SneakAttack.png
-12 ->  TorchGoesOut.png
-13 ->  TrapDoor.png
-14 ->  VampireBats.png 
+0  ->  Img/Cards/RoomCard/EmptyRoom.png");
+1  ->  Img/Cards/RoomCard/CaveIn.png");
+2  ->  Img/Cards/RoomCard/Jewellery.png");
+3  ->  Img/Cards/RoomCard/Bracelet.png"); 
+4  ->  Img/Cards/RoomCard/CrossfireTrap.png");  
+5  ->  Img/Cards/RoomCard/Crypt.png"); 
+6  ->  Img/Cards/RoomCard/CurseOfTheWizard.png"); 
+7  ->  Img/Cards/RoomCard/DeadAdventurer.png"); 
+8  ->  Img/Cards/RoomCard/GiantSpider.png"); 
+9  ->  Img/Cards/RoomCard/Potion.png"); 
+10 ->  Img/Cards/RoomCard/SneakAttack.png"); 
+11 ->  Img/Cards/RoomCard/TorchGoesOut.png"); 
+12 ->  Img/Cards/RoomCard/TrapDoor.png"); 
+13 ->  Img/Cards/RoomCard/VampireBats.png"); 
+ 
+14 ->  Img/Cards/SearchCard/EmptySearch.png");
+15 ->  Img/Cards/SearchCard/GiantCentipedeSearch.png");
+16 ->  Img/Cards/SearchCard/PotionSearch.png");
+17 ->  Img/Cards/SearchCard/SecretDoorSearch.png");
+18 ->  Img/Cards/SearchCard/TrapSearch.png");
+19 ->  Img/Cards/SearchCard/GoldenGuineasSearch.png");
+28 ->  Img/Cards/SearchCard/JewellerySearch.png");
+29 ->  Img/Cards/SearchCard/RingSearch.png");
+   
+20 ->  Img/Cards/RoomCard/MonsterCard/ChampionOfChaos.png");
+21 ->  Img/Cards/RoomCard/MonsterCard/DeathWarrior.png");
+22 ->  Img/Cards/RoomCard/MonsterCard/Goblin.png");
+23 ->  Img/Cards/RoomCard/MonsterCard/MountainTroll.png");
+24 ->  Img/Cards/RoomCard/MonsterCard/Orc.png");
+    
+25 ->  Img/Cards/DoorCard/DoorJammed.png");
+26 ->  Img/Cards/DoorCard/DoorOpens.png");
+27 ->  Img/Cards/DoorCard/DoorTrap.png");
+    
+30 ->  Img/Cards/CryptCard/BraceletCrypt.png");
+31 ->  Img/Cards/CryptCard/BroochCrypt.png");
+32 ->  Img/Cards/CryptCard/EmptyCrypt.png");
+33 ->  Img/Cards/CryptCard/GoldenGuineasCrypt.png");
+34 ->  Img/Cards/CryptCard/JewelledDaggerCrypt.png");
+35 ->  Img/Cards/CryptCard/PotionCrypt.png");
+36 ->  Img/Cards/CryptCard/SkeletonCrypt.png");
+37 ->  Img/Cards/CryptCard/TrapCrypt.png");
+      

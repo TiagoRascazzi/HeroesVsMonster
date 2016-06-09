@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
 
-public class RingSearch extends SearchCard{
+public class GoldenGuineasCrypt extends CryptCards{
    
-   public RingSearch(){
-      super(29);
+   public GoldenGuineasCrypt(){
+      super(33);
       active = true;
    }
    
@@ -33,8 +33,8 @@ public class RingSearch extends SearchCard{
    }
    
    public void mainAction(){
-      this.gold += 90;
+      this.gold += 50;
       BGMusicPlayer.playSound(3);
-      Display.showTextPopup("You received 90 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+90));
+      Display.showTextPopup("You received 50 gold\nyou have a total of "+ (HVMPanel.players.get(HVMPanel.currentPlayer).gold()+50));
    }
 }

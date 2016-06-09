@@ -16,6 +16,7 @@ public abstract class ActionCard{
    protected boolean newRoomCard = false;
    protected Point moveTo = null;
    protected boolean getRidOfCard = false;
+   protected ActionCard newCard = null;
    
    public ActionCard(int tID){
       textureID =  tID;
@@ -49,6 +50,9 @@ public abstract class ActionCard{
    public boolean actionKeyInput(KeyEvent e, int count){return false;}
    public boolean actionMouseInput(Point screenSize, Point actionPos, MouseEvent e, int count){return false;}
    
+   public ActionCard getNewCard(){
+     return newCard;
+   }
    public boolean disableDefaultAction(){
       return false;
    }

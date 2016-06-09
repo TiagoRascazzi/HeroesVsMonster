@@ -10,9 +10,12 @@ import java.awt.Point;
 public class Display extends HVMPanel{
    
    private static Dimension boardSize = new Dimension(0, 0);   //save the number of row and col in the board 
+   
    private static ImageIcon[] tileTextures;                    //array that contain all the texture for the tiles
    private static ImageIcon[] cardTextures;                    //array that contain all the texture for the cards
    private static ImageIcon[] combatTextures;
+
+   
    private static ImageIcon startImg;                          //the picture for the start screen 
    private static ImageIcon endImg;                          //the picture for the end screen 
    private static ImageIcon sunImg;                            //the picture for the sun icon
@@ -22,6 +25,7 @@ public class Display extends HVMPanel{
    private static ImageIcon volumeMinus; 
    private static ImageIcon volumePlusHover;
    private static ImageIcon volumeMinusHover;
+   private static ImageIcon winImg;
    
    private static String TextPopupValue = "";
    private static ActionCard CardPopupValue = null;
@@ -31,6 +35,7 @@ public class Display extends HVMPanel{
    private static ImageIcon monsterHealth;
    
    public static void loadImages(){
+      winImg = new ImageIcon("Img/trophy.png");
       //load backgroung and icon image
       startImg = new ImageIcon("Img/start.jpg");
       endImg = new ImageIcon("Img/end.jpg");
@@ -52,14 +57,14 @@ public class Display extends HVMPanel{
       //IF YOU CHANGE TextureID WHICH YOU SHOULD NOT ATLEAST CHANGE IT IN THE OBJECT CLASS
       
       //load all the image for cards
-      cardTextures = new ImageIcon[30];
+      cardTextures = new ImageIcon[38];
       //roomcard
       cardTextures[0] = new ImageIcon("Img/Cards/RoomCard/EmptyRoom.png");
       cardTextures[1] = new ImageIcon("Img/Cards/RoomCard/CaveIn.png");
       cardTextures[2] = new ImageIcon("Img/Cards/RoomCard/Jewellery.png");
       cardTextures[3] = new ImageIcon("Img/Cards/RoomCard/Bracelet.png"); 
       cardTextures[4] = new ImageIcon("Img/Cards/RoomCard/CrossfireTrap.png");  
-      //cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
+      cardTextures[5] = new ImageIcon("Img/Cards/RoomCard/Crypt.png"); 
       cardTextures[6] = new ImageIcon("Img/Cards/RoomCard/CurseOfTheWizard.png"); 
       //cardTextures[7] = new ImageIcon("Img/Cards/RoomCard/DeadAdventurer.png"); 
       //ca1rdTextures[8] = new ImageIcon("Img/Cards/RoomCard/GiantSpider.png"); 
@@ -87,6 +92,15 @@ public class Display extends HVMPanel{
       cardTextures[25] = new ImageIcon("Img/Cards/DoorCard/DoorJammed.png");
       cardTextures[26] = new ImageIcon("Img/Cards/DoorCard/DoorOpens.png");
       cardTextures[27] = new ImageIcon("Img/Cards/DoorCard/DoorTrap.png");
+      //CryptCards
+      cardTextures[30] = new ImageIcon("Img/Cards/CryptCard/BraceletCrypt.png");
+      cardTextures[31] = new ImageIcon("Img/Cards/CryptCard/BroochCrypt.png");
+      cardTextures[32] = new ImageIcon("Img/Cards/CryptCard/EmptyCrypt.png");
+      cardTextures[33] = new ImageIcon("Img/Cards/CryptCard/GoldenGuineasCrypt.png");
+      cardTextures[34] = new ImageIcon("Img/Cards/CryptCard/JewelledDaggerCrypt.png");
+      cardTextures[35] = new ImageIcon("Img/Cards/CryptCard/PotionCrypt.png");
+      cardTextures[36] = new ImageIcon("Img/Cards/CryptCard/SkeletonCrypt.png");
+      cardTextures[37] = new ImageIcon("Img/Cards/CryptCard/TrapCrypt.png");
       
       
               
@@ -124,6 +138,7 @@ public class Display extends HVMPanel{
       combatTextures[0] = new ImageIcon("Img/Combat/LeapAside.png");
       combatTextures[1] = new ImageIcon("Img/Combat/MightyBlow.png");
       combatTextures[2] = new ImageIcon("Img/Combat/Slash.png");
+     
       
    }
    
@@ -362,6 +377,24 @@ public class Display extends HVMPanel{
       g.drawString("(r) RESTART", 100, 155);
       GUI.chgColorOnHover(g, Color.RED, Color.WHITE, 100, 230, 205, 235);
       g.drawString("(q) QUIT", 100, 205);
+      
+      
+      
+      
+      g.drawImage(winImg.getImage(), screenWidth/2-150, screenHeight/2-150, 300, 300, null);
+      String name = "";
+      int max = -1;
+      for(int i=0; i<players.size(); i++){
+         if(players.get(i).gold() > max){
+            max = players.get(i).gold();
+            name = players.get(i).getName();
+         }
+      }
+      g.setColor(Color.RED);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
+      g.drawString(name, screenWidth/2-(g.getFontMetrics().stringWidth(name)/2), screenHeight/2+200);
+      
+      
    }
    
    //Draw the card that the player received
@@ -372,6 +405,7 @@ public class Display extends HVMPanel{
          g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
          
          //IF YOU GET AN ERROR HERE CHECK IF YOU DECOMMENTED THE IMAGEICON ON TOP
+         System.out.println(c);
          g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4), (int)(screenWidth/4), (int)(screenHeight/2), null);
          
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20));          
