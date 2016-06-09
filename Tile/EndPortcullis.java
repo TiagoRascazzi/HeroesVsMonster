@@ -8,6 +8,7 @@ public class EndPortcullis extends Tile{
    public EndPortcullis(){
             
       super(19, false, true, true, false, false, false);
+      setOneWay(false, false, false, true); 
       
    //private int textureID0;
    //private int maxNumOfPlayers;
@@ -18,5 +19,7 @@ public class EndPortcullis extends Tile{
    //private boolean topSide:
    //private boolean bottomSide;
    }
+   
+   
    
 }

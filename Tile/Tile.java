@@ -1,8 +1,16 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.util.Random;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.Point;
+
 
 public abstract class Tile{
+   protected enum CardState {SHOW, ACTION, OPT1, OPT2, OPT3, OPT4, OPT5};
+   protected CardState cardState;
+   protected boolean active = false;
    
    public static final int TOP = 0;
    public static final int BOTTOM = 1;
@@ -172,7 +180,7 @@ public abstract class Tile{
       //for testing purpose not to change since we are not done doing the cards
       //wr.add(1, new TestTile());
       
-      wr.add(5, new RotatingRoom());
+     /* */wr.add(5, new RotatingRoom());/*
       wr.add(2, new BottomLessPit());
       
       wr.add(5, new EndEmptyRoom());
@@ -195,9 +203,8 @@ public abstract class Tile{
       wr.add(15, new FourWayEmptyRoom());
       wr.add(2, new FourWayPit());
       wr.add(3, new FourWayTrap());
-      wr.add(2, new FourWayCorridors());
-      
-          
+      wr.add(2, new FourWayCorridors());*/
+ 
       return wr.next();
    }
    
@@ -252,4 +259,22 @@ public abstract class Tile{
    public int getTextureID(){
       return textureID;
    } 
+   public void drawAction(Graphics2D g, int posX, int posY){}
+   public ActionCard processKeyInput(KeyEvent e){
+      if(cardState == CardState.SHOW){
+         if(e.getKeyCode() == KeyEvent.VK_ENTER ){
+            cardState = CardState.ACTION;
+         }
+      }
+      return null;
+   }
+   
+   public ActionCard processMouseInput(Point screenSize, MouseEvent e){
+      if(cardState == CardState.SHOW){
+         if(GUI.hover((int)(screenSize.x/2)-25, (int)(screenSize.x/2)-25+75, (int)(screenSize.y-(3*screenSize.y/16))+10, (int)(screenSize.y-(3*screenSize.y/16))+30) ){
+            cardState = CardState.ACTION;
+         }
+      }
+      return null;
+   }
 }

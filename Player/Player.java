@@ -379,7 +379,9 @@ public abstract class Player{
                if(HVMPanel.board.get(p.y, p.x) != null){// if already has tile
                   if(getNumOfPlayersAt(p) < HVMPanel.board.get(p.y, p.x).getMaxNumOfPlayers()){ //check max number of player
                      if(canEnter(p)){//test if can enter in tile
+                        if(isOneWay(p)){
                            return true;
+                        }
                      }
                   }
                }
