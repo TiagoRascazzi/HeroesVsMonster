@@ -405,7 +405,6 @@ public class Display extends HVMPanel{
          g.fillRoundRect( (int)(screenWidth/6), (int)(screenHeight/6), (int)(screenWidth/1.5), (int)(screenHeight/1.5), screenWidth/8, screenHeight/8); 
          
          //IF YOU GET AN ERROR HERE CHECK IF YOU DECOMMENTED THE IMAGEICON ON TOP
-         System.out.println(c);
          g.drawImage( cardTextures[c.getTextureID()].getImage(), (int)(screenWidth/2)-(int)(screenWidth/8), (int)(screenHeight/2)-(int)(screenHeight/4), (int)(screenWidth/4), (int)(screenHeight/2), null);
          
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20));          
