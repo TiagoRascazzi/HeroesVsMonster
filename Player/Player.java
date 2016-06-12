@@ -312,6 +312,8 @@ public abstract class Player{
                   posX = p.x;
                   posY = p.y;
                   BGMusicPlayer.playSound(0);
+                  if(tile instanceof RotatingRoom)
+                     tile.rotate180DegClockwise();
                   if(tile instanceof TreasureChamberTile)
                      treasureChamberAction();
                   return afterMove();
