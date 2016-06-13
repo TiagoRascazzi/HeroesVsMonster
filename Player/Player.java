@@ -101,11 +101,6 @@ public abstract class Player{
             if(done == true)
                return true;
          }
-       //  for(int i=0; i<playerCards.size(); i++){
-       //     if(playerCards.get(i).getRidOfCard()){
-       //        playerCards.remove(i);
-       //     }
-       //  }
          
       }
       else if(state == PlayerState.MOVE){
@@ -312,6 +307,8 @@ public abstract class Player{
                   posX = p.x;
                   posY = p.y;
                   BGMusicPlayer.playSound(0);
+                  if(tile instanceof RotatingRoom)
+                     tile.rotate180DegClockwise();
                   if(tile instanceof TreasureChamberTile)
                      treasureChamberAction();
                   return afterMove();

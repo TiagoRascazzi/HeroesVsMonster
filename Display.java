@@ -381,19 +381,38 @@ public class Display extends HVMPanel{
       
       
       
-      g.drawImage(winImg.getImage(), screenWidth/2-150, screenHeight/2-150, 300, 300, null);
       String name = "";
       int max = -1;
       for(int i=0; i<players.size(); i++){
-         if(players.get(i).gold() > max){
-            max = players.get(i).gold();
-            name = players.get(i).getName();
+         if(isInACornerTile(players.get(i))){
+            if(players.get(i).gold() > max){
+               max = players.get(i).gold();
+               name = players.get(i).getName();
+            }
          }
       }
+      
       g.setColor(Color.RED);
       g.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
-      g.drawString(name, screenWidth/2-(g.getFontMetrics().stringWidth(name)/2), screenHeight/2+200);
+      if(name != ""){
+         g.drawString(name, screenWidth/2-(g.getFontMetrics().stringWidth(name)/2), screenHeight/2+200);
+         g.drawImage(winImg.getImage(), screenWidth/2-150, screenHeight/2-150, 300, 300, null);
+      }else{
+         g.drawString("Nobody Won", screenWidth/2-(g.getFontMetrics().stringWidth("Nobody Won")/2), screenHeight/2);
+      }
       
+   }
+   
+   public static boolean isInACornerTile(Player p){
+      if(p.getPosX() == 0 && p.getPosY() == 0)
+         return true;
+      if(p.getPosX() == board.numRows()-1 && p.getPosY() == board.numColumns()-1)
+         return true;
+      if(p.getPosX() == board.numRows()-1 && p.getPosY() == 0)
+         return true;
+      if(p.getPosX() == 0 && p.getPosY() == board.numColumns()-1)
+         return true;
+      return false;
       
    }
    

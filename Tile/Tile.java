@@ -180,8 +180,8 @@ public abstract class Tile{
       //for testing purpose not to change since we are not done doing the cards
       //wr.add(1, new TestTile());
       
-     /* */wr.add(5, new RotatingRoom());/*
-      wr.add(2, new BottomLessPit());
+     wr.add(5, new RotatingRoom());
+     wr.add(2, new BottomLessPit());
       
       wr.add(5, new EndEmptyRoom());
       wr.add(1, new EndPortcullis());      
@@ -203,7 +203,7 @@ public abstract class Tile{
       wr.add(15, new FourWayEmptyRoom());
       wr.add(2, new FourWayPit());
       wr.add(3, new FourWayTrap());
-      wr.add(2, new FourWayCorridors());*/
+      wr.add(2, new FourWayCorridors());
  
       return wr.next();
    }
