@@ -137,7 +137,7 @@ public abstract class MonsterCard extends RoomCard{
       }else if(CurrentVals.get(0) == 2){ //Flee
          CurrentVals.remove(0);
          active = false;
-         Display.showTextPopup("The monster fleed");
+         Display.showTextPopup("The monster flees");
       }else if(CurrentVals.get(0) == 3){ //Escape
          CurrentVals.remove(0);
          Display.showTextPopup("You escaped");
